@@ -1,13 +1,13 @@
 terraform {
   required_providers {
     docker = {
-      source = "kreuzwerker/docker"
+      source  = "kreuzwerker/docker"
+      version = "2.16.0"
     }
   }
 }
 
-# TODO Should be output from other module
 provider "docker" {
-  host     = "ssh://core@192.168.122.56:22"
+  host     = "ssh://core@${var.docker_host}:22"
   ssh_opts = ["-o", "StrictHostKeyChecking=no", "-o", "UserKnownHostsFile=/dev/null"]
 }

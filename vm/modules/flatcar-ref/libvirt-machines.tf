@@ -13,10 +13,6 @@ terraform {
   }
 }
 
-provider "libvirt" {
-  uri = "qemu:///system"
-}
-
 resource "libvirt_pool" "volumetmp" {
   name = "${var.cluster_name}-pool"
   type = "dir"
