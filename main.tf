@@ -8,3 +8,7 @@ module "flatcar" {
    
    # TODO Figure out where output from module lands
 }
+
+module "flatcar-docker" {
+   source = "./modules/flatcar-containers"
+}
