@@ -1,0 +1,21 @@
+http:
+  routers:
+    to-nginx:
+      entryPoints:
+        - web
+      rule: "PathPrefix(`/nginx`)"
+      middlewares:
+        - nginx-stripprefix
+      service: nginx
+
+  middlewares:
+    nginx-stripprefix:
+      stripPrefix:
+        prefixes:
+          - "/nginx"
+
+  services:
+    nginx:
+      loadBalancer:
+        servers:
+          - url: http://nginx/

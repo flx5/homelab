@@ -1,14 +1,14 @@
 # Start a container
 resource "docker_container" "nginx" {
-  name  = "foo"
+  name  = "nginx"
   image = docker_image.nginx.latest
-  ports {
-    internal = "80"
-    external = "8080"
+  restart = "always"
+
+  networks_advanced {
+      name = var.network_name
   }
 }
 
-# Find the latest Ubuntu precise image.
 resource "docker_image" "nginx" {
   name = "nginx"
 }
