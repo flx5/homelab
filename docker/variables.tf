@@ -2,4 +2,6 @@ variable "docker_host" {
   type        = string
 }
 
-variable "test" {}
+variable "docker_user" {
+  type        = string
+}

@@ -14,13 +14,10 @@ variable "base_disk" {
   type = string
 }
 
-variable "networks" {
-  type = object({
-    admin_network = object({
-      id = string
-    })
-    internet_network = object({
-      id = string
-    })
-  })
+variable "domain" {
+  type = string
+}
+
+variable "network" {
+  type = string
 }

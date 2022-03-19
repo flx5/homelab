@@ -1,5 +1,5 @@
-resource "libvirt_domain" "test" {
-  name   = var.name
+resource "libvirt_domain" "docker" {
+  name   = "docker_${var.name}"
   memory = "1024"
   vcpu   = 1
 
@@ -10,7 +10,8 @@ resource "libvirt_domain" "test" {
   }
 
   network_interface {
-    network_id     = var.networks.internet_network.id
+    network_id     = var.network
     wait_for_lease = true
+    hostname = local.fqdn
   }
 }

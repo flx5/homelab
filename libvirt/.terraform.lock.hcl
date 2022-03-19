@@ -24,8 +24,7 @@ provider "registry.terraform.io/dmacvicar/libvirt" {
 }
 
 provider "registry.terraform.io/hashicorp/template" {
-  version     = "2.2.0"
-  constraints = "~> 2.2.0"
+  version = "2.2.0"
   hashes = [
     "h1:94qn780bi1qjrbC3uQtjJh3Wkfwd5+tTtJHOb7KTg9w=",
     "zh:01702196f0a0492ec07917db7aaa595843d8f171dc195f4c988d2ffca2a06386",
@@ -38,39 +37,5 @@ provider "registry.terraform.io/hashicorp/template" {
     "zh:992843002f2db5a11e626b3fc23dc0c87ad3729b3b3cff08e32ffb3df97edbde",
     "zh:ad906f4cebd3ec5e43d5cd6dc8f4c5c9cc3b33d2243c89c5fc18f97f7277b51d",
     "zh:c979425ddb256511137ecd093e23283234da0154b7fa8b21c2687182d9aea8b2",
-  ]
-}
-
-provider "registry.terraform.io/kreuzwerker/docker" {
-  version     = "2.16.0"
-  constraints = "2.16.0"
-  hashes = [
-    "h1:OcTn2QyCQNjDiJYy1vqQFmz2dxJdOF/2/HBXBvGxU2E=",
-    "zh:0ff8aa7884c6dae90e6f245bb9d37898735f89e095ba53413f2f364db4d11a77",
-    "zh:4101f4c909477f3a8225829b7063e5c5a2e2986a6163e0f113af040b5feab61f",
-    "zh:59db110d2b6c620cc12a1741d81ed8d1dd7fb0540024428fefbb57e8bebe5b60",
-    "zh:6e134983f195ea0273ac042f0a2df14158d676a24e8dd140ca0357f3efc3fd61",
-    "zh:7de1de3cc1eacb2ef2693207f5c5f54fa4814ae8c024b8b3c2a0923c82fd6f14",
-    "zh:a6659fbc7c45fbb60c7c9bf06724eb6084711f1b79c720ef8512a4367e63cbe5",
-    "zh:ae97c721431517d8c71f8cede91d734d2f2372a1bfef0c3bba43b54c0f8b1cee",
-    "zh:b3cbd47d5f0cb522b6dd3561ccd2f491fb6afb577372718e0663d12cfeef30e9",
-    "zh:b64af7c6ad8870c11677874f6cd13322aa03d2190391a120be17304ca324ea1c",
-    "zh:c363747bae968af997eaf22193168451523e92b59aee8aee135d3b27db132366",
-    "zh:c40721250642157b2a72d8db44fa09de0f7635ba4b0e2ebf5527570f3988e62f",
-    "zh:e97707609e346bf463d539099faa8790f2f453cfbd0b880327b6eae16ca4f213",
-    "zh:f4a23ce27cb430f91895466b3e2d132c534fa2b58808f6771235d76e696f4972",
-    "zh:fd634e973eb2b6483a1ce9251801a393d04cb496f8e83ffcf3f0c4cad8c18f4c",
-  ]
-}
-
-provider "registry.terraform.io/poseidon/ct" {
-  version     = "0.7.1"
-  constraints = "0.7.1"
-  hashes = [
-    "h1:kAGw7TUNQOl8H/fJVU7dobVRt9fYNxeqQiDpZ5q+xZU=",
-    "zh:0e177e262cfc532a90ca3ef3abd7ff1ce36176974330e94fb9f2cfd972fe5ec0",
-    "zh:3c1761b49d8199e9f27d155d4fa4146af4524d3874deb9c87283b6d6f2d25120",
-    "zh:81cf5dc3ce54a505d1953576066ecbdab01a6a158f6c5c1364c0cd1de0b8a3c5",
-    "zh:fdfedb62b3d650e9cf50ccebcf5dbd75842daad55d8c2bcfa5a9dbd29b711db6",
   ]
 }
