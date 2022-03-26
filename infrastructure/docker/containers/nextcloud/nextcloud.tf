@@ -16,8 +16,14 @@ resource "docker_container" "nextcloud" {
     "REDIS_HOST=${docker_container.redis.name}",
     "REDIS_HOST_PASSWORD=${random_password.redis_password.result}",
 
-    # TODO Configure SMTP
+    "SMTP_HOST=${var.smtp_host}",
+    "SMTP_PORT=${var.smtp_port}",
+    "SMTP_AUTHTYPE=PLAIN",
+    "MAIL_FROM_ADDRESS=nextcloud@nextcloud.local"
+    # TODO Configure SMTP (From) correctly
   ]
+
+  // TODO Configure volumes properly
 
   volumes {
     container_path = "/var/www/html"

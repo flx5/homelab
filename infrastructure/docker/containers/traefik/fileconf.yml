@@ -4,26 +4,25 @@ http:
       entryPoints:
         - web
       rule: "Host(`nginx.local`)"
-      middlewares:
-        - nginx-stripprefix
       service: nginx
     to-nextcloud:
       entryPoints:
         - web
       rule: "Host(`nextcloud.local`)"
-      middlewares:
-        - nextcloud-stripprefix
       service: nextcloud
+    to-mailhog:
+      entryPoints:
+        - web
+      rule: "PathPrefix(`/mail`)"
+      middlewares:
+        - mail-stripprefix
+      service: mailhog
 
   middlewares:
-    nginx-stripprefix:
+    mail-stripprefix:
       stripPrefix:
         prefixes:
-          - "/nginx"
-    nextcloud-stripprefix:
-      stripPrefix:
-        prefixes:
-          - "/nextcloud"
+          - "/mail"
 
   services:
     nginx:
@@ -34,3 +33,7 @@ http:
       loadBalancer:
         servers:
           - url: http://nextcloud-app/
+    mailhog:
+      loadBalancer:
+        servers:
+          - url: http://mailhog:8025/
