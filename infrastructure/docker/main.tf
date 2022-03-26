@@ -3,6 +3,12 @@ module "nginx" {
    network_name = docker_network.internal.name
 }
 
+module "nextcloud" {
+   source = "./containers/nextcloud"
+   network_name = docker_network.internal.name
+}
+
+
 module "traefik" {
    source = "./containers/traefik"
    internal_network_name = docker_network.internal.name

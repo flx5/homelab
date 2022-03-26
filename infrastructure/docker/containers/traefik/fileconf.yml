@@ -1,0 +1,36 @@
+http:
+  routers:
+    to-nginx:
+      entryPoints:
+        - web
+      rule: "PathPrefix(`/nginx`)"
+      middlewares:
+        - nginx-stripprefix
+      service: nginx
+    to-nextcloud:
+      entryPoints:
+        - web
+      rule: "PathPrefix(`/nextcloud`)"
+      middlewares:
+        - nextcloud-stripprefix
+      service: nextcloud
+
+  middlewares:
+    nginx-stripprefix:
+      stripPrefix:
+        prefixes:
+          - "/nginx"
+    nextcloud-stripprefix:
+      stripPrefix:
+        prefixes:
+          - "/nextcloud"
+
+  services:
+    nginx:
+      loadBalancer:
+        servers:
+          - url: http://nginx/
+    nextcloud:
+      loadBalancer:
+        servers:
+          - url: http://nextcloud-app/
