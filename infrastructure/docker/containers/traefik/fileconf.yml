@@ -3,14 +3,14 @@ http:
     to-nginx:
       entryPoints:
         - web
-      rule: "PathPrefix(`/nginx`)"
+      rule: "Host(`nginx.local`)"
       middlewares:
         - nginx-stripprefix
       service: nginx
     to-nextcloud:
       entryPoints:
         - web
-      rule: "PathPrefix(`/nextcloud`)"
+      rule: "Host(`nextcloud.local`)"
       middlewares:
         - nextcloud-stripprefix
       service: nextcloud
