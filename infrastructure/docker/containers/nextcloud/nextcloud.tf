@@ -25,6 +25,9 @@ resource "docker_container" "nextcloud" {
 
   // TODO Configure volumes properly
 
+  # TODO Setup Nextcloud Cron
+  # TODO Setup Reverse Proxy properly (See Warnings in Nextcloud Admin interface)
+
   volumes {
     container_path = "/var/www/html"
     host_path = "/opt/containers/nextcloud/app"
