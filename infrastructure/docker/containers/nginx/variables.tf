@@ -1,3 +1,3 @@
-variable "network_name" {
+variable "traefik_network" {
   type        = string
 }

@@ -5,7 +5,7 @@ resource "docker_container" "nginx" {
   restart = "always"
 
   networks_advanced {
-      name = var.network_name
+      name = var.traefik_network
   }
 }
 

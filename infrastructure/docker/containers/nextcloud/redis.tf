@@ -13,7 +13,8 @@ resource "docker_container" "redis" {
 
   command = ["redis-server", "--requirepass", random_password.redis_password.result]
 
+  # Backend Network
   networks_advanced {
-    name = var.network_name
+    name = docker_network.nextcloud_backend.name
   }
 }

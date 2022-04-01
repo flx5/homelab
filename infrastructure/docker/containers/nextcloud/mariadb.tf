@@ -17,8 +17,9 @@ resource "docker_container" "mariadb" {
 
   command = ["--transaction-isolation=READ-COMMITTED", "--log-bin=ROW", "--innodb_read_only_compressed=OFF"]
 
+  # Backend Network
   networks_advanced {
-    name = var.network_name
+    name = docker_network.nextcloud_backend.name
   }
 
   volumes {

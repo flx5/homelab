@@ -25,16 +25,18 @@ resource "docker_container" "traefik" {
     external = "8080"
   }
 
+  # Use file based configuration because of https://github.com/traefik/traefik/issues/4174
   upload {
     file = "/etc/traefik/traefik.yml"
     content = templatefile("${path.module}/traefik.yml", {})
   }
 
-  # Use file based configuration because of https://github.com/traefik/traefik/issues/4174
   upload {
     file = "/etc/traefik/hosts/fileconf.yml"
     content = templatefile("${path.module}/fileconf.yml", {})
   }
+}
 
-
+output "hostname" {
+        value = docker_container.traefik.name
 }
