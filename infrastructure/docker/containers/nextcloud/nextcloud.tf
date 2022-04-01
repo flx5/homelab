@@ -1,5 +1,9 @@
 resource "docker_image" "nextcloud" {
-  name = "nextcloud:21.0.9"
+  name = "nextcloud-full"
+  build {
+    path = path.module
+    tag  = ["nextcloud-full"]
+  }
 }
 
 resource "docker_container" "nextcloud" {
@@ -25,7 +29,6 @@ resource "docker_container" "nextcloud" {
 
   // TODO Configure volumes properly
 
-  # TODO Setup Nextcloud Cron
   # TODO Setup Reverse Proxy properly (See Warnings in Nextcloud Admin interface)
 
   volumes {
