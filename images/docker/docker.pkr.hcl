@@ -10,7 +10,7 @@ source "qemu" "docker" {
 
   output_directory  = "output/docker"
   shutdown_command  = "sudo shutdown -P now"
-  disk_size         = "5000M"
+  disk_size         = "20G"
   format            = "qcow2"
 
   ssh_username      = "packer"
