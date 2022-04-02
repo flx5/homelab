@@ -1,0 +1,13 @@
+http:
+  routers:
+    to-nextcloud:
+      entryPoints:
+        - web
+      rule: "Host(`nextcloud.local`)"
+      service: nextcloud
+
+  services:
+    nextcloud:
+      loadBalancer:
+        servers:
+          - url: http://nextcloud-app/

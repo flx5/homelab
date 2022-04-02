@@ -31,9 +31,12 @@ resource "docker_container" "traefik" {
     content = templatefile("${path.module}/traefik.yml", {})
   }
 
-  upload {
-    file = "/etc/traefik/hosts/fileconf.yml"
-    content = templatefile("${path.module}/fileconf.yml", {})
+  dynamic "upload" {
+    for_each = var.configurations
+    content {
+      file = "/etc/traefik/hosts/${upload.key}.yml"
+      content = upload.value
+    }
   }
 }
 

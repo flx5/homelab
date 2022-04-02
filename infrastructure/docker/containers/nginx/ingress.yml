@@ -1,0 +1,13 @@
+http:
+  routers:
+    to-nginx:
+      entryPoints:
+        - web
+      rule: "Host(`nginx.local`)"
+      service: nginx
+
+  services:
+    nginx:
+      loadBalancer:
+        servers:
+          - url: http://nginx/

@@ -5,3 +5,7 @@ variable "internal_network_name" {
 variable "wan_network_name" {
   type        = string
 }
+
+variable "configurations" {
+  type = map(string)
+}

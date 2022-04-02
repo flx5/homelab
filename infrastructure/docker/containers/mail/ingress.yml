@@ -1,0 +1,21 @@
+http:
+  routers:
+    to-mailhog:
+      entryPoints:
+        - web
+      rule: "PathPrefix(`/mail`)"
+      middlewares:
+        - mail-stripprefix
+      service: mailhog
+
+  middlewares:
+    mail-stripprefix:
+      stripPrefix:
+        prefixes:
+          - "/mail"
+
+  services:
+    mailhog:
+      loadBalancer:
+        servers:
+          - url: http://mailhog:8025/
