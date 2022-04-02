@@ -1,7 +1,6 @@
-# TODO Mail should be on own network because it might be unencrypted
 module "mail" {
    source = "./containers/mail"
-   network_name = docker_network.mail.name
+   network_name = docker_network.traefik_intern.name
 }
 
 module "traefik" {
