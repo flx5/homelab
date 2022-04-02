@@ -7,7 +7,7 @@ resource "random_password" "redis_password" {
 }
 
 resource "docker_container" "redis" {
-  name  = "nextcloud-redis"
+  name  = var.name
   image = docker_image.redis.latest
   restart = "always"
 
@@ -15,6 +15,6 @@ resource "docker_container" "redis" {
 
   # Backend Network
   networks_advanced {
-    name = docker_network.nextcloud_backend.name
+    name = var.network
   }
 }

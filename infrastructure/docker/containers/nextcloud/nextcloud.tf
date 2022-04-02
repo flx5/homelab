@@ -25,6 +25,12 @@ module "database" {
   command = ["--transaction-isolation=READ-COMMITTED", "--log-bin=ROW", "--innodb_read_only_compressed=OFF"]
 }
 
+module "redis" {
+  source = "../redis"
+  name = "nextcloud-redis"
+  network = docker_network.nextcloud_backend.name
+}
+
 resource "docker_container" "nextcloud" {
   name  = "nextcloud-app"
   image = docker_image.nextcloud.latest
@@ -38,8 +44,8 @@ resource "docker_container" "nextcloud" {
     "MYSQL_HOST=${module.database.container.name}",
 
     # Redis Configuration
-    "REDIS_HOST=${docker_container.redis.name}",
-    "REDIS_HOST_PASSWORD=${random_password.redis_password.result}",
+    "REDIS_HOST=${module.redis.container.name}",
+    "REDIS_HOST_PASSWORD=${module.redis.password}",
 
     # Mail Configuration
     "SMTP_HOST=${var.smtp_host}",
@@ -65,7 +71,7 @@ resource "docker_container" "nextcloud" {
 
   depends_on = [
     module.database.container,
-    docker_container.redis
+    module.redis.container
   ]
 
   # Backend Network
