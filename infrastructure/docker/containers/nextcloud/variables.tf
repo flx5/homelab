@@ -13,3 +13,8 @@ variable "smtp_port" {
 variable "traefik_host" {
   type = string
 }
+
+variable "db_password" {
+  type        = string
+  sensitive   = true
+}

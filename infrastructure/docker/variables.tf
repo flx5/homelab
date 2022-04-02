@@ -5,3 +5,13 @@ variable "docker_host" {
 variable "docker_user" {
   type        = string
 }
+
+variable "gitea_db_password" {
+  type        = string
+  sensitive   = true
+}
+
+variable "nextcloud_db_password" {
+  type        = string
+  sensitive   = true
+}

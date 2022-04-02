@@ -15,6 +15,7 @@ module "nextcloud" {
    smtp_port = module.mail.port
    traefik_host = module.traefik.hostname
    traefik_network = docker_network.traefik_intern.name
+   db_password = var.nextcloud_db_password
 }
 
 module "gitea" {
@@ -23,6 +24,7 @@ module "gitea" {
    traefik_network = docker_network.traefik_intern.name
    smtp_host = module.mail.server
    smtp_port = module.mail.port
+   db_password = var.gitea_db_password
 }
 
 module "traefik" {

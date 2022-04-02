@@ -1,3 +1,8 @@
+locals {
+  database = "nextcloud"
+  db_user = "nextcloud"
+}
+
 resource "docker_image" "nextcloud" {
   name = "nextcloud-full"
   build {
@@ -10,6 +15,16 @@ resource "docker_network" "nextcloud_backend" {
   name = "nextcloud_backend"
 }
 
+module "database" {
+  source = "../mariadb"
+  database = local.database
+  name =  "nextcloud-db"
+  network = docker_network.nextcloud_backend.name
+  username = local.db_user
+  password = var.db_password
+  command = ["--transaction-isolation=READ-COMMITTED", "--log-bin=ROW", "--innodb_read_only_compressed=OFF"]
+}
+
 resource "docker_container" "nextcloud" {
   name  = "nextcloud-app"
   image = docker_image.nextcloud.latest
@@ -17,10 +32,10 @@ resource "docker_container" "nextcloud" {
 
   env = [
     # MySQL Configuration
-    "MYSQL_DATABASE=nextcloud",
-    "MYSQL_USER=nextcloud",
-    "MYSQL_PASSWORD=${random_password.mariadb_nextcloud_password.result}",
-    "MYSQL_HOST=${docker_container.mariadb.name}",
+    "MYSQL_DATABASE=${local.database}",
+    "MYSQL_USER=${local.db_user}",
+    "MYSQL_PASSWORD=${var.db_password}",
+    "MYSQL_HOST=${module.database.container.name}",
 
     # Redis Configuration
     "REDIS_HOST=${docker_container.redis.name}",
@@ -37,9 +52,6 @@ resource "docker_container" "nextcloud" {
     # Proxy Configuration
     "TRUSTED_PROXIES=${var.traefik_host}"
   ]
-  // TODO Configure volumes properly
-
-  # TODO Setup Reverse Proxy properly (See Warnings in Nextcloud Admin interface)
 
   volumes {
     container_path = "/var/www/html"
@@ -52,7 +64,7 @@ resource "docker_container" "nextcloud" {
   }
 
   depends_on = [
-    docker_container.mariadb,
+    module.database.container,
     docker_container.redis
   ]
 

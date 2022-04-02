@@ -10,7 +10,7 @@ http:
     gitea:
       loadBalancer:
         servers:
-          - url: http://gitea:3000/
+          - url: http://${host}:3000/
 
 entryPoints:
   gitea:
@@ -28,4 +28,4 @@ tcp:
     gitea:
       loadBalancer:
         servers:
-          - address: gitea:22
+          - address: ${host}:22

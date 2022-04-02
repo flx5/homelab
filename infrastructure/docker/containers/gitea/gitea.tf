@@ -1,3 +1,8 @@
+locals {
+  database = "gitea"
+  db_user = "gitea"
+}
+
 resource "docker_image" "gitea" {
   name = "gitea/gitea:1.16.5"
 }
@@ -6,9 +11,18 @@ resource "docker_network" "gitea_backend" {
   name = "gitea_backend"
 }
 
+module "database" {
+  source = "../mariadb"
+  database = local.database
+  name =  "gitea-db"
+  network = docker_network.gitea_backend.name
+  username = local.db_user
+  password = var.db_password
+}
+
 # Start a container
 resource "docker_container" "gitea" {
-  name  = "gitea"
+  name  = "gitea-app"
   image = docker_image.gitea.latest
   restart = "always"
 
@@ -21,16 +35,17 @@ resource "docker_container" "gitea" {
 
     # Database configuration
     "GITEA__database__DB_TYPE=mysql",
-    "GITEA__database__HOST=${docker_container.mariadb.name}:3306",
-    "GITEA__database__NAME=gitea",
-    "GITEA__database__USER=gitea",
-    "GITEA__database__PASSWD=${random_password.mariadb_gitea_password.result}",
+    "GITEA__database__HOST=${module.database.container.name}:3306",
+    "GITEA__database__NAME=${local.database}",
+    "GITEA__database__USER=${local.db_user}",
+    "GITEA__database__PASSWD=${var.db_password}",
 
     # Mail configuration
     "GITEA__mailer__ENABLED=true",
     "GITEA__mailer__FROM=gitea@gitea.local",
     "GITEA__mailer__MAILER_TYPE=smtp",
     "GITEA__mailer__HOST=${var.smtp_host}:${var.smtp_port}",
+    # TODO Enable TLS
     "GITEA__mailer__IS_TLS_ENABLED=false",
 
     # Server configuration
@@ -62,6 +77,6 @@ resource "docker_container" "gitea" {
   }
 
   depends_on = [
-    docker_container.mariadb
+    module.database.container
   ]
 }

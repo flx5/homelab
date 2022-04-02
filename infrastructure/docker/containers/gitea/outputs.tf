@@ -1,3 +1,5 @@
 output "traefik_config" {
-  value = templatefile("${path.module}/ingress.yml", {})
+  value = templatefile("${path.module}/ingress.yml", {
+    host = docker_container.gitea.name
+  })
 }
