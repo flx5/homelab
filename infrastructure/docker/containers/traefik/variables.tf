@@ -9,3 +9,7 @@ variable "wan_network_name" {
 variable "configurations" {
   type = map(string)
 }
+
+variable "additional_entrypoints" {
+  type = map(number)
+}

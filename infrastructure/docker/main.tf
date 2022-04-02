@@ -17,6 +17,14 @@ module "nextcloud" {
    traefik_network = docker_network.traefik_intern.name
 }
 
+module "gitea" {
+   source = "./containers/gitea"
+
+   traefik_network = docker_network.traefik_intern.name
+   smtp_host = module.mail.server
+   smtp_port = module.mail.port
+}
+
 module "traefik" {
    source = "./containers/traefik"
    internal_network_name = docker_network.traefik_intern.name
@@ -24,6 +32,11 @@ module "traefik" {
    configurations = {
       nextcloud = module.nextcloud.traefik_config,
       nginx    = module.nginx.traefik_config,
-      mail    = module.mail.traefik_config
+      mail    = module.mail.traefik_config,
+      gitea   = module.gitea.traefik_config
+   }
+
+   additional_entrypoints = {
+      gitea_ssh = 2222
    }
 }

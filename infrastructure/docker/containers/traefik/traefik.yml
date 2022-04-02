@@ -13,3 +13,7 @@ api:
 entryPoints:
   web:
     address: :80
+  %{ for name, port in additional_entrypoints }
+  ${name}:
+    address: ":${port}"
+  %{ endfor ~}

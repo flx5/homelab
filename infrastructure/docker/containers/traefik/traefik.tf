@@ -25,10 +25,20 @@ resource "docker_container" "traefik" {
     external = "8080"
   }
 
+  dynamic "ports" {
+    for_each = var.additional_entrypoints
+    content {
+      internal = ports.value
+      external = ports.value
+    }
+  }
+
   # Use file based configuration because of https://github.com/traefik/traefik/issues/4174
   upload {
     file = "/etc/traefik/traefik.yml"
-    content = templatefile("${path.module}/traefik.yml", {})
+    content = templatefile("${path.module}/traefik.yml", {
+      additional_entrypoints = var.additional_entrypoints
+    })
   }
 
   dynamic "upload" {
