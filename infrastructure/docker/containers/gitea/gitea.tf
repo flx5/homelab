@@ -38,7 +38,7 @@ resource "docker_container" "gitea" {
     "GITEA__server__DOMAIN=gitea.local",
     "GITEA__server__ROOT_URL=http://gitea.local/",
     "GITEA__server__SSH_PORT=2222",
-    # TODO Configure ssh
+
     # I don't really need gravatars...
     "GITEA__server__OFFLINE_MODE=true",
 
