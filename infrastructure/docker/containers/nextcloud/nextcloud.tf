@@ -48,6 +48,7 @@ resource "docker_container" "nextcloud" {
     "REDIS_HOST_PASSWORD=${module.redis.password}",
 
     # Mail Configuration
+    # TODO TLS?
     "SMTP_HOST=${var.smtp_host}",
     "SMTP_PORT=${var.smtp_port}",
     "SMTP_AUTHTYPE=PLAIN",
@@ -82,5 +83,10 @@ resource "docker_container" "nextcloud" {
   # Traefik Network
   networks_advanced {
     name = var.traefik_network
+  }
+
+  # Mail Network
+  networks_advanced {
+    name = var.mail_network
   }
 }

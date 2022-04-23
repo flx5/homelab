@@ -2,27 +2,43 @@ locals {
   port = 25
 }
 
-resource "docker_image" "mailhog" {
-  name = "mailhog/mailhog"
+resource "docker_image" "postfix" {
+  name = "postfix"
+  build {
+    path = path.module
+  }
 }
 
-resource "docker_container" "mailhog" {
-  name  = "mailhog"
-  image = docker_image.mailhog.latest
+# TODO internal TLS?
+
+resource "docker_container" "postfix" {
+  name  = "postfix"
+  image = docker_image.postfix.latest
   restart = "always"
 
   env = [
-    "MH_SMTP_BIND_ADDR=0.0.0.0:${local.port}",
-    "MH_UI_WEB_PATH=mail"
+    "myhostname=postfix",
+    "mydomain=${var.mydomain}",
+    "relayhost=${var.relayhost}",
+    "relayport=${var.relayport}",
+    "relayuser=${var.relayuser}",
+    "relaypassword=${var.relaypassword}",
+    "mynetworks=${var.my_networks}",
+    # TODO Configure proper nameserver
+    "nameserver=1.1.1.1"
   ]
 
   networks_advanced {
-    name = var.network_name
+    name = var.mail_network_name
+  }
+
+  networks_advanced {
+    name = var.wan_network_name
   }
 }
 
 output "server" {
-  value = docker_container.mailhog.name
+  value = docker_container.postfix.name
 }
 
 output "port" {

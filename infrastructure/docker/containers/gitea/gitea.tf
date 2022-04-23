@@ -76,6 +76,10 @@ resource "docker_container" "gitea" {
     name = docker_network.gitea_backend.name
   }
 
+  networks_advanced {
+    name = var.mail_network
+  }
+
   depends_on = [
     module.database.container
   ]
