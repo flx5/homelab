@@ -37,6 +37,13 @@ module "gitea" {
    mail_network = docker_network.mail.name
 }
 
+module "calibre" {
+   source = "./containers/calibre"
+
+   traefik_network = docker_network.traefik_intern.name
+   mail_network = docker_network.mail.name
+}
+
 module "traefik" {
    source = "./containers/traefik"
    internal_network_name = docker_network.traefik_intern.name
@@ -45,6 +52,7 @@ module "traefik" {
       nextcloud = module.nextcloud.traefik_config,
       nginx    = module.nginx.traefik_config,
       gitea   = module.gitea.traefik_config
+      calibre = module.calibre.traefik_config
    }
 
    additional_entrypoints = {

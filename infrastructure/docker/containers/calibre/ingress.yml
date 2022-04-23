@@ -1,0 +1,13 @@
+http:
+  routers:
+    to-calibre:
+      entryPoints:
+        - web
+      rule: "Host(`calibre.local`)"
+      service: calibre
+
+  services:
+    calibre:
+      loadBalancer:
+        servers:
+          - url: http://calibre-app:8083/
