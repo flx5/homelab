@@ -24,3 +24,14 @@ module "vm_media" {
    pool_name = libvirt_pool.stage_prod.name
    ssh_id = var.ssh_id
 }
+
+module "vm_internal" {
+   source = "./apps/docker"
+
+   base_disk = module.images.docker
+   domain = libvirt_network.internet_network.domain
+   name = "internal"
+   network = libvirt_network.internet_network.id
+   pool_name = libvirt_pool.stage_prod.name
+   ssh_id = var.ssh_id
+}
