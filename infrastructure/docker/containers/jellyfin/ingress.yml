@@ -1,0 +1,13 @@
+http:
+  routers:
+    to-jellyfin:
+      entryPoints:
+        - web
+      rule: "Host(`jellyfin.local`)"
+      service: jellyfin
+
+  services:
+    jellyfin:
+      loadBalancer:
+        servers:
+          - url: http://jellyfin:8096/
