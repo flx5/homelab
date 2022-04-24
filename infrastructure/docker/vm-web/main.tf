@@ -1,5 +1,5 @@
 module "mail" {
-   source = "./containers/mail"
+   source = "../containers/mail"
    mail_network_name = docker_network.mail.name
    my_networks = join(",", [ for config in docker_network.mail.ipam_config : config.subnet ])
    mydomain = var.mail_mydomain
@@ -11,12 +11,12 @@ module "mail" {
 
 
 module "nginx" {
-   source = "./containers/nginx"
+   source = "../containers/nginx"
    traefik_network = docker_network.traefik_intern.name
 }
 
 module "nextcloud" {
-   source = "./containers/nextcloud"
+   source = "../containers/nextcloud"
 
    smtp_host = module.mail.server
    smtp_port = module.mail.port
@@ -27,7 +27,7 @@ module "nextcloud" {
 }
 
 module "gitea" {
-   source = "./containers/gitea"
+   source = "../containers/gitea"
 
    traefik_network = docker_network.traefik_intern.name
    smtp_host = module.mail.server
@@ -37,14 +37,14 @@ module "gitea" {
 }
 
 module "calibre" {
-   source = "./containers/calibre"
+   source = "../containers/calibre"
 
    traefik_network = docker_network.traefik_intern.name
    mail_network = docker_network.mail.name
 }
 
 module "traefik" {
-   source = "./containers/traefik"
+   source = "../containers/traefik"
    internal_network_name = docker_network.traefik_intern.name
    wan_network_name = docker_network.wan.name
    configurations = {
