@@ -27,5 +27,5 @@ variable "name" {
 
 variable "command" {
   type = list(string)
-  default = []
+  default = null
 }
