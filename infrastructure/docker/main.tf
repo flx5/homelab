@@ -1,7 +1,6 @@
 module "mail" {
    source = "./containers/mail"
    mail_network_name = docker_network.mail.name
-   wan_network_name = docker_network.wan.name
    my_networks = join(",", [ for config in docker_network.mail.ipam_config : config.subnet ])
    mydomain = var.mail_mydomain
    relayhost = var.mail_relayhost

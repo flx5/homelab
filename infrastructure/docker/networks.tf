@@ -9,5 +9,4 @@ resource "docker_network" "wan" {
 
 resource "docker_network" "mail" {
   name = "mail"
-  internal = true
 }

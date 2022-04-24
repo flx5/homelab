@@ -6,10 +6,6 @@ variable "my_networks" {
   type        = string
 }
 
-variable "wan_network_name" {
-  type        = string
-}
-
 variable "mydomain" {
   type        = string
 }

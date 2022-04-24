@@ -31,10 +31,6 @@ resource "docker_container" "postfix" {
   networks_advanced {
     name = var.mail_network_name
   }
-
-  networks_advanced {
-    name = var.wan_network_name
-  }
 }
 
 output "server" {
