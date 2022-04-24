@@ -1,0 +1,23 @@
+http:
+  routers:
+    to-tvheadend:
+      entryPoints:
+        - web
+      rule: "Host(`tvheadend.local`)"
+      middlewares:
+        - tvheadend-ipwhitelist
+      service: tvheadend
+
+  middlewares:
+    tvheadend-ipwhitelist:
+      ipWhiteList:
+        sourceRange:
+          - "127.0.0.1/32"
+          - "192.168.0.0/16"
+          - "10.0.0.0/8"
+
+  services:
+    tvheadend:
+      loadBalancer:
+        servers:
+          - url: http://tvheadend:9981/

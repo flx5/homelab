@@ -9,6 +9,12 @@ module "mail" {
    relayuser = var.mail_relayuser
 }
 
+module "tvheadend" {
+   source = "../containers/tvheadend"
+   traefik_network = docker_network.traefik_intern.name
+}
+
+
 module "jellyfin" {
    source = "../containers/jellyfin"
    traefik_network = docker_network.traefik_intern.name
@@ -20,7 +26,8 @@ module "traefik" {
    internal_network_name = docker_network.traefik_intern.name
    wan_network_name = docker_network.lan.name
    configurations = {
-      nextcloud = module.jellyfin.traefik_config,
+      jellyfin = module.jellyfin.traefik_config,
+      tvheadend = module.tvheadend.traefik_config
    }
    additional_entrypoints = {}
 }
