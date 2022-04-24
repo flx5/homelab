@@ -1,4 +1,9 @@
-output "docker_addresses" {
+output "vm_web_addresses" {
   description = "The docker instance addresses on the admin interface"
-  value = module.docker.admin_adresses
+  value = module.vm_web.admin_adresses
+}
+
+output "vm_media_addresses" {
+  description = "The docker instance addresses on the admin interface"
+  value = module.vm_media.admin_adresses
 }
