@@ -40,6 +40,10 @@ variable "base_domain" {
   type = string
 }
 
-variable "dyndns" {
+variable "public_ip" {
+  type = string
+}
+
+variable "record_type" {
   type = string
 }

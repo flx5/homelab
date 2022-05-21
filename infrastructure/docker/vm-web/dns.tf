@@ -23,7 +23,7 @@ resource "cloudflare_record" "dns" {
 
   zone_id = var.zone_id
   name    = each.value
-  value   = var.dyndns
-  type    = "CNAME"
+  value   = var.public_ip
+  type    = var.record_type
   ttl     = 3600
 }
