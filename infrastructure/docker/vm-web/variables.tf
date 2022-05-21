@@ -39,3 +39,7 @@ variable "mail_relaypassword" {
 variable "base_domain" {
   type = string
 }
+
+variable "dyndns" {
+  type = string
+}

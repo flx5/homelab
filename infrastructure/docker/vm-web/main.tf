@@ -1,5 +1,10 @@
 locals {
    traefik_name = "traefik"
+   hostnames = {
+      nginx = "nginx.${var.base_domain}"
+      nextcloud = "cloud.${var.base_domain}"
+      calibre = "books.${var.base_domain}"
+   }
 }
 
 module "mail" {
@@ -18,7 +23,7 @@ module "nginx" {
    source = "../containers/nginx"
    traefik_network = docker_network.traefik_intern.name
 
-   fqdn = "nginx.${var.base_domain}"
+   fqdn = local.hostnames.nginx
 }
 
 module "nextcloud" {
@@ -31,7 +36,7 @@ module "nextcloud" {
    mail_network = docker_network.mail.name
    db_password = var.nextcloud_db_password
 
-   fqdn = "cloud.${var.base_domain}"
+   fqdn = local.hostnames.nextcloud
 }
 
 module "gitea" {
@@ -50,7 +55,7 @@ module "calibre" {
 
    traefik_network = docker_network.traefik_intern.name
    mail_network = docker_network.mail.name
-   fqdn = "books.${var.base_domain}"
+   fqdn = local.hostnames.calibre
 }
 
 module "traefik" {
