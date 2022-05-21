@@ -35,3 +35,7 @@ variable "mail_relayuser" {
 variable "mail_relaypassword" {
   type        = string
 }
+
+variable "base_domain" {
+  type = string
+}

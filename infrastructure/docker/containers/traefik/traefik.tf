@@ -3,7 +3,7 @@ resource "docker_image" "traefik" {
 }
 
 resource "docker_container" "traefik" {
-  name  = "traefik"
+  name  = var.hostname
   image = docker_image.traefik.latest
   restart = "always"
 
@@ -48,8 +48,4 @@ resource "docker_container" "traefik" {
       content = upload.value
     }
   }
-}
-
-output "hostname" {
-        value = docker_container.traefik.name
 }

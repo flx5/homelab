@@ -1,3 +1,7 @@
+locals {
+   traefik_name = "traefik"
+}
+
 module "mail" {
    source = "../containers/mail"
    mail_network_name = docker_network.mail.name
@@ -13,6 +17,8 @@ module "mail" {
 module "nginx" {
    source = "../containers/nginx"
    traefik_network = docker_network.traefik_intern.name
+
+   fqdn = "nginx.${var.base_domain}"
 }
 
 module "nextcloud" {
@@ -20,15 +26,18 @@ module "nextcloud" {
 
    smtp_host = module.mail.server
    smtp_port = module.mail.port
-   traefik_host = module.traefik.hostname
+   traefik_host = local.traefik_name
    traefik_network = docker_network.traefik_intern.name
    mail_network = docker_network.mail.name
    db_password = var.nextcloud_db_password
+
+   fqdn = "cloud.${var.base_domain}"
 }
 
 module "gitea" {
    source = "../containers/gitea"
 
+   fqdn = "git.${var.base_domain}"
    traefik_network = docker_network.traefik_intern.name
    smtp_host = module.mail.server
    smtp_port = module.mail.port
@@ -41,6 +50,7 @@ module "calibre" {
 
    traefik_network = docker_network.traefik_intern.name
    mail_network = docker_network.mail.name
+   fqdn = "books.${var.base_domain}"
 }
 
 module "traefik" {
@@ -53,6 +63,8 @@ module "traefik" {
       gitea   = module.gitea.traefik_config
       calibre = module.calibre.traefik_config
    }
+
+   hostname = local.traefik_name
 
    additional_entrypoints = {
       gitea_ssh = 2222

@@ -5,3 +5,7 @@ variable "traefik_network" {
 variable "mail_network" {
   type        = string
 }
+
+variable "fqdn" {
+  type = string
+}

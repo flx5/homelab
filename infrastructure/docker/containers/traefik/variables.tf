@@ -13,3 +13,8 @@ variable "configurations" {
 variable "additional_entrypoints" {
   type = map(number)
 }
+
+variable "hostname" {
+  type = string
+  default = "traefik"
+}

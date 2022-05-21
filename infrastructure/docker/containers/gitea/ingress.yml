@@ -3,7 +3,7 @@ http:
     to-gitea:
       entryPoints:
         - web
-      rule: "Host(`gitea.local`)"
+      rule: "Host(`${fqdn}`)"
       service: gitea
 
   services:

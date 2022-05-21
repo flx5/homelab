@@ -3,11 +3,11 @@ http:
     to-nginx:
       entryPoints:
         - web
-      rule: "Host(`nginx.local`)"
+      rule: "Host(`${fqdn}`)"
       service: nginx
 
   services:
     nginx:
       loadBalancer:
         servers:
-          - url: http://nginx/
+          - url: http://${host}/

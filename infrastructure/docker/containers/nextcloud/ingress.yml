@@ -3,11 +3,11 @@ http:
     to-nextcloud:
       entryPoints:
         - web
-      rule: "Host(`nextcloud.local`)"
+      rule: "Host(`${fqdn}`)"
       service: nextcloud
 
   services:
     nextcloud:
       loadBalancer:
         servers:
-          - url: http://nextcloud-app/
+          - url: http://${host}/

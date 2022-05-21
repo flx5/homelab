@@ -3,11 +3,11 @@ http:
     to-calibre:
       entryPoints:
         - web
-      rule: "Host(`calibre.local`)"
+      rule: "Host(`${fqdn}`)"
       service: calibre
 
   services:
     calibre:
       loadBalancer:
         servers:
-          - url: http://calibre-app:8083/
+          - url: http://${host}:8083/
