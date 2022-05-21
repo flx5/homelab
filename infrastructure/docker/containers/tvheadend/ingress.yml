@@ -3,7 +3,7 @@ http:
     to-tvheadend:
       entryPoints:
         - web
-      rule: "Host(`tvheadend.local`)"
+      rule: "Host(`${fqdn}`)"
       middlewares:
         - tvheadend-ipwhitelist
       service: tvheadend
@@ -20,4 +20,4 @@ http:
     tvheadend:
       loadBalancer:
         servers:
-          - url: http://tvheadend:9981/
+          - url: http://${host}:9981/

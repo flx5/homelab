@@ -3,7 +3,7 @@ http:
     to-jellyfin:
       entryPoints:
         - web
-      rule: "Host(`jellyfin.local`)"
+      rule: "Host(`${fqdn}`)"
       middlewares:
         - jellyfin-ipwhitelist
       service: jellyfin
@@ -20,4 +20,4 @@ http:
     jellyfin:
       loadBalancer:
         servers:
-          - url: http://jellyfin:8096/
+          - url: http://${host}:8096/
