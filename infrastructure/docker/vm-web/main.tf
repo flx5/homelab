@@ -4,6 +4,7 @@ locals {
       nginx = "nginx.${var.base_domain}"
       nextcloud = "cloud.${var.base_domain}"
       calibre = "books.${var.base_domain}"
+      backblaze = "backblaze.${var.base_domain}"
    }
 }
 
@@ -58,6 +59,13 @@ module "calibre" {
    fqdn = local.hostnames.calibre
 }
 
+module "backblaze" {
+   source = "../containers/backblaze"
+
+   traefik_network = docker_network.traefik_intern.name
+   fqdn = local.hostnames.backblaze
+}
+
 module "traefik" {
    source = "../containers/traefik"
    internal_network_name = docker_network.traefik_intern.name
@@ -67,6 +75,7 @@ module "traefik" {
       nginx    = module.nginx.traefik_config,
       gitea   = module.gitea.traefik_config
       calibre = module.calibre.traefik_config
+      backblaze = module.backblaze.traefik_config
    }
 
    hostname = local.traefik_name

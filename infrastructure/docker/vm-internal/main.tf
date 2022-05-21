@@ -1,3 +1,7 @@
+locals {
+   traefik_name = "traefik"
+}
+
 module "mail" {
    source = "../containers/mail"
    mail_network_name = docker_network.mail.name
@@ -14,7 +18,7 @@ module "nextcloud" {
 
    smtp_host = module.mail.server
    smtp_port = module.mail.port
-   traefik_host = module.traefik.hostname
+   traefik_host = local.traefik_name
    traefik_network = docker_network.traefik_intern.name
    mail_network = docker_network.mail.name
    db_password = var.nextcloud_db_password
@@ -27,6 +31,8 @@ module "addons" {
 
 module "traefik" {
    source = "../containers/traefik"
+
+   hostname = local.traefik_name
    internal_network_name = docker_network.traefik_intern.name
    wan_network_name = docker_network.lan.name
    configurations = merge({

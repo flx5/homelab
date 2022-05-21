@@ -1,0 +1,23 @@
+http:
+  routers:
+    to-tvheadend:
+      entryPoints:
+        - web
+      rule: "Host(`${fqdn}`)"
+      middlewares:
+        - backblaze-ipwhitelist
+      service: backblaze
+
+  middlewares:
+    backblaze-ipwhitelist:
+      ipWhiteList:
+        sourceRange:
+          - "127.0.0.1/32"
+          - "192.168.0.0/16"
+          - "10.0.0.0/8"
+
+  services:
+    backblaze:
+      loadBalancer:
+        servers:
+          - url: http://${host}:8080/
