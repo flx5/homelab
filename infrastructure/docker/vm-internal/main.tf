@@ -1,5 +1,8 @@
 locals {
    traefik_name = "traefik"
+   hostnames = {
+      nextcloud = "cloud.internal.${var.base_domain}"
+   }
 }
 
 module "mail" {
@@ -22,11 +25,13 @@ module "nextcloud" {
    traefik_network = docker_network.traefik_intern.name
    mail_network = docker_network.mail.name
    db_password = var.nextcloud_db_password
+   fqdn = local.hostnames.nextcloud
 }
 
 module "addons" {
    source = "git::ssh://git@github.com/flx5/homelab-addons.git//internal"
    traefik_network = docker_network.traefik_intern.name
+   base_domain = var.base_domain
 }
 
 module "traefik" {
