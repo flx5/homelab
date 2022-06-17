@@ -1,0 +1,112 @@
+# playbook.yml
+- name: 'Provision Image'
+  hosts: all
+  become: true
+  gather_facts: yes
+
+  tasks:
+    - name: Add Backports required for Cockpit
+      ansible.builtin.apt_repository:
+        repo: deb http://deb.debian.org/debian "{{ansible_distribution_release}}-backports" main
+        state: present
+
+    - name: Update Package Cache
+      ansible.builtin.apt:
+        update_cache: true
+        # Valid for 24h
+        cache_valid_time: 86400
+
+    - name: Upgrade Packages
+      ansible.builtin.apt:
+        pkg: '*'
+        state: 'latest'
+
+    # Install Cockpit
+    - name: Install Cockpit
+      ansible.builtin.apt:
+        pkg:
+          - 'cockpit'
+          - 'cockpit-networkmanager'
+          - 'cockpit-storaged'
+          - 'cockpit-packagekit'
+          - 'cockpit-machines'
+        state: present
+        default_release: "{{ansible_distribution_release}}-backports"
+
+    - name: Add current user to libvirt
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+        groups: libvirt
+        append: yes
+
+    - name: Copy Qemu Config
+      ansible.builtin.copy:
+        src: files/qemu.conf
+        dest: /etc/libvirt/qemu.conf
+        owner: root
+        group: root
+        mode: '0600'
+      notify: Restart libvirtd
+
+    - name: Install mdadm
+      ansible.builtin.apt:
+        pkg: mdadm
+        state: present
+
+    - name: Copy mdadm.conf
+      notify: Update mdadm
+      ansible.builtin.copy:
+        src: files/mdadm.conf
+        dest: /etc/mdadm/mdadm.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+    # TODO Configure mdadm
+
+    - name: Install bridge-utils
+      ansible.builtin.apt:
+        pkg: bridge-utils
+        state: present
+
+    - name: Install LUKS
+      ansible.builtin.apt:
+        pkg: cryptsetup
+        state: present
+
+    # TODO Upload ssd.key
+
+    - name: SSD Crypto
+      community.general.crypttab:
+        name: ssd_crypt
+        backing_device: /dev/md0
+        password: /root/ssd.key
+        state: present
+        opts: discard,luks
+
+    - name: Install hdparm
+      ansible.builtin.apt:
+        pkg: hdparm
+        state: present
+    # TODO Configure hdparm https://wiki.debianforum.de/Hdparm#Energieverwaltung
+
+    - name: Create /mnt/vm
+      ansible.builtin.file:
+        path: /mnt/vm
+        state: directory
+        mode: '0755'
+
+    - name: Mount VM Folder
+      ansible.posix.mount:
+        path: /mnt/vm
+        src: /dev/pve-ssd/vm
+        fstype: ext4
+        state: present
+
+  handlers:
+    - name: Restart libvirtd
+      service:
+        name: libvirtd
+        state: restarted
+    - name: Update mdadm
+      ansible.builtin.command: update-initramfs -u

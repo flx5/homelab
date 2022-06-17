@@ -1,0 +1,14 @@
+version: 2
+
+# To disable network config:
+# config: disabled
+
+ethernets: {}
+  # opaque ID for physical interfaces, only referred to by other stanzas
+ # ens3:
+ #   dhcp4: false
+
+#bridges:
+#  br0:
+#    interfaces: [ens3]
+#    dhcp4: true

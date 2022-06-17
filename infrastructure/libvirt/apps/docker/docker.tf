@@ -3,6 +3,10 @@ resource "libvirt_domain" "docker" {
   memory = "1024"
   vcpu   = 1
 
+  autostart = true
+
+  qemu_agent = true
+
   cloudinit = libvirt_cloudinit_disk.commoninit.id
 
   disk {

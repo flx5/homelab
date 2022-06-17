@@ -41,6 +41,13 @@ build {
   # Reset Cloud Init
   provisioner "shell" {
     inline = [
+      "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y qemu-guest-agent"
+    ]
+  }
+
+  # Reset Cloud Init
+  provisioner "shell" {
+    inline = [
       "sudo cloud-init clean"
     ]
   }

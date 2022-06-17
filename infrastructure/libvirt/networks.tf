@@ -1,6 +1,8 @@
 resource "libvirt_network" "admin_network" {
   name = "admin_network"
 
+  autostart = true
+
   mode = "none"
   domain = "admin.local"
   addresses = ["10.17.2.0/24"]
@@ -17,16 +19,8 @@ resource "libvirt_network" "admin_network" {
 resource "libvirt_network" "internet_network" {
   name = "internet_network"
 
-  mode = "nat"
-  domain = "inet.local"
+  autostart = true
 
-  addresses = ["10.17.3.0/24"]
-
-  dns {
-    enabled = true
-  }
-
-  dhcp {
-    enabled = true
-  }
+  mode = "bridge"
+  bridge = "br-eno1"
 }
