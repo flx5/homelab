@@ -18,6 +18,6 @@ variable "domain" {
   type = string
 }
 
-variable "network" {
+variable "bridge" {
   type = string
 }

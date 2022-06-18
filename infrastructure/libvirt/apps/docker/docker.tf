@@ -14,7 +14,7 @@ resource "libvirt_domain" "docker" {
   }
 
   network_interface {
-    network_id     = var.network
+    bridge     = var.bridge
     wait_for_lease = true
     hostname = local.fqdn
   }

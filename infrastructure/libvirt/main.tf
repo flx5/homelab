@@ -1,5 +1,6 @@
 locals {
    domain = "fritz.box"
+   bridge = "br-eno1"
 }
 
 module "images" {
@@ -13,7 +14,7 @@ module "vm_web" {
    base_disk = module.images.docker
    domain = local.domain
    name = "web"
-   network = libvirt_network.internet_network.id
+   bridge = local.bridge
    pool_name = libvirt_pool.stage_prod.name
    ssh_id = var.ssh_id
 }
@@ -24,7 +25,7 @@ module "vm_media" {
    base_disk = module.images.docker
    domain = local.domain
    name = "media"
-   network = libvirt_network.internet_network.id
+   bridge = local.bridge
    pool_name = libvirt_pool.stage_prod.name
    ssh_id = var.ssh_id
 }
@@ -35,7 +36,7 @@ module "vm_internal" {
    base_disk = module.images.docker
    domain = local.domain
    name = "internal"
-   network = libvirt_network.internet_network.id
+   bridge = local.bridge
    pool_name = libvirt_pool.stage_prod.name
    ssh_id = var.ssh_id
 }

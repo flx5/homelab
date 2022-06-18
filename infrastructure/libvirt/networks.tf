@@ -15,12 +15,3 @@ resource "libvirt_network" "admin_network" {
     enabled = false
   }
 }
-
-resource "libvirt_network" "internet_network" {
-  name = "internet_network"
-
-  autostart = true
-
-  mode = "bridge"
-  bridge = "br-eno1"
-}
