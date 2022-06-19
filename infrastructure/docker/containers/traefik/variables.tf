@@ -18,3 +18,8 @@ variable "hostname" {
   type = string
   default = "traefik"
 }
+
+variable "acme_email" {
+  type = string
+  default = ""
+}

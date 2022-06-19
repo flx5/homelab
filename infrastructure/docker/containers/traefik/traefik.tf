@@ -21,6 +21,11 @@ resource "docker_container" "traefik" {
   }
 
   ports {
+    internal = "443"
+    external = "443"
+  }
+
+  ports {
     internal = "8080"
     external = "8080"
   }
@@ -37,7 +42,8 @@ resource "docker_container" "traefik" {
   upload {
     file = "/etc/traefik/traefik.yml"
     content = templatefile("${path.module}/traefik.yml", {
-      additional_entrypoints = var.additional_entrypoints
+      additional_entrypoints = var.additional_entrypoints,
+      email = var.acme_email
     })
   }
 
@@ -47,5 +53,10 @@ resource "docker_container" "traefik" {
       file = "/etc/traefik/hosts/${upload.key}.yml"
       content = upload.value
     }
+  }
+
+  volumes {
+    container_path = "/acme"
+    host_path = "/opt/containers/traefik/acme"
   }
 }

@@ -57,3 +57,7 @@ variable "public_ip" {
 variable "record_type" {
   type = string
 }
+
+variable "acme_email" {
+  type = string
+}

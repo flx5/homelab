@@ -89,4 +89,6 @@ module "traefik" {
    additional_entrypoints = {
       gitea_ssh = 2222
    }
+
+   acme_email = var.acme_email
 }

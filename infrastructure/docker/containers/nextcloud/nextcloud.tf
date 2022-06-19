@@ -48,8 +48,12 @@ resource "docker_container" "nextcloud" {
     "REDIS_HOST=${module.redis.container.name}",
     "REDIS_HOST_PASSWORD=${module.redis.password}",
 
+    # Domain configuration
+    "OVERWRITEPROTOCOL=https",
+    "OVERWRITEHOST=${var.fqdn}",
+    "OVERWRITECLIURL=${var.fqdn}",
+
     # Mail Configuration
-    # TODO TLS?
     "SMTP_HOST=${var.smtp_host}",
     "SMTP_PORT=${var.smtp_port}",
     "SMTP_AUTHTYPE=PLAIN",

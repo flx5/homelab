@@ -11,9 +11,27 @@ api:
   insecure: true
 
 entryPoints:
-  web:
+  webinsecure:
     address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: websecure
+          scheme: https
+
+  web:
+    address: :443
+
   %{ for name, port in additional_entrypoints }
   ${name}:
     address: ":${port}"
   %{ endfor ~}
+
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: ${email}
+      storage: /acme/acme.json
+      httpChallenge:
+        # used during the challenge
+        entryPoint: web
