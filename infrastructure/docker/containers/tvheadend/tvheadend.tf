@@ -27,6 +27,8 @@ resource "docker_container" "tvheadend" {
     for_each = var.devices
     content {
       host_path = devices.value
+      container_path = devices.value
+      permissions    = "rwm"
     }
   }
 }
