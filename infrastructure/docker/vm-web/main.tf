@@ -5,6 +5,7 @@ locals {
       nextcloud = "cloud.${var.base_domain}"
       calibre = "books.${var.base_domain}"
       backblaze = "backblaze.${var.base_domain}"
+      gitea = "git.${var.base_domain}"
    }
 }
 
@@ -46,7 +47,7 @@ module "nextcloud" {
 module "gitea" {
    source = "../containers/gitea"
 
-   fqdn = "git.${var.base_domain}"
+   fqdn = local.hostnames.gitea
    traefik_network = docker_network.traefik_intern.name
    smtp_host = module.mail.server
    smtp_port = module.mail.port
