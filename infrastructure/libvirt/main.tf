@@ -45,6 +45,24 @@ module "vm_media" {
    spice_address = var.host
 
    mac = "52:54:00:2E:ED:B0"
+
+   block_devices = [
+      "/dev/disk1/media",
+      "/dev/disk2/media",
+      "/dev/disk3/media",
+      "/dev/parity1/media",
+   ]
+
+   # TODO Make sure snapraid runs in regular intervals
+   packages = [ "mergerfs", "snapraid" ]
+
+   mounts = [
+      ["/dev/vdc", "/mnt/disks/media1"],
+      ["/dev/vdd", "/mnt/disks/media2"],
+      ["/dev/vde", "/mnt/disks/media3"],
+      ["/dev/vdf", "/mnt/parity1/media"],
+      ["/mnt/disks/media*", "/mnt/media", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=60G,fsname=mergerfs", "0", "0"]
+   ]
 }
 
 module "vm_internal" {

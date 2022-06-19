@@ -84,6 +84,47 @@
         state: present
         opts: discard,luks
 
+    # TODO Figure out if ansible can do a loop for me
+    - name: HDD1 Crypto
+      community.general.crypttab:
+        name: disk1
+        backing_device: UUID="c2b1d73b-b223-4469-9cc1-c3cd404b2cf7"
+        password: /root/hdd.key
+        state: present
+        opts: luks
+
+    - name: HDD2 Crypto
+      community.general.crypttab:
+        name: disk2
+        backing_device: UUID="aab8bfb5-5b05-4f51-abd1-8ff3af255312"
+        password: /root/hdd.key
+        state: present
+        opts: luks
+
+    - name: HDD3 Crypto
+      community.general.crypttab:
+        name: disk3
+        backing_device: UUID="2d306ec1-e162-4e95-a089-2353a08d733b"
+        password: /root/hdd.key
+        state: present
+        opts: luks
+
+    - name: Backup1 Crypto
+      community.general.crypttab:
+        name: backup1
+        backing_device: UUID="748053ac-709d-4a29-bef1-990bbc5549b6"
+        password: /root/hdd.key
+        state: present
+        opts: luks
+
+    - name: Parity1 Crypto
+      community.general.crypttab:
+        name: parity1
+        backing_device: UUID="76298653-f95f-4beb-89ff-d0b9368cfc31"
+        password: /root/hdd.key
+        state: present
+        opts: luks
+
     - name: Install hdparm
       ansible.builtin.apt:
         pkg: hdparm

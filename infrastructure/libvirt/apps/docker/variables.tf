@@ -44,3 +44,9 @@ variable "mounts" {
 
   default = []
 }
+
+variable "packages" {
+  type = list(string)
+
+  default = []
+}

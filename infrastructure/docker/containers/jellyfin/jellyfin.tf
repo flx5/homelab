@@ -5,7 +5,7 @@ resource "docker_container" "jellyfin" {
   restart = "always"
 
   env = [
-    "JELLYFIN_PublishedServerUrl=jellyfin.local"
+    "JELLYFIN_PublishedServerUrl=${var.fqdn}"
   ]
 
   networks_advanced {
@@ -22,7 +22,15 @@ resource "docker_container" "jellyfin" {
     host_path = "/opt/containers/jellyfin/cache"
   }
 
-  # TODO Add media folders as bind mounts
+  volumes {
+    container_path = "/Audio"
+    host_path = "/mnt/media/Audio"
+  }
+
+  volumes {
+    container_path = "/Videos"
+    host_path = "/mnt/media/Videos"
+  }
 }
 
 resource "docker_image" "jellyfin" {
