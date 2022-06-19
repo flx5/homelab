@@ -1,3 +1,3 @@
 provider "libvirt" {
-  uri = "qemu+ssh://192.168.20.106/system"
+  uri = "qemu+ssh://${var.host}/system"
 }

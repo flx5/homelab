@@ -2,10 +2,6 @@ resource "docker_image" "mariadb" {
   name = "mariadb:10.7.3"
 }
 
-resource "random_password" "mariadb_root_password" {
-  length           = 16
-}
-
 resource "docker_container" "mariadb" {
   name  = var.name
   image = docker_image.mariadb.latest
@@ -24,7 +20,7 @@ resource "docker_container" "mariadb" {
   }
 
   env = [
-    "MYSQL_ROOT_PASSWORD=${var.root_password == "" ? random_password.mariadb_root_password.result : var.root_password}",
+    "MYSQL_ROOT_PASSWORD=${var.root_password}",
     "MYSQL_DATABASE=${var.database}",
     "MYSQL_USER=${var.username}",
     "MYSQL_PASSWORD=${var.password}",

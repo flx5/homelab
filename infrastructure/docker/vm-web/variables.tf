@@ -11,7 +11,17 @@ variable "gitea_db_password" {
   sensitive   = true
 }
 
+variable "gitea_db_root_password" {
+  type        = string
+  sensitive   = true
+}
+
 variable "nextcloud_db_password" {
+  type        = string
+  sensitive   = true
+}
+
+variable "nextcloud_db_root_password" {
   type        = string
   sensitive   = true
 }

@@ -22,6 +22,7 @@ module "database" {
   network = docker_network.nextcloud_backend.name
   username = local.db_user
   password = var.db_password
+  root_password = var.db_root_password
   command = ["--transaction-isolation=READ-COMMITTED", "--log-bin=ROW", "--innodb_read_only_compressed=OFF"]
 }
 
@@ -57,7 +58,12 @@ resource "docker_container" "nextcloud" {
     # TODO Configure SMTP (From) correctly
 
     # Proxy Configuration
-    "TRUSTED_PROXIES=${var.traefik_host}"
+    "TRUSTED_PROXIES=${var.traefik_host}",
+
+    # Place data somewhere different because this container very happily will
+    # overwrite everything in /var/www/html when updating the nextcloud version.
+    # This prevents accidentially configuring the data volume as the /var/www/html volume
+    "NEXTCLOUD_DATA_DIR=/mnt/data"
   ]
 
   volumes {
@@ -66,8 +72,8 @@ resource "docker_container" "nextcloud" {
   }
 
   volumes {
-    container_path = "/var/www/html/data"
-    host_path = "/opt/containers/nextcloud/data"
+    container_path = "/mnt/data"
+    host_path = var.data_dir
   }
 
   depends_on = [

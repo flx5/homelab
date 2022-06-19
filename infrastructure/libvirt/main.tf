@@ -16,7 +16,19 @@ module "vm_web" {
    name = "web"
    bridge = local.bridge
    pool_name = libvirt_pool.stage_prod.name
+   data_pool_name = libvirt_pool.data.name
+
    ssh_id = var.ssh_id
+
+   spice_address = var.host
+
+   block_devices = [ "/dev/pve-ssd/nextcloud" ]
+
+   mac = "52:54:00:6E:3A:C2"
+
+   mounts = [
+      [ "/dev/vdc", "/mnt/nextcloud" ]
+   ]
 }
 
 module "vm_media" {
@@ -27,7 +39,12 @@ module "vm_media" {
    name = "media"
    bridge = local.bridge
    pool_name = libvirt_pool.stage_prod.name
+   data_pool_name = libvirt_pool.data.name
    ssh_id = var.ssh_id
+
+   spice_address = var.host
+
+   mac = "52:54:00:2E:ED:B0"
 }
 
 module "vm_internal" {
@@ -38,5 +55,10 @@ module "vm_internal" {
    name = "internal"
    bridge = local.bridge
    pool_name = libvirt_pool.stage_prod.name
+   data_pool_name = libvirt_pool.data.name
    ssh_id = var.ssh_id
+
+   spice_address = var.host
+
+   mac = "52:54:00:42:7E:88"
 }

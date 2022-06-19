@@ -36,8 +36,11 @@ module "nextcloud" {
    traefik_network = docker_network.traefik_intern.name
    mail_network = docker_network.mail.name
    db_password = var.nextcloud_db_password
+   db_root_password = var.nextcloud_db_root_password
 
    fqdn = local.hostnames.nextcloud
+
+   data_dir = "/mnt/nextcloud/data"
 }
 
 module "gitea" {
@@ -49,6 +52,8 @@ module "gitea" {
    smtp_port = module.mail.port
    db_password = var.gitea_db_password
    mail_network = docker_network.mail.name
+
+   db_root_password = var.gitea_db_root_password
 }
 
 module "calibre" {

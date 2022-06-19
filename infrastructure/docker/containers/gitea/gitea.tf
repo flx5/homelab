@@ -18,6 +18,7 @@ module "database" {
   network = docker_network.gitea_backend.name
   username = local.db_user
   password = var.db_password
+  root_password = var.db_root_password
 }
 
 # Start a container

@@ -19,6 +19,11 @@ variable "db_password" {
   sensitive   = true
 }
 
+variable "db_root_password" {
+  type        = string
+  sensitive   = true
+}
+
 variable "fqdn" {
   type = string
 }
