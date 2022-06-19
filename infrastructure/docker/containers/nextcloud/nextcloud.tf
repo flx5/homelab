@@ -8,6 +8,9 @@ resource "docker_image" "nextcloud" {
   build {
     path = path.module
     tag  = ["nextcloud-full"]
+    label = {
+      trigger_dockerfile_hash = filemd5("${path.module}/Dockerfile")
+    }
   }
 }
 
