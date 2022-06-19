@@ -51,4 +51,9 @@ build {
       "sudo cloud-init clean"
     ]
   }
+
+  post-processor "checksum" {
+    checksum_types = ["sha1"]
+    output = "output/docker/packer_{{.BuildName}}_{{.ChecksumType}}.checksum"
+  }
 }

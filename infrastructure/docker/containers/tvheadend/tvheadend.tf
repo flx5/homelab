@@ -23,6 +23,12 @@ resource "docker_container" "tvheadend" {
   }
 
   # TODO Add devices for dvb + vaapi
+  dynamic "devices" {
+    for_each = var.devices
+    content {
+      host_path = devices.value
+    }
+  }
 }
 
 resource "docker_image" "tvheadend" {

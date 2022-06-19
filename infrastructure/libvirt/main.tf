@@ -34,7 +34,7 @@ module "vm_web" {
 module "vm_media" {
    source = "./apps/docker"
 
-   base_disk = module.images.docker
+   base_disk = module.images.media
    domain = local.domain
    name = "media"
    bridge = local.bridge
@@ -54,7 +54,6 @@ module "vm_media" {
    ]
 
    # TODO Make sure snapraid runs in regular intervals
-   packages = [ "mergerfs", "snapraid" ]
 
    mounts = [
       ["/dev/vdc", "/mnt/disks/media1"],

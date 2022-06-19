@@ -9,6 +9,13 @@ module "tvheadend" {
    source = "../containers/tvheadend"
    traefik_network = docker_network.traefik_intern.name
    fqdn = local.hostnames.tvheadend
+
+   devices = [
+      "/dev/dvb/adapter0",
+      "/dev/dvb/adapter1",
+      "/dev/dvb/adapter2",
+      "/dev/dvb/adapter3",
+   ]
 }
 
 

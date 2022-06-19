@@ -5,3 +5,8 @@ variable "traefik_network" {
 variable "fqdn" {
   type        = string
 }
+
+variable "devices" {
+  type        = list(string)
+  default = []
+}

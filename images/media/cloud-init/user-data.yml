@@ -1,0 +1,13 @@
+#cloud-config
+ssh_pwauth: True
+
+users:
+  - name: packer
+    shell: /bin/bash
+    passwd: ${password}
+    # Enable password login
+    lock_passwd: false
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    no_create_home: true
+    no_user_group: true
+    homedir: /

@@ -1,0 +1,1 @@
+Downloaded from https://raw.githubusercontent.com/CoreELEC/dvb-firmware/master/firmware/dvb-demod-si2168-d60-01.fw
