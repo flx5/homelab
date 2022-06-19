@@ -5,7 +5,7 @@ locals {
       nextcloud = "cloud.${var.base_domain}"
       calibre = "books.${var.base_domain}"
       backblaze = "backblaze.${var.base_domain}"
-      gitea = "git.${var.base_domain}"
+      gitea = "git2.${var.base_domain}"
    }
 }
 

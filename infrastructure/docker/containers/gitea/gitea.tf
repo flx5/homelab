@@ -43,7 +43,7 @@ resource "docker_container" "gitea" {
 
     # Mail configuration
     "GITEA__mailer__ENABLED=true",
-    "GITEA__mailer__FROM=gitea@gitea.local",
+    "GITEA__mailer__FROM=gitea@${var.fqdn}",
     "GITEA__mailer__MAILER_TYPE=smtp",
     "GITEA__mailer__HOST=${var.smtp_host}:${var.smtp_port}",
     # TODO Enable TLS
@@ -51,8 +51,8 @@ resource "docker_container" "gitea" {
 
     # Server configuration
     "GITEA__server__PROTOCOL=http",
-    "GITEA__server__DOMAIN=gitea.local",
-    "GITEA__server__ROOT_URL=http://gitea.local/",
+    "GITEA__server__DOMAIN=${var.fqdn}",
+    "GITEA__server__ROOT_URL=http://${var.fqdn}/",
     "GITEA__server__SSH_PORT=2222",
 
     # I don't really need gravatars...
