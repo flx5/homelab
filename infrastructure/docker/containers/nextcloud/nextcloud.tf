@@ -51,7 +51,7 @@ resource "docker_container" "nextcloud" {
     # Domain configuration
     "OVERWRITEPROTOCOL=https",
     "OVERWRITEHOST=${var.fqdn}",
-    "OVERWRITECLIURL=${var.fqdn}",
+    "OVERWRITECLIURL=https://${var.fqdn}",
 
     # Mail Configuration
     "SMTP_HOST=${var.smtp_host}",

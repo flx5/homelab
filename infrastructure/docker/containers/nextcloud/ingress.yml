@@ -5,6 +5,9 @@ http:
         - web
       rule: "Host(`${fqdn}`)"
       service: nextcloud
+      middlewares:
+        - secHeaders
+        - nextcloud-webdav
       tls:
         certResolver: letsencrypt
 
@@ -13,3 +16,9 @@ http:
       loadBalancer:
         servers:
           - url: http://${host}/
+
+  middlewares:
+    nextcloud-webdav:
+      replacePathRegex:
+        regex: "^/.well-known/ca(l|rd)dav$"
+        replacement: "/remote.php/dav/"
