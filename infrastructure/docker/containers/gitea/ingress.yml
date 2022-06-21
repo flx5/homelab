@@ -12,10 +12,6 @@ http:
         servers:
           - url: http://${host}:3000/
 
-entryPoints:
-  gitea:
-    address: :2222
-
 tcp:
   routers:
     to-gitea:

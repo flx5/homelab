@@ -21,3 +21,25 @@ http:
       loadBalancer:
         servers:
           - url: http://${host}:9981/
+
+tcp:
+  routers:
+    to-tvheadend:
+      entryPoints:
+        - tvheadend_htsp
+      rule: "HostSNI(`*`)"
+      middlewares:
+        - tvheadend-ipwhitelist
+      service: tvheadend
+
+  middlewares:
+    tvheadend-ipwhitelist:
+      ipWhiteList:
+        sourceRange:
+          - "192.168.0.0/16"
+
+  services:
+    tvheadend:
+      loadBalancer:
+        servers:
+          - address: ${host}:9982

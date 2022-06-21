@@ -39,5 +39,7 @@ module "traefik" {
       jellyfin = module.jellyfin.traefik_config,
       tvheadend = module.tvheadend.traefik_config
    }, module.addons.traefik_config)
-   additional_entrypoints = {}
+   additional_entrypoints = {
+      tvheadend_htsp = 9982
+   }
 }
