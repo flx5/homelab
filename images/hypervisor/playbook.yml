@@ -62,7 +62,7 @@
         group: root
         mode: '0644'
 
-    # TODO Configure mdadm
+    # TODO Configure mdadm to send emails on failure
 
     - name: Install bridge-utils
       ansible.builtin.apt:

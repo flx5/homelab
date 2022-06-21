@@ -1,0 +1,43 @@
+- name: 'Configure host'
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Update Package Cache
+      ansible.builtin.apt:
+        update_cache: true
+        # Valid for 24h
+        cache_valid_time: 86400
+
+    - name: Configure hdparm
+
+
+    # Sadly the Fujitsu D3644-B seems to only support fan readout but not control by the operating system.
+    # It does however provide a BIOS setting to control the fan (full power, auto)
+    - name: Install Sensors and Fancontrol
+      ansible.builtin.apt:
+        pkg:
+          - 'lm-sensors'
+        state: present
+
+    # The following is specific to the fujitsu mainboard D3644-B:
+    - name: Copy ftsteutates module config
+      ansible.builtin.copy:
+        src: files/mod-ftsteutates.conf
+        dest: /etc/modules-load.d/mod-ftsteutates.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Enable ftsteutates
+      community.general.modprobe:
+        name: ftsteutates
+        state: present
+
+    - name: Copy ftsteutates sensors config for Mainboard D3664-B
+      ansible.builtin.copy:
+        src: files/fts-teutates-D3644-B.conf
+        dest: /etc/sensors.d/fts-teutates-D3644-B.conf
+        owner: root
+        group: root
+        mode: '0644'
