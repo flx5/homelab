@@ -11,15 +11,10 @@ api:
   insecure: true
 
 entryPoints:
-  webinsecure:
-    address: :80
-    http:
-      redirections:
-        entryPoint:
-          to: websecure
-          scheme: https
-
   web:
+    address: :80
+
+  websecure:
     address: :443
 
   %{ for name, port in additional_entrypoints }

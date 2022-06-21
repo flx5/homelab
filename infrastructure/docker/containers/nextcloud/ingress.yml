@@ -1,8 +1,10 @@
+# TODO Redirect only ssl enabled hosts from http to https
+
 http:
   routers:
     to-nextcloud:
       entryPoints:
-        - web
+        - websecure
       rule: "Host(`${fqdn}`)"
       service: nextcloud
       middlewares:
