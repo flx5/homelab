@@ -34,42 +34,62 @@ source "qemu" "media" {
 build {
   sources = ["source.qemu.media"]
 
-  provisioner "file" {
-    source = "${path.root}/firmware/dvb-demod-si2168-d60-01.fw"
-    destination = "/tmp/dvb-demod-si2168-d60-01.fw"
-  }
-
   provisioner "shell" {
     inline = [
+      "set -e",
       "apt-get update",
       "apt-get install -y mergerfs snapraid",
 
       # We need the normal kernel, not the cloud one because the tv card driver cx23885.ko is not included in cloud drivers
       "apt-get install -y linux-image-amd64",
       "apt-get remove -y linux-image-*-cloud-amd64 linux-image-cloud-amd64",
-      # Reboot to make sure that the kernel change worked
-      "reboot",
 
-      # Check that the running kernel is not a cloud image (-v negates the match)
-      "uname -r | grep -vq cloud",
-      # Try to load the tv card module,
-      "modprobe cx23885",
-
-      # Install firmware
-      #
-      # The script mentioned here does not support this card yet, but everything else is the same.
-      # https://www.linuxtv.org/wiki/index.php/Hauppauge_WinTV-HVR-5500#Firmware
-      "cp /tmp/dvb-demod-si2168-d60-01.fw /lib/firmware/",
-      "depmod -a"
+      # Configure the module
+      # https://github.com/b-rad-NDi/Ubuntu-media-tree-kernel-builder/issues/51
+      "echo 'options cx23885 dma_reset_workaround=2' > /etc/modprobe.d/Hauppauge-WinTV-QuadHD.conf"
     ]
-
-    expect_disconnect = true
 
     environment_vars = [
       "DEBIAN_FRONTEND=noninteractive"
     ]
 
     execute_command = "sudo -S sh -c '{{ .Vars }} {{ .Path }}'"
+  }
+
+  # Reboot to make sure that the kernel change worked
+  provisioner "shell" {
+    inline = [
+      "sudo reboot"
+    ]
+    expect_disconnect = true
+  }
+
+  # Verify the installed kernel supports the required module
+  provisioner "shell" {
+    inline = [
+      "set -e",
+      # Check that the running kernel is not a cloud image (-v negates the match)
+      "uname -r | grep -vq cloud",
+      # Try to load the tv card module,
+      "sudo modprobe cx23885"
+    ]
+  }
+
+  provisioner "file" {
+    source = "${path.root}/firmware/dvb-demod-si2168-d60-01.fw"
+    destination = "/tmp/dvb-demod-si2168-d60-01.fw"
+  }
+
+  # Install firmware
+  #
+  # The script mentioned here does not support this card yet, but everything else is the same.
+  # https://www.linuxtv.org/wiki/index.php/Hauppauge_WinTV-HVR-5500#Firmware
+  provisioner "shell" {
+    inline = [
+      "set -e",
+      "sudo cp /tmp/dvb-demod-si2168-d60-01.fw /lib/firmware/",
+      "sudo depmod -a"
+    ]
   }
 
   # Reset Cloud Init
