@@ -23,7 +23,3 @@ variable "acme_email" {
   type = string
   default = ""
 }
-
-variable "error_host" {
-  type = string
-}

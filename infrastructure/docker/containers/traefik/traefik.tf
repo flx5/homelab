@@ -2,6 +2,17 @@ resource "docker_image" "traefik" {
   name = "traefik:v2.6"
 }
 
+module "error_host" {
+  source = "../nginx"
+  traefik_network = var.internal_network_name
+
+  files = [
+    { filename = "index.html", content = "You have reached /dev/null" }
+  ]
+
+  fqdn = "error.local"
+}
+
 resource "docker_container" "traefik" {
   name  = var.hostname
   image = docker_image.traefik.latest
@@ -50,7 +61,7 @@ resource "docker_container" "traefik" {
   upload {
     file = "/etc/traefik/hosts/common.yml"
     content = templatefile("${path.module}/common.yml", {
-      error = var.error_host
+      error = module.error_host.name
     })
   }
 

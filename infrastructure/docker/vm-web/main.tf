@@ -1,7 +1,6 @@
 locals {
    traefik_name = "traefik"
    hostnames = {
-      nginx = "nginx.${var.base_domain}"
       nextcloud = "cloud.${var.base_domain}"
       calibre = "books.${var.base_domain}"
       backblaze = "backblaze.${var.base_domain}"
@@ -18,18 +17,6 @@ module "mail" {
    relaypassword = var.mail_relaypassword
    relayport = var.mail_relayport
    relayuser = var.mail_relayuser
-}
-
-
-module "nginx" {
-   source = "../containers/nginx"
-   traefik_network = docker_network.traefik_intern.name
-
-   fqdn = local.hostnames.nginx
-
-   files = [
-      { filename = "index.html", content = "You have reached /dev/null" }
-   ]
 }
 
 module "nextcloud" {
@@ -82,7 +69,6 @@ module "traefik" {
    wan_network_name = docker_network.wan.name
    configurations = {
       nextcloud = module.nextcloud.traefik_config,
-      nginx    = module.nginx.traefik_config,
       gitea   = module.gitea.traefik_config
       calibre = module.calibre.traefik_config
       backblaze = module.backblaze.traefik_config
@@ -95,6 +81,4 @@ module "traefik" {
    }
 
    acme_email = var.acme_email
-
-   error_host = module.nginx.name
 }
