@@ -50,6 +50,7 @@ resource "docker_container" "traefik" {
   upload {
     file = "/etc/traefik/hosts/common.yml"
     content = templatefile("${path.module}/common.yml", {
+      error = var.error_host
     })
   }
 

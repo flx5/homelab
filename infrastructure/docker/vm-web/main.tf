@@ -26,6 +26,10 @@ module "nginx" {
    traefik_network = docker_network.traefik_intern.name
 
    fqdn = local.hostnames.nginx
+
+   files = [
+      { filename = "index.html", content = "You have reached /dev/null" }
+   ]
 }
 
 module "nextcloud" {
@@ -91,4 +95,6 @@ module "traefik" {
    }
 
    acme_email = var.acme_email
+
+   error_host = module.nginx.name
 }

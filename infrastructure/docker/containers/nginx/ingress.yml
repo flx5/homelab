@@ -7,7 +7,7 @@ http:
       service: nginx
 
   services:
-    nginx:
+    ${service_name}:
       loadBalancer:
         servers:
           - url: http://${host}/

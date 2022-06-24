@@ -9,6 +9,16 @@ http:
         stsPreload: true
         stsSeconds: 15552000
         customFrameOptionsValue: "SAMEORIGIN"
+    https-redirect:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+  services:
+    accidential_http:
+      loadBalancer:
+        servers:
+          - url: http://${error}/
 
 tls:
   options:

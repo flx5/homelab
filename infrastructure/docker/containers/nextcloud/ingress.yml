@@ -2,14 +2,24 @@
 
 http:
   routers:
+    to-nextcloud-insecure:
+      entryPoints:
+        - web
+      rule: "Host(`${fqdn}`)"
+      service: accidential_http
+      middlewares:
+        - https-redirect
+
     to-nextcloud:
       entryPoints:
+        - web
         - websecure
       rule: "Host(`${fqdn}`)"
       service: nextcloud
       middlewares:
         - secHeaders
         - nextcloud-webdav
+        - https-redirect
       tls:
         certResolver: letsencrypt
 
