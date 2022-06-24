@@ -92,6 +92,15 @@ build {
     ]
   }
 
+  # Install snapraid runner
+  provisioner "shell" {
+    inline = [
+      "set -e",
+      "sudo mkdir /opt/snapraid-runner/",
+      "wget -O- https://raw.githubusercontent.com/Chronial/snapraid-runner/v0.5/snapraid-runner.py | sudo tee /opt/snapraid-runner/snapraid-runner.py >/dev/null",
+    ]
+  }
+
   # Reset Cloud Init
   provisioner "shell" {
     inline = [

@@ -6,6 +6,7 @@ resource "libvirt_cloudinit_disk" "commoninit" {
     fqdn = local.fqdn
     mounts = var.mounts
     packages = var.packages
+    files = var.files
   })
   network_config = templatefile("${path.module}/network_config.cfg", {})
   pool = var.pool_name

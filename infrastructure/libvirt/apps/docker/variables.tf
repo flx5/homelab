@@ -45,6 +45,15 @@ variable "mounts" {
   default = []
 }
 
+variable "files" {
+  type = list(object({
+    path = string
+    content = string
+  }))
+
+  default = []
+}
+
 variable "packages" {
   type = list(string)
 

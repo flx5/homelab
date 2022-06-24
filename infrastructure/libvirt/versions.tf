@@ -8,6 +8,10 @@ terraform {
       source  = "hashicorp/template"
       version = "~> 2.2.0"
     }
+    healthchecksio = {
+      source = "kristofferahl/healthchecksio"
+      version = "1.9.0"
+    }
   }
 }
 

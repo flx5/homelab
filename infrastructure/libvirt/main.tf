@@ -53,7 +53,14 @@ module "vm_media" {
       "/dev/parity1/media",
    ]
 
-   # TODO Make sure snapraid runs in regular intervals
+   files = [
+      { path="/opt/snapraid-runner/snapraid-runner.conf", content = file("${path.module}/files/snapraid-runner.conf")},
+      { path="/opt/snapraid-runner/snapraid-media.conf", content = file("${path.module}/files/snapraid-media.conf")},
+      { path="/etc/cron.d/snapraid", content = templatefile("${path.module}/files/snapraid-cron.conf", {
+         healthcheck = healthchecksio_check.snapraid_media.ping_url
+      })},
+   ]
+
 
    mounts = [
       ["/dev/vdc", "/mnt/disks/media1"],
