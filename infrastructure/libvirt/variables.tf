@@ -5,3 +5,11 @@ variable "ssh_id" {
 variable "host" {
   type = string
 }
+
+variable "admin_mail" {
+  type = string
+}
+
+variable "media_mail" {
+  type = string
+}

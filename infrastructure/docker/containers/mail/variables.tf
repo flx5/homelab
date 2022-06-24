@@ -2,6 +2,10 @@ variable "mail_network_name" {
   type        = string
 }
 
+variable "traefik_network_name" {
+  type        = string
+}
+
 variable "my_networks" {
   type        = string
 }

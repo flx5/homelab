@@ -1,0 +1,13 @@
+tcp:
+  routers:
+    mailer:
+      entryPoints:
+        - "mailer"
+      service: "mailer"
+      rule: "HostSNI(`*`)"
+
+  services:
+    mailer:
+      loadBalancer:
+        servers:
+          - address: "${host}:25"

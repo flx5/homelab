@@ -14,6 +14,13 @@ http:
         scheme: https
         permanent: true
 
+    lan-whitelist:
+      ipWhiteList:
+        sourceRange:
+          - "127.0.0.1/32"
+          - "192.168.0.0/16"
+          - "10.0.0.0/8"
+
   services:
     accidential_http:
       loadBalancer:

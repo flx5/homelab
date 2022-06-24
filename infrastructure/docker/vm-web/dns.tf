@@ -27,3 +27,11 @@ resource "cloudflare_record" "dns" {
   type    = var.record_type
   ttl     = 3600
 }
+
+resource "cloudflare_record" "mailer" {
+  zone_id = var.zone_id
+  name    = "internal-mailer"
+  value   = var.docker_host
+  type    = "A"
+  ttl     = 3600
+}

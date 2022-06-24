@@ -31,6 +31,10 @@ resource "docker_container" "postfix" {
   networks_advanced {
     name = var.mail_network_name
   }
+
+  networks_advanced {
+    name = var.traefik_network_name
+  }
 }
 
 output "server" {

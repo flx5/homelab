@@ -54,7 +54,10 @@ module "vm_media" {
    ]
 
    files = [
-      { path="/opt/snapraid-runner/snapraid-runner.conf", content = file("${path.module}/files/snapraid-runner.conf")},
+      { path="/opt/snapraid-runner/snapraid-runner.conf", content = templatefile("${path.module}/files/snapraid-runner.conf", {
+         from_mail = var.media_mail
+         to_mail = var.admin_mail
+      })},
       { path="/opt/snapraid-runner/snapraid-media.conf", content = file("${path.module}/files/snapraid-media.conf")},
       { path="/etc/cron.d/snapraid", content = templatefile("${path.module}/files/snapraid-cron.conf", {
          healthcheck = healthchecksio_check.snapraid_media.ping_url

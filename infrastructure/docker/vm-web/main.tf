@@ -11,12 +11,13 @@ locals {
 module "mail" {
    source = "../containers/mail"
    mail_network_name = docker_network.mail.name
-   my_networks = join(",", [ for config in docker_network.mail.ipam_config : config.subnet ])
+   my_networks = join(",", [ for config in setunion(docker_network.mail.ipam_config, docker_network.traefik_intern.ipam_config) : config.subnet ])
    mydomain = var.mail_mydomain
    relayhost = var.mail_relayhost
    relaypassword = var.mail_relaypassword
    relayport = var.mail_relayport
    relayuser = var.mail_relayuser
+   traefik_network_name = docker_network.traefik_intern.name
 }
 
 module "nextcloud" {
@@ -72,12 +73,14 @@ module "traefik" {
       gitea   = module.gitea.traefik_config
       calibre = module.calibre.traefik_config
       backblaze = module.backblaze.traefik_config
+      mail = module.mail.traefik_config
    }
 
    hostname = local.traefik_name
 
    additional_entrypoints = {
       gitea_ssh = 2222
+      mailer = 2525
    }
 
    acme_email = var.acme_email
