@@ -3,6 +3,10 @@ resource "libvirt_domain" "docker" {
   memory = "2048"
   vcpu   = 1
 
+  cpu {
+    mode = "host-passthrough"
+  }
+
   autostart = true
 
   qemu_agent = true
