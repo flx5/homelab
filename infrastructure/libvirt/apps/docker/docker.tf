@@ -41,4 +41,12 @@ resource "libvirt_domain" "docker" {
     hostname = local.fqdn
     mac = var.mac
   }
+
+  xml {
+    xslt = templatefile("xslt/add_hostdevs.xslt", {
+      pci_devices = var.pci_devices
+      usb_devices = var.usb_devices
+
+    })
+  }
 }

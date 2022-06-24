@@ -69,6 +69,48 @@ module "vm_media" {
       ["/dev/vdf", "/mnt/parity1/media"],
       ["/mnt/disks/media*", "/mnt/media", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=60G,fsname=mergerfs", "0", "0"]
    ]
+
+   pci_devices = [
+      {
+         name = "hostdev0",
+         host = {
+            bus = "0x05",
+            slot= "0x00"
+         }
+         guest = {
+            bus = "0x00",
+            slot="0x0d"
+         }
+      },
+      {
+         name = "hostdev1",
+         host = {
+            bus = "0x06",
+            slot = "0x00"
+         }
+         guest = {
+            bus = "0x00",
+            slot="0x0e"
+         }
+      }
+   ]
+
+
+   usb_devices = [
+      {
+         name = "hostdev2"
+         host = {
+            bus = "1"
+            device = "2"
+         }
+         guest = {
+            bus = "0"
+            port = "1"
+         }
+         vendor = "0x0bda"
+         product = "0x0165"
+      }
+   ]
 }
 
 module "vm_internal" {

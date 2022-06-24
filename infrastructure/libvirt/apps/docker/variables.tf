@@ -59,3 +59,37 @@ variable "packages" {
 
   default = []
 }
+
+variable "pci_devices" {
+  type = list(object({
+    name = string
+    host = object({
+      bus = string
+      slot = string
+    })
+    guest = object({
+      bus = string
+      slot = string
+    })
+  }))
+
+  default = []
+}
+
+variable "usb_devices" {
+  type = list(object({
+    name = string
+    host = object({
+      bus = string
+      device = string
+    })
+    guest = object({
+      bus = string
+      port = string
+    })
+    vendor = string
+    product = string
+  }))
+
+  default = []
+}
