@@ -57,13 +57,8 @@ build {
   }
 
   # TODO Install borg and configure backups
-  # TODO Install hardware specific drivers
-  # TODO Configure disk spin down
+
   # TODO Configure disk monitoring and mail sending
-
-  # TODO Make sure fsteutates module is installed https://forum.siduction.org/index.php?topic=7773.0
-
-  # TODO Convert to UEFI with https://github.com/juan-vg/maas/wiki/Create-a-Debian-9-%28Stretch%29-image-that-works-with-UEFI-secure-booting
 
   provisioner "ansible" {
     playbook_file = "${path.root}/playbook.yml"

@@ -3,6 +3,13 @@
   hosts: all
   become: true
   gather_facts: yes
+  vars:
+    disks:
+      - ata-WDC_WD40EFAX-68JH4N0_WD-WX22D10FN6HN
+      - ata-WDC_WD40EFAX-68JH4N0_WD-WX22D10FNX3C
+      - ata-WDC_WD40EFAX-68JH4N0_WD-WX42D10LLSRL
+      - ata-WDC_WD40EFAX-68JH4N0_WD-WX42D10LLVVZ
+      - ata-TOSHIBA_MG08ACA16TE_61Q0A1WJF57H
 
   tasks:
     - name: Add Backports required for Cockpit
@@ -69,6 +76,11 @@
         pkg: bridge-utils
         state: present
 
+    - name: Install cpupower
+      ansible.builtin.apt:
+        pkg: linux-cpupower
+        state: present
+
     - name: Install LUKS
       ansible.builtin.apt:
         pkg: cryptsetup
@@ -129,7 +141,14 @@
       ansible.builtin.apt:
         pkg: hdparm
         state: present
-    # TODO Configure hdparm https://wiki.debianforum.de/Hdparm#Energieverwaltung
+
+    - name: Copy hdparm.conf
+      ansible.builtin.template:
+        src: files/hdparm.conf
+        dest: /etc/hdparm.conf
+        owner: root
+        group: root
+        mode: '0644'
 
     - name: Create /mnt/vm
       ansible.builtin.file:
