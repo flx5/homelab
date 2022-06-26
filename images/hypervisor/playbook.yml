@@ -37,6 +37,7 @@
           - 'cockpit-storaged'
           - 'cockpit-packagekit'
           - 'cockpit-machines'
+          - 'cockpit-pcp'
         state: present
         default_release: "{{ansible_distribution_release}}-backports"
 
