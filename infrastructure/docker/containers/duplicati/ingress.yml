@@ -1,0 +1,23 @@
+http:
+  routers:
+    to-duplicati:
+      entryPoints:
+        - web
+      rule: "Host(`${fqdn}`)"
+      middlewares:
+        - lan-whitelist
+        - duplicati-host
+      service: duplicati
+
+  services:
+    duplicati:
+      loadBalancer:
+        passHostHeader: true
+        servers:
+          - url: http://${host}:8200/
+
+  middlewares:
+    duplicati-host:
+      headers:
+        customRequestHeaders:
+          Host: "127.0.0.1"
