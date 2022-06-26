@@ -1,10 +1,12 @@
 locals {
    traefik_name = "traefik"
    hostnames = {
-      nextcloud = "cloud.${var.base_domain}"
-      calibre = "books.${var.base_domain}"
-      backblaze = "backblaze.${var.base_domain}"
-      gitea = "git2.${var.base_domain}"
+      nextcloud = { url= "cloud.${var.base_domain}", public=true}
+      calibre = { url="books.${var.base_domain}", public=false}
+      backblaze = { url = "backblaze.${var.base_domain}", public=false}
+      gitea = { url= "git.${var.base_domain}", public=true }
+      duplicati = { url = "duplicati.${var.base_domain}", public=false }
+      mailer = { url = "internal-mailer.${var.base_domain}", public=false }
    }
 }
 
@@ -31,7 +33,7 @@ module "nextcloud" {
    db_password = var.nextcloud_db_password
    db_root_password = var.nextcloud_db_root_password
 
-   fqdn = local.hostnames.nextcloud
+   fqdn = local.hostnames.nextcloud.url
 
    data_dir = "/mnt/nextcloud/data"
 }
@@ -39,7 +41,7 @@ module "nextcloud" {
 module "gitea" {
    source = "../containers/gitea"
 
-   fqdn = local.hostnames.gitea
+   fqdn = local.hostnames.gitea.url
    traefik_network = docker_network.traefik_intern.name
    smtp_host = module.mail.server
    smtp_port = module.mail.port
@@ -54,14 +56,22 @@ module "calibre" {
 
    traefik_network = docker_network.traefik_intern.name
    mail_network = docker_network.mail.name
-   fqdn = local.hostnames.calibre
+   fqdn = local.hostnames.calibre.url
+}
+
+module "duplicati" {
+   source = "../containers/duplicati"
+
+   traefik_network = docker_network.traefik_intern.name
+   mail_network = docker_network.mail.name
+   fqdn = local.hostnames.duplicati.url
 }
 
 module "backblaze" {
    source = "../containers/backblaze"
 
    traefik_network = docker_network.traefik_intern.name
-   fqdn = local.hostnames.backblaze
+   fqdn = local.hostnames.backblaze.url
 }
 
 module "traefik" {
@@ -74,6 +84,7 @@ module "traefik" {
       calibre = module.calibre.traefik_config
       backblaze = module.backblaze.traefik_config
       mail = module.mail.traefik_config
+      duplicati = module.duplicati.traefik_config
    }
 
    hostname = local.traefik_name
