@@ -2,6 +2,8 @@ providers:
   file:
     directory: "/etc/traefik/hosts"
 
+accessLog: {}
+
 global:
   checkNewVersion: false
   sendAnonymousUsage: false
