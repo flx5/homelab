@@ -1,0 +1,89 @@
+# playbook.yml
+- name: 'Provision Image'
+  hosts: all
+  become: true
+  gather_facts: yes
+  vars:
+    disks: []
+
+  tasks:
+    - name: Add Backports required for Cockpit
+      ansible.builtin.apt_repository:
+        repo: deb http://deb.debian.org/debian "{{ansible_distribution_release}}-backports" main
+        state: present
+
+    - name: Update Package Cache
+      ansible.builtin.apt:
+        update_cache: true
+        # Valid for 24h
+        cache_valid_time: 86400
+
+    - name: Upgrade Packages
+      ansible.builtin.apt:
+        pkg: '*'
+        state: 'latest'
+
+
+    - name: Install Sensors and Fancontrol
+      ansible.builtin.apt:
+        pkg:
+          - 'lm-sensors'
+        state: present
+
+    # Install Cockpit
+    - name: Install Cockpit
+      ansible.builtin.apt:
+        pkg:
+          - 'cockpit'
+          - 'cockpit-networkmanager'
+          - 'cockpit-storaged'
+          - 'cockpit-packagekit'
+          - 'cockpit-podman'
+          - 'cockpit-pcp'
+        state: present
+        default_release: "{{ansible_distribution_release}}-backports"
+
+    - name: Install mdadm
+      ansible.builtin.apt:
+        pkg: mdadm
+        state: present
+
+    - name: Copy mdadm.conf
+      notify: Update mdadm
+      ansible.builtin.copy:
+        src: files/mdadm.conf
+        dest: /etc/mdadm/mdadm.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+    # TODO Configure mdadm to send emails on failure
+
+    - name: Install cpupower
+      ansible.builtin.apt:
+        pkg: linux-cpupower
+        state: present
+
+    - name: Install LUKS
+      ansible.builtin.apt:
+        pkg: cryptsetup
+        state: present
+
+    # TODO Configure disk crypto
+
+    - name: Install hdparm
+      ansible.builtin.apt:
+        pkg: hdparm
+        state: present
+
+    - name: Copy hdparm.conf
+      ansible.builtin.template:
+        src: files/hdparm.conf
+        dest: /etc/hdparm.conf
+        owner: root
+        group: root
+        mode: '0644'
+
+  handlers:
+    - name: Update mdadm
+      ansible.builtin.command: update-initramfs -u

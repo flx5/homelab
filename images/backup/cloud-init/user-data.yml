@@ -1,0 +1,23 @@
+#cloud-config
+ssh_pwauth: True
+
+hostname: backup
+
+# TODO Potentially also set https://unix.stackexchange.com/a/424666
+
+keyboard:
+  layout: de
+  model: pc105
+  variant: nodeadkeys
+  options: compose:rwin
+
+users:
+  - name: ${username}
+    shell: /bin/bash
+    passwd: ${password}
+    # Enable password login
+    lock_passwd: false
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    no_user_group: true
+    ssh_authorized_keys:
+      - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDB6PprRBGhozT/8yYajVFoHWXfBUfa7ByyJig3OmA/thSeBjtotJ6H5spuaLhgmpRIekwNjEvL1B99aLj/rbpRnyHE8gHMBSN4OwNsfHBz6QhJnbdYaw1Fw751rpVhuua9/HL5mvsmNVfq7r0Vl0fBP6niucdh/j7vdMsE/2cHXMckJGBdnsV/IIgCel4GBmmYHpjwalUXvBW6e8Zdx4aPuXGhfWQvL+5ZI/Nr+G+m/pamBMFhyspmLnBSOBvO9jZgBtnxraQMNi55exWkt6UrjWThSX8DAYv7iCtcvKCwlvE8mo9WL2GqGYj6IQhnd6qncbG8yuuTFaQh84nVG+5x felix@felix-ThinkPad-E480
