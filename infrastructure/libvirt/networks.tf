@@ -1,17 +1,17 @@
-resource "libvirt_network" "admin_network" {
-  name = "admin_network"
+resource "libvirt_network" "routed_network" {
+  name = "routed_network"
 
   autostart = true
 
-  mode = "none"
-  domain = "admin.local"
+  mode = "route"
+  domain = "routed.local"
   addresses = ["10.17.2.0/24"]
 
   dns {
-    enabled = false
+    enabled = true
   }
 
   dhcp {
-    enabled = false
+    enabled = true
   }
 }
