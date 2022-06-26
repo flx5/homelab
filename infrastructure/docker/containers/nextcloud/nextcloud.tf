@@ -10,6 +10,7 @@ resource "docker_image" "nextcloud" {
     tag  = ["nextcloud-full"]
     label = {
       trigger_dockerfile_hash = filemd5("${path.module}/Dockerfile")
+      trigger_files_hash = join(", ", [ for file in fileset("${path.module}/files", "*") :  "${file}:${md5(file)}" ])
     }
   }
 }

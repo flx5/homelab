@@ -22,12 +22,16 @@ module "vm_web" {
 
    spice_address = var.host
 
-   block_devices = [ "/dev/pve-ssd/nextcloud" ]
+   block_devices = [
+      "/dev/pve-ssd/nextcloud", # vdc
+      "/dev/backup1/nextcloud" # vdd
+   ]
 
    mac = "52:54:00:6E:3A:C2"
 
    mounts = [
-      [ "/dev/vdc", "/mnt/nextcloud" ]
+      [ "/dev/vdc", "/mnt/nextcloud" ],
+      ["/dev/vdd", "/mnt/backups/nextcloud"]
    ]
 }
 
@@ -47,10 +51,10 @@ module "vm_media" {
    mac = "52:54:00:2E:ED:B0"
 
    block_devices = [
-      "/dev/disk1/media",
-      "/dev/disk2/media",
-      "/dev/disk3/media",
-      "/dev/parity1/media",
+      "/dev/disk1/media", # vdc
+      "/dev/disk2/media", # vdd
+      "/dev/disk3/media", # vde
+      "/dev/parity1/media", #vdf
    ]
 
    files = [

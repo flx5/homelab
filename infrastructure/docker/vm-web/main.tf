@@ -65,6 +65,22 @@ module "duplicati" {
    traefik_network = docker_network.traefik_intern.name
    mail_network = docker_network.mail.name
    fqdn = local.hostnames.duplicati.url
+
+   volumes = [
+      { container_path = "/scratch/nextcloud", host_path = "/mnt/nextcloud/scratch/", read_only = false },
+      { container_path = "/data_src/nextcloud", host_path = "/mnt/nextcloud/data/", read_only = true },
+      { container_path = "/data_backup/nextcloud", host_path = "/mnt/backups/nextcloud/", read_only = true },
+   ]
+
+   networks = [
+      # Attach to nextcloud network to allow sql dumps
+      module.nextcloud.backend_network.name
+   ]
+
+   scripts = {
+      nextcloud_pre = module.nextcloud.backup_pre
+      nextcloud_post = module.nextcloud.backup_post
+   }
 }
 
 module "backblaze" {

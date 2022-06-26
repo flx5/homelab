@@ -49,12 +49,17 @@ RUN set -ex; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
     rm -rf /var/lib/apt/lists/*
 
+RUN mkdir -p /var/www/management
+COPY files/management.php /var/www/management/
+COPY files/ports.conf /etc/apache2/
+COPY files/001-management.conf /etc/apache2/sites-enabled/
+
 RUN mkdir -p \
     /var/log/supervisord \
     /var/run/supervisord \
 ;
 
-COPY supervisord.conf /
+COPY files/supervisord.conf /
 
 ENV NEXTCLOUD_UPDATE=1
 
