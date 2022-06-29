@@ -22,6 +22,11 @@ resource "docker_container" "duplicati" {
     host_path = "/opt/containers/duplicati/config"
   }
 
+  volumes {
+    container_path = "/var/run/docker.sock"
+    host_path = "/var/run/docker.sock"
+  }
+
   dynamic "volumes" {
     for_each = var.volumes
     content {

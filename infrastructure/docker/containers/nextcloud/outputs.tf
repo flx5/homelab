@@ -11,8 +11,8 @@ output "backend_network" {
 
 output "backup_pre" {
   value = templatefile("${path.module}/files/nextcloud-pre.sh", {
-    app = docker_container.nextcloud.hostname
-    db_host = module.database.container.name
+    app_container = docker_container.nextcloud.id
+    db_container = module.database.container.id
     user = local.db_user
     password = var.db_password
     database = local.database
@@ -21,6 +21,6 @@ output "backup_pre" {
 
 output "backup_post" {
   value = templatefile("${path.module}/files/nextcloud-post.sh", {
-    app = docker_container.nextcloud.hostname
+    app_container = docker_container.nextcloud.id
   })
 }

@@ -55,6 +55,7 @@ module "vm_media" {
       "/dev/disk2/media", # vdd
       "/dev/disk3/media", # vde
       "/dev/parity1/media", #vdf
+      "/dev/backup1/media" # vdg
    ]
 
    files = [
@@ -74,7 +75,8 @@ module "vm_media" {
       ["/dev/vdd", "/mnt/disks/media2"],
       ["/dev/vde", "/mnt/disks/media3"],
       ["/dev/vdf", "/mnt/parity1/media"],
-      ["/mnt/disks/media*", "/mnt/media", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=60G,fsname=mergerfs", "0", "0"]
+      ["/mnt/disks/media*", "/mnt/media", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=60G,fsname=mergerfs", "0", "0"],
+      ["/dev/vdg", "/mnt/backups"],
    ]
 
    pci_devices = [

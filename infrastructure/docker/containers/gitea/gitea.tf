@@ -1,6 +1,8 @@
 locals {
   database = "gitea"
   db_user = "gitea"
+
+  host_data_path = "/opt/containers/gitea/data"
 }
 
 resource "docker_image" "gitea" {
@@ -66,7 +68,7 @@ resource "docker_container" "gitea" {
 
   volumes {
     container_path = "/data"
-    host_path = "/opt/containers/gitea/data"
+    host_path = local.host_data_path
   }
 
   networks_advanced {

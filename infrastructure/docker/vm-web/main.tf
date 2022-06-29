@@ -3,7 +3,6 @@ locals {
    hostnames = {
       nextcloud = { url= "cloud.${var.base_domain}", public=true}
       calibre = { url="books.${var.base_domain}", public=false}
-      backblaze = { url = "backblaze.${var.base_domain}", public=false}
       gitea = { url= "git.${var.base_domain}", public=true }
       duplicati = { url = "duplicati.${var.base_domain}", public=false }
       mailer = { url = "internal-mailer.${var.base_domain}", public=false }
@@ -51,6 +50,7 @@ module "gitea" {
    db_root_password = var.gitea_db_root_password
 }
 
+# TODO Backup
 module "calibre" {
    source = "../containers/calibre"
 
@@ -67,27 +67,21 @@ module "duplicati" {
    fqdn = local.hostnames.duplicati.url
 
    volumes = [
-      { container_path = "/scratch/nextcloud", host_path = "/mnt/nextcloud/scratch/", read_only = false },
+      { container_path = "/scratch/", host_path = "/mnt/backups/scratch/", read_only = false },
       { container_path = "/data_src/nextcloud", host_path = "/mnt/nextcloud/data/", read_only = true },
-      { container_path = "/data_backup/nextcloud", host_path = "/mnt/backups/nextcloud/", read_only = true },
-   ]
+      { container_path = "/data_backup/nextcloud", host_path = "/mnt/backups/nextcloud/", read_only = false },
+      { container_path = "/data_backup/remote", host_path = "/mnt/backups/remote/", read_only = false },
 
-   networks = [
-      # Attach to nextcloud network to allow sql dumps
-      module.nextcloud.backend_network.name
+      { container_path = "/data_src/gitea", host_path = module.gitea.host_data_path, read_only = true },
    ]
 
    scripts = {
       nextcloud_pre = module.nextcloud.backup_pre
       nextcloud_post = module.nextcloud.backup_post
+
+      gitea_pre = module.gitea.backup_pre
+      gitea_post = module.gitea.backup_post
    }
-}
-
-module "backblaze" {
-   source = "../containers/backblaze"
-
-   traefik_network = docker_network.traefik_intern.name
-   fqdn = local.hostnames.backblaze.url
 }
 
 module "traefik" {
@@ -98,7 +92,6 @@ module "traefik" {
       nextcloud = module.nextcloud.traefik_config,
       gitea   = module.gitea.traefik_config
       calibre = module.calibre.traefik_config
-      backblaze = module.backblaze.traefik_config
       mail = module.mail.traefik_config
       duplicati = module.duplicati.traefik_config
    }
