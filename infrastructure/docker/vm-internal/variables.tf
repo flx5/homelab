@@ -30,3 +30,8 @@ variable "mail_relayuser" {
 variable "mail_relaypassword" {
   type        = string
 }
+
+variable "nextcloud_db_root_password" {
+  type        = string
+  sensitive   = true
+}

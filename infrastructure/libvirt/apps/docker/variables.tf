@@ -93,3 +93,10 @@ variable "usb_devices" {
 
   default = []
 }
+
+variable "data_size" {
+  type = number
+
+  # Method calls (pow) are not allowed here, so set to zero.
+  default = 0
+}

@@ -31,7 +31,7 @@ module "vm_web" {
 
    mounts = [
       [ "/dev/vdc", "/mnt/nextcloud" ],
-      ["/dev/vdd", "/mnt/backups/nextcloud"]
+      ["/dev/vdd", "/mnt/backups"]
    ]
 }
 
@@ -120,6 +120,8 @@ module "vm_media" {
          product = "0x0165"
       }
    ]
+
+   data_size = 30 * pow(1024, 3)
 }
 
 module "vm_internal" {
@@ -136,4 +138,25 @@ module "vm_internal" {
    spice_address = var.host
 
    mac = "52:54:00:42:7E:88"
+
+   block_devices = [
+      "/dev/disk1/stash", # vdc
+      "/dev/disk2/stash", # vdd
+      "/dev/disk3/stash", # vde
+      "/dev/parity1/stash", #vdf
+      "/dev/backup1/stash" # vdg
+   ]
+
+   # TODO Configure snapraid
+
+   mounts = [
+      ["UUID=5f7fd7df-475b-41cc-94cf-402429efbaf2", "/mnt/disks/stash1"],
+      ["UUID=5e16c451-d8a6-4c53-90b8-62b0328dbe86", "/mnt/disks/stash2"],
+      ["UUID=dc217d83-0a36-47a8-a899-78479a8a1992", "/mnt/disks/stash3"],
+      ["UUID=f0b5fab4-ebb8-4cca-8bb9-f179fd0a409c", "/mnt/parity1/stash"],
+      ["/mnt/disks/stash*", "/mnt/stash", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=60G,fsname=mergerfs", "0", "0"],
+      ["UUID=a7a973fe-5211-4e81-81a8-87a503bf572c", "/mnt/backups"],
+   ]
+
+   packages = ["mergerfs", "snapraid"]
 }

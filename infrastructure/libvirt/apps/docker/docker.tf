@@ -7,6 +7,8 @@ resource "libvirt_domain" "docker" {
     mode = "host-passthrough"
   }
 
+  cmdline     = []
+
   autostart = true
 
   qemu_agent = true

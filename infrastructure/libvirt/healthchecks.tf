@@ -12,4 +12,7 @@ resource "healthchecksio_check" "snapraid_media" {
 
   grace = 120 # in seconds
   schedule = "5 4 * * *"
+
+  # TODO Should match Europe/Berlin
+  timezone  = "UTC"
 }

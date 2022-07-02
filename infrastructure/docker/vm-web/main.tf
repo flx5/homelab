@@ -69,8 +69,7 @@ module "duplicati" {
    volumes = [
       { container_path = "/scratch/", host_path = "/mnt/backups/scratch/", read_only = false },
       { container_path = "/data_src/nextcloud", host_path = "/mnt/nextcloud/data/", read_only = true },
-      { container_path = "/data_backup/nextcloud", host_path = "/mnt/backups/nextcloud/", read_only = false },
-      { container_path = "/data_backup/remote", host_path = "/mnt/backups/remote/", read_only = false },
+      { container_path = "/data_backup/", host_path = "/mnt/backups/", read_only = false },
 
       { container_path = "/data_src/gitea", host_path = module.gitea.host_data_path, read_only = true },
    ]
