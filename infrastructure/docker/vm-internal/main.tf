@@ -72,7 +72,16 @@ module "traefik" {
    wan_network_name = docker_network.lan.name
    configurations = merge({
       nextcloud = module.nextcloud.traefik_config
-      duplicati = module.duplicati.traefik_config
+      duplicati = module.duplicati.traefik_config,
+      internalAuth: templatefile("internal-auth.yml", {
+         users = {
+            "${var.auth_username}" = var.auth_password
+         }
+      })
    }, module.addons.traefik_config)
    additional_entrypoints = {}
+
+   cloudflare_email = var.cloudflare_email
+   cloudflare_api_key = var.cloudflare_api_key
+   acme_email = var.acme_email
 }

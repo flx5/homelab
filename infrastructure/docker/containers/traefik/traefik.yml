@@ -29,6 +29,5 @@ certificatesResolvers:
     acme:
       email: ${email}
       storage: /acme/acme.json
-      httpChallenge:
-        # used during the challenge
-        entryPoint: web
+      dnsChallenge:
+        provider: cloudflare

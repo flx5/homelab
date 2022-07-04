@@ -1,0 +1,8 @@
+http:
+  middlewares:
+    internal-auth:
+      basicAuth:
+        users:
+          %{ for user, password in users }
+          - "${user}:${bcrypt(password)}"
+          %{ endfor }

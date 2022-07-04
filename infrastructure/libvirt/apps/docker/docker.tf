@@ -38,10 +38,8 @@ resource "libvirt_domain" "docker" {
   }
 
   network_interface {
-    bridge     = var.bridge
-    wait_for_lease = true
-    hostname = local.fqdn
-    mac = var.mac
+    network_id     = var.network
+    addresses = [ var.address ]
   }
 
   xml {

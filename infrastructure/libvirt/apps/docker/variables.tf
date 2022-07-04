@@ -18,13 +18,14 @@ variable "domain" {
   type = string
 }
 
-variable "bridge" {
+variable "network" {
   type = string
 }
 
-variable "mac" {
+variable "address" {
   type = string
 }
+
 
 variable "spice_address" {
   type = string

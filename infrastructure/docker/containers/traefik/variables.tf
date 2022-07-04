@@ -22,4 +22,17 @@ variable "hostname" {
 variable "acme_email" {
   type = string
   default = ""
+  sensitive = true
+}
+
+variable "cloudflare_email" {
+  type = string
+  default = ""
+  sensitive = true
+}
+
+variable "cloudflare_api_key" {
+  type = string
+  default = ""
+  sensitive = true
 }

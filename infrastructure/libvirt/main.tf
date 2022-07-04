@@ -1,8 +1,3 @@
-locals {
-   domain = "fritz.box"
-   bridge = "br-eno1"
-}
-
 module "images" {
    source = "./images"
    pool_name = libvirt_pool.stage_prod.name
@@ -12,9 +7,12 @@ module "vm_web" {
    source = "./apps/docker"
 
    base_disk = module.images.docker
-   domain = local.domain
+   domain = libvirt_network.routed_network.domain
    name = "web"
-   bridge = local.bridge
+
+   network = libvirt_network.routed_network.id
+   address = cidrhost(local.routed_subnet, 10)
+
    pool_name = libvirt_pool.stage_prod.name
    data_pool_name = libvirt_pool.data.name
 
@@ -27,8 +25,6 @@ module "vm_web" {
       "/dev/backup1/nextcloud" # vdd
    ]
 
-   mac = "52:54:00:6E:3A:C2"
-
    mounts = [
       [ "/dev/vdc", "/mnt/nextcloud" ],
       ["/dev/vdd", "/mnt/backups"]
@@ -39,16 +35,17 @@ module "vm_media" {
    source = "./apps/docker"
 
    base_disk = module.images.media
-   domain = local.domain
+   domain = libvirt_network.routed_network.domain
    name = "media"
-   bridge = local.bridge
+
+   network = libvirt_network.routed_network.id
+   address = cidrhost(local.routed_subnet, 11)
+
    pool_name = libvirt_pool.stage_prod.name
    data_pool_name = libvirt_pool.data.name
    ssh_id = var.ssh_id
 
    spice_address = var.host
-
-   mac = "52:54:00:2E:ED:B0"
 
    block_devices = [
       "/dev/disk1/media", # vdc
@@ -128,16 +125,17 @@ module "vm_internal" {
    source = "./apps/docker"
 
    base_disk = module.images.docker
-   domain = local.domain
+   domain = libvirt_network.routed_network.domain
    name = "internal"
-   bridge = local.bridge
+
+   network = libvirt_network.routed_network.id
+   address = cidrhost(local.routed_subnet, 12)
+
    pool_name = libvirt_pool.stage_prod.name
    data_pool_name = libvirt_pool.data.name
    ssh_id = var.ssh_id
 
    spice_address = var.host
-
-   mac = "52:54:00:42:7E:88"
 
    block_devices = [
       "/dev/disk1/stash", # vdc

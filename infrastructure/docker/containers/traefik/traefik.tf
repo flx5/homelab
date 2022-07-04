@@ -18,6 +18,11 @@ resource "docker_container" "traefik" {
   image = docker_image.traefik.latest
   restart = "always"
 
+  env = [
+    "CF_API_EMAIL=${var.cloudflare_email}",
+    "CF_API_KEY=${var.cloudflare_api_key}"
+  ]
+
   networks_advanced {
     name = var.internal_network_name
   }

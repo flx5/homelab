@@ -12,7 +12,6 @@ http:
 
     to-nextcloud:
       entryPoints:
-        - web
         - websecure
       rule: "Host(`${fqdn}`)"
       service: nextcloud

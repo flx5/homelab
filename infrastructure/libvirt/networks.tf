@@ -1,3 +1,7 @@
+locals {
+  routed_subnet = "192.168.100.0/24"
+}
+
 resource "libvirt_network" "routed_network" {
   name = "routed_network"
 
@@ -5,7 +9,7 @@ resource "libvirt_network" "routed_network" {
 
   mode = "route"
   domain = "routed.local"
-  addresses = ["10.17.2.0/24"]
+  addresses = [local.routed_subnet]
 
   dns {
     enabled = true
