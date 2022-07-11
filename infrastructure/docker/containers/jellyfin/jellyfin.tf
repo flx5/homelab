@@ -1,7 +1,7 @@
 # Start a container
 resource "docker_container" "jellyfin" {
   name  = "jellyfin"
-  image = docker_image.jellyfin.latest
+  image = docker_image.jellyfin.repo_digest
   restart = "always"
 
   env = [
@@ -34,5 +34,5 @@ resource "docker_container" "jellyfin" {
 }
 
 resource "docker_image" "jellyfin" {
-  name = "jellyfin/jellyfin"
+  name = "jellyfin/jellyfin:10.8.1"
 }
