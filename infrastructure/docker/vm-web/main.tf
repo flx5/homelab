@@ -4,7 +4,6 @@ locals {
       nextcloud = { url= "cloud.${var.base_domain}", public=true}
       calibre = { url="books.${var.base_domain}", public=false}
       gitea = { url= "git.${var.base_domain}", public=true }
-      duplicati = { url = "duplicati.${var.base_domain}", public=false }
       mailer = { url = "internal-mailer.${var.base_domain}", public=false }
    }
 }
@@ -21,6 +20,7 @@ module "mail" {
    traefik_network_name = docker_network.traefik_intern.name
 }
 
+# TODO Backup
 module "nextcloud" {
    source = "../containers/nextcloud"
 
@@ -37,6 +37,7 @@ module "nextcloud" {
    data_dir = "/mnt/nextcloud/data"
 }
 
+# TODO Backup
 module "gitea" {
    source = "../containers/gitea"
 
@@ -59,29 +60,6 @@ module "calibre" {
    fqdn = local.hostnames.calibre.url
 }
 
-module "duplicati" {
-   source = "../containers/duplicati"
-
-   traefik_network = docker_network.traefik_intern.name
-   mail_network = docker_network.mail.name
-   fqdn = local.hostnames.duplicati.url
-
-   volumes = [
-      { container_path = "/scratch/", host_path = "/mnt/backups/scratch/", read_only = false },
-      { container_path = "/data_src/nextcloud", host_path = "/mnt/nextcloud/data/", read_only = true },
-      { container_path = "/data_backup/", host_path = "/mnt/backups/", read_only = false },
-
-      { container_path = "/data_src/gitea", host_path = module.gitea.host_data_path, read_only = true },
-   ]
-
-   scripts = {
-      nextcloud_pre = module.nextcloud.backup_pre
-      nextcloud_post = module.nextcloud.backup_post
-
-      gitea_pre = module.gitea.backup_pre
-      gitea_post = module.gitea.backup_post
-   }
-}
 
 module "traefik" {
    source = "../containers/traefik"
@@ -92,7 +70,6 @@ module "traefik" {
       gitea   = module.gitea.traefik_config
       calibre = module.calibre.traefik_config
       mail = module.mail.traefik_config
-      duplicati = module.duplicati.traefik_config
    }
 
    hostname = local.traefik_name
