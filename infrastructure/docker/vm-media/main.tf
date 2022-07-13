@@ -31,6 +31,10 @@ module "addons" {
    source = "git::ssh://git@github.com/flx5/homelab-addons.git//media"
    traefik_network = docker_network.traefik_intern.name
    base_domain = var.base_domain
+   
+   sftp_host = var.sftp_host
+   sftp_user = var.sftp_user
+   sftp_password = var.sftp_password
 }
 
 module "duplicati" {
