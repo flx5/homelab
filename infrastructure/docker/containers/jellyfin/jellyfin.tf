@@ -1,7 +1,7 @@
 # Start a container
 resource "docker_container" "jellyfin" {
   name  = "jellyfin"
-  image = docker_image.jellyfin.repo_digest
+  image = docker_image.jellyfin.latest
   restart = "always"
 
   env = [
