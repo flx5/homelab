@@ -2,10 +2,6 @@ variable "traefik_network" {
   type        = string
 }
 
-variable "mail_network" {
-  type        = string
-}
-
 variable "smtp_host" {
   type        = string
 }

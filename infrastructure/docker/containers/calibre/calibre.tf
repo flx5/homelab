@@ -28,8 +28,4 @@ resource "docker_container" "calibre" {
   networks_advanced {
     name = var.traefik_network
   }
-
-  networks_advanced {
-    name = var.mail_network
-  }
 }

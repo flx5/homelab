@@ -98,9 +98,4 @@ resource "docker_container" "nextcloud" {
   networks_advanced {
     name = var.traefik_network
   }
-
-  # Mail Network
-  networks_advanced {
-    name = var.mail_network
-  }
 }

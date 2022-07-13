@@ -4,28 +4,18 @@ locals {
       nextcloud = "cloud.internal.${var.base_domain}"
       duplicati = "duplicati.internal.${var.base_domain}"
    }
-}
-
-module "mail" {
-   source = "../containers/mail"
-   mail_network_name = docker_network.mail.name
-   my_networks = join(",", [ for config in docker_network.mail.ipam_config : config.subnet ])
-   mydomain = var.mail_mydomain
-   relayhost = var.mail_relayhost
-   relaypassword = var.mail_relaypassword
-   relayport = var.mail_relayport
-   relayuser = var.mail_relayuser
-   traefik_network_name = docker_network.traefik_intern.name
+   
+   smtp_host = cidrhost("${var.docker_host}/24", 1)
+   smtp_port = 25
 }
 
 module "nextcloud" {
    source = "../containers/nextcloud"
 
-   smtp_host = module.mail.server
-   smtp_port = module.mail.port
+   smtp_host = local.smtp_host
+   smtp_port = local.smtp_port
    traefik_host = local.traefik_name
    traefik_network = docker_network.traefik_intern.name
-   mail_network = docker_network.mail.name
    db_password = var.nextcloud_db_password
    db_root_password = var.nextcloud_db_root_password
 

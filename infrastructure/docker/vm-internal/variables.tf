@@ -11,26 +11,6 @@ variable "nextcloud_db_password" {
   sensitive   = true
 }
 
-variable "mail_mydomain" {
-  type        = string
-}
-
-variable "mail_relayhost" {
-  type        = string
-}
-
-variable "mail_relayport" {
-  type        = string
-}
-
-variable "mail_relayuser" {
-  type        = string
-}
-
-variable "mail_relaypassword" {
-  type        = string
-}
-
 variable "nextcloud_db_root_password" {
   type        = string
   sensitive   = true
