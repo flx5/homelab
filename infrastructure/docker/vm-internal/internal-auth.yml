@@ -4,5 +4,5 @@ http:
       basicAuth:
         users:
           %{ for user, password in users }
-          - "${user}:${bcrypt(password)}"
+          - "${user}:${password}"
           %{ endfor }

@@ -63,3 +63,22 @@ provider "registry.terraform.io/kreuzwerker/docker" {
     "zh:fd634e973eb2b6483a1ce9251801a393d04cb496f8e83ffcf3f0c4cad8c18f4c",
   ]
 }
+
+provider "registry.terraform.io/loafoe/htpasswd" {
+  version     = "1.0.3"
+  constraints = "1.0.3"
+  hashes = [
+    "h1:HXV2hZ0Ba6WADQ9c55tR5/wcewUjn48UHPiQ8DeB+FA=",
+    "zh:108010743d7138be58a0b1f43406e669e3d782326a63a0c8edd559ddef2eb5ca",
+    "zh:574caf6114f10f7d23515513d5c392f27189b9719e22f214ea81e03df2c51802",
+    "zh:65927d13845d94985ba86b8d208b856a0a6f4689ab4bcb0542c897af7614b982",
+    "zh:730f5ba94298f2124791e52fd10cd215747891ea4b3bf369f278342938b581e0",
+    "zh:7537caf336d3d136ff4da2989c8b1c876e524251116cac1b90471559fcd9dd2f",
+    "zh:9e3c230af5fcdca2f73a27896150d109d6ecd56493ad6fadfa702fb7dbe234f3",
+    "zh:c33df9680d2d5d9eb3effd8876f609eb19b2a60cd3c3004860bf64e58922629e",
+    "zh:c476bcef324da6580783d54f4c6dfdaa2480b9a77aa44b9b9444b1dce9419b67",
+    "zh:e686f9186c799f8c04bee09f791ecf08a23cc13f3447dbddc7b5b08501eb167b",
+    "zh:ea2ffe3ec5f2f734547010c7b5cae42094750f06eb0e3db65a29c756a6d8f75b",
+    "zh:fe0c151cdba16887b9bb7febab2be83b894e4c30f46cb92ab02ca1380264ac80",
+  ]
+}

@@ -41,27 +41,13 @@ module "addons" {
    base_domain = var.base_domain
 }
 
+resource "random_password" "salt" {
+  length = 8
+}
 
-module "duplicati" {
-   source = "../containers/duplicati"
-
-   traefik_network = docker_network.traefik_intern.name
-   mail_network = docker_network.mail.name
-   fqdn = local.hostnames.duplicati
-
-   volumes = [
-      { container_path = "/scratch/", host_path = "/mnt/backups/scratch/", read_only = false },
-      { container_path = "/data_src/nextcloud", host_path = "/mnt/stash/nextcloud", read_only = true },
-      { container_path = "/data_src/stash", host_path = "/mnt/stash/stash", read_only = true },
-      { container_path = "/data_backup/", host_path = "/mnt/backups/", read_only = false },
-   ]
-
-   scripts = {
-      nextcloud_pre = module.nextcloud.backup_pre
-      nextcloud_post = module.nextcloud.backup_post
-
-      # TODO Scripts from addon module
-   }
+resource "htpasswd_password" "hash" {
+  password = var.auth_password
+  salt     = random_password.salt.result
 }
 
 module "traefik" {
@@ -72,10 +58,9 @@ module "traefik" {
    wan_network_name = docker_network.lan.name
    configurations = merge({
       nextcloud = module.nextcloud.traefik_config
-      duplicati = module.duplicati.traefik_config,
       internalAuth: templatefile("internal-auth.yml", {
          users = {
-            "${var.auth_username}" = var.auth_password
+            "${var.auth_username}" = htpasswd_password.hash.bcrypt
          }
       })
    }, module.addons.traefik_config)
