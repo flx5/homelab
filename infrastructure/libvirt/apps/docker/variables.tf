@@ -80,12 +80,7 @@ variable "pci_devices" {
 variable "usb_devices" {
   type = list(object({
     name = string
-    host = object({
-      bus = string
-      device = string
-    })
     guest = object({
-      bus = string
       port = string
     })
     vendor = string
@@ -93,6 +88,11 @@ variable "usb_devices" {
   }))
 
   default = []
+}
+
+variable "use_ich9_controller" {
+  type = bool
+  default = false
 }
 
 variable "data_size" {

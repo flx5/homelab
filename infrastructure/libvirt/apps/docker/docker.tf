@@ -46,7 +46,7 @@ resource "libvirt_domain" "docker" {
     xslt = templatefile("xslt/add_hostdevs.xslt", {
       pci_devices = var.pci_devices
       usb_devices = var.usb_devices
-
+      use_ich9_controller = var.use_ich9_controller
     })
   }
 }

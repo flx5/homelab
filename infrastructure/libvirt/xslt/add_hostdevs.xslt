@@ -52,22 +52,55 @@
                     <xsl:element name="product">
                         <xsl:attribute name="id">${device.product}</xsl:attribute>
                     </xsl:element>
-                    <xsl:element name="address">
-                        <xsl:attribute name="bus">${device.host.bus}</xsl:attribute>
-                        <xsl:attribute name="device">${device.host.device}</xsl:attribute>
-                    </xsl:element>
                 </xsl:element>
                 <xsl:element name="alias">
                     <xsl:attribute name="name">${device.name}</xsl:attribute>
                 </xsl:element>
                 <xsl:element name="address">
                     <xsl:attribute name="type">usb</xsl:attribute>
-                    <xsl:attribute name="bus">${device.guest.bus}</xsl:attribute>
+                    <!-- Currently libvirt seems to only support one usb bus -->
+                    <xsl:attribute name="bus">0</xsl:attribute>
                     <xsl:attribute name="port">${device.guest.port}</xsl:attribute>
                 </xsl:element>
             </xsl:element>
             %{ endfor }
+            
+            %{ if use_ich9_controller }
+            <xsl:element name ="controller">
+                <xsl:attribute name="type">usb</xsl:attribute>
+                <xsl:attribute name="index">0</xsl:attribute>
+                <xsl:attribute name="model">ich9-ehci1</xsl:attribute>
+            </xsl:element>
+            <xsl:element name ="controller">
+                <xsl:attribute name="type">usb</xsl:attribute>
+                <xsl:attribute name="index">0</xsl:attribute>
+                <xsl:attribute name="model">ich9-uhci1</xsl:attribute>
+                
+                <xsl:element name="master">
+                    <xsl:attribute name="startport">0</xsl:attribute>
+                </xsl:element>
+            </xsl:element>
+            
+            <xsl:element name ="controller">
+                <xsl:attribute name="type">usb</xsl:attribute>
+                <xsl:attribute name="index">0</xsl:attribute>
+                <xsl:attribute name="model">ich9-uhci2</xsl:attribute>
+                
+                <xsl:element name="master">
+                    <xsl:attribute name="startport">2</xsl:attribute>
+                </xsl:element>
+            </xsl:element>
+            
+            <xsl:element name ="controller">
+                <xsl:attribute name="type">usb</xsl:attribute>
+                <xsl:attribute name="index">0</xsl:attribute>
+                <xsl:attribute name="model">ich9-uhci3</xsl:attribute>
+                
+                <xsl:element name="master">
+                    <xsl:attribute name="startport">4</xsl:attribute>
+                </xsl:element>
+            </xsl:element>
+            %{ endif }
         </xsl:copy>
     </xsl:template>
-
 </xsl:stylesheet>

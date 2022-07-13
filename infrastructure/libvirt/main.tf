@@ -105,18 +105,16 @@ module "vm_media" {
    usb_devices = [
       {
          name = "hostdev2"
-         host = {
-            bus = "1"
-            device = "2"
-         }
          guest = {
-            bus = "0"
             port = "1"
          }
          vendor = "0x0bda"
          product = "0x0165"
       }
    ]
+   
+   # Card reader fails with usb3 so use a usb2 bus...
+   use_ich9_controller = true
 
    data_size = 30 * pow(1024, 3)
 }
