@@ -7,12 +7,19 @@ provider "healthchecksio" {
   api_key = var.healthchecksio_api_key
 }
 
+data "healthchecksio_channel" "email" {
+  kind = "email"
+}
+
 resource "healthchecksio_check" "snapraid_media" {
   name = "SnapRAID Media"
 
   grace = 120 # in seconds
   schedule = "5 4 * * *"
 
-  # TODO Should match Europe/Berlin
-  timezone  = "UTC"
+  timezone  = "Europe/Berlin"
+
+  channels = [
+    data.healthchecksio_channel.email.id
+  ]
 }
