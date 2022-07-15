@@ -48,6 +48,11 @@
         state: present
         default_release: "{{ansible_distribution_release}}-backports"
 
+    - name: Install libguestfs-tools
+      ansible.builtin.apt:
+        pkg: libguestfs-tools 
+        state: present
+
     - name: Add current user to libvirt
       ansible.builtin.user:
         name: "{{ ansible_user }}"
