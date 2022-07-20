@@ -25,6 +25,8 @@ source "qemu" "backup" {
       username = var.username
       password = bcrypt(var.password)
     })
+    "network-config" = templatefile("cloud-init/network-config.yml", {
+    })
   }
   cd_label = "cidata"
 

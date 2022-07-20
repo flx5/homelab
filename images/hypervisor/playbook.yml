@@ -12,7 +12,7 @@
       - ata-TOSHIBA_MG08ACA16TE_61Q0A1WJF57H
 
   vars_files:
-    - mail_vars.yml
+    - ../ansible/vars/mail_vars.yml
 
   roles:
     - '../ansible/roles/postfix'

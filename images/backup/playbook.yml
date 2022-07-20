@@ -4,7 +4,16 @@
   become: true
   gather_facts: yes
   vars:
-    disks: []
+    disks:
+      - ata-TOSHIBA_MG08ACA16TE_61Q0A1WLF57H
+      - ata-TOSHIBA_MG08ACA16TE_61Q0A1YBF57H
+
+  vars_files:
+    - ../ansible/vars/mail_vars.yml
+
+  roles:
+    - '../ansible/roles/postfix'
+    - '../ansible/roles/timezone'
 
   tasks:
     - name: Add Backports required for Cockpit
@@ -22,9 +31,20 @@
       ansible.builtin.apt:
         pkg: '*'
         state: 'latest'
-
-
-    - name: Install Sensors and Fancontrol
+ 
+    - name: Install LVM
+      ansible.builtin.apt:
+        pkg:
+          - lvm2
+        state: present
+ 
+    - name: Install Borg Backup
+      ansible.builtin.apt:
+        pkg:
+          - borgbackup
+        state: present
+        
+    - name: Install Sensors
       ansible.builtin.apt:
         pkg:
           - 'lm-sensors'
@@ -57,8 +77,6 @@
         group: root
         mode: '0644'
 
-    # TODO Configure mdadm to send emails on failure
-
     - name: Install cpupower
       ansible.builtin.apt:
         pkg: linux-cpupower
@@ -69,7 +87,15 @@
         pkg: cryptsetup
         state: present
 
-    # TODO Configure disk crypto
+    # TODO Upload md0.key
+
+    - name: RAID Crypto
+      community.general.crypttab:
+        name: md0_crypt
+        backing_device: /dev/md0
+        password: /root/md0.key
+        state: present
+        opts: luks
 
     - name: Install hdparm
       ansible.builtin.apt:
@@ -83,6 +109,36 @@
         owner: root
         group: root
         mode: '0644'
+        
+    - name: Add backup user for nas
+      ansible.builtin.user:
+        name: nasbackup
+        password_lock: yes
+        uid: 1100
+
+    - name: Set ssh key for backup
+      ansible.posix.authorized_key:
+        user: nasbackup
+        key: "{{ lookup('file', 'nas_key.pub') }}"
+        state: present
+        exclusive: True
+        key_options: 'command="borg serve --append-only --restrict-to-repository /home/nasbackup/repository",restrict'
+        
+    - name: Create /home/nasbackup/repo
+      ansible.builtin.file:
+        path: /home/nasbackup/repository
+        state: directory
+        mode: '0755'
+        owner: nasbackup
+        group: nasbackup
+
+        
+    - name: Mount nas backup Folder
+      ansible.posix.mount:
+        path: /home/nasbackup/repository
+        src: /dev/hdd/nas_backup
+        fstype: ext4
+        state: present
 
   handlers:
     - name: Update mdadm
