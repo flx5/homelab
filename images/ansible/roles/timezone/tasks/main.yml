@@ -1,0 +1,8 @@
+- name: Install and configure Postfix
+  block:
+    - name: Set timezone to Europe/Berlin
+      community.general.timezone:
+        name: Europe/Berlin
+        # Documentation recommends restarting cron
+      notify: Restart cron
+  become: yes

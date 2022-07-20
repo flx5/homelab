@@ -17,14 +17,9 @@
   roles:
     - '../ansible/roles/postfix'
     - '../ansible/roles/fujitsu-d3644'
+    - '../ansible/roles/timezone'
 
   tasks:
-    - name: Set timezone to Europe/Berlin
-      community.general.timezone:
-        name: Europe/Berlin
-        # Documentation recommends restarting cron
-      notify: Restart cron
-  
     - name: Add Backports required for Cockpit
       ansible.builtin.apt_repository:
         repo: deb http://deb.debian.org/debian "{{ansible_distribution_release}}-backports" main
@@ -181,11 +176,6 @@
         state: present
 
   handlers:
-    - name: Restart cron
-      service:
-        name: cron
-        state: restarted
-        
     - name: Restart libvirtd
       service:
         name: libvirtd
