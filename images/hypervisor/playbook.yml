@@ -16,6 +16,7 @@
 
   roles:
     - '../ansible/roles/postfix'
+    - '../ansible/roles/fujitsu-d3644'
 
   tasks:
     - name: Set timezone to Europe/Berlin

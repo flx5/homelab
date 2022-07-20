@@ -1,16 +1,11 @@
-- name: 'Configure host'
-  hosts: all
+- name: 'Configure for Mainboard Fujitsu D3644'
   become: true
-
-  tasks:
+  block:
     - name: Update Package Cache
       ansible.builtin.apt:
         update_cache: true
         # Valid for 24h
         cache_valid_time: 86400
-
-    - name: Configure hdparm
-
 
     # Sadly the Fujitsu D3644-B seems to only support fan readout but not control by the operating system.
     # It does however provide a BIOS setting to control the fan (full power, auto)
