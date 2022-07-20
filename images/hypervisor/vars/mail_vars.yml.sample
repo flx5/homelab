@@ -1,0 +1,5 @@
+mail_relayhost: smtp.gmail.com
+mail_relayuser: "admin@localhost"
+mail_relaypassword: "changeme"
+mail_relayport: 587
+admin_mail: "admin@localhost"

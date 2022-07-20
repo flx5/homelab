@@ -1,0 +1,7 @@
+- name: Restart postfix
+  service:
+    name: postfix
+    state: restarted
+    
+- name: postmap
+  ansible.builtin.command: postmap /etc/postfix/sasl_password

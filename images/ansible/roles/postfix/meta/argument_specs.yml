@@ -1,0 +1,24 @@
+argument_specs:
+  main:
+    short_description: A test role
+    options:
+      mail_relayhost:
+        type: "str"
+        required: true
+        description: "The smtp relay host"
+      mail_relayuser:
+        type: "str"
+        required: true
+        description: "The smtp relay user"
+      mail_relaypassword:
+        type: "str"
+        required: true
+        description: "The smtp relay password"
+      mail_relayport:
+        type: "str"
+        required: true
+        description: "The smtp relay port"
+      admin_mail:
+        type: "str"
+        required: true
+        description: "The admin mail address"

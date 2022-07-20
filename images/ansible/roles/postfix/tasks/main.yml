@@ -1,0 +1,36 @@
+- name: Install and configure Postfix
+  block:
+    - name: Install postfix
+      ansible.builtin.apt:
+        pkg: 
+          - postfix
+          - bsd-mailx
+        state: present
+        
+    - name: Copy /etc/postfix/sasl_password
+      notify: 
+        - postmap
+        - Restart postfix
+      ansible.builtin.template:
+        src: files/sasl_password.j2
+        dest: /etc/postfix/sasl_password
+        owner: root
+        group: root
+        mode: '0600'
+        
+    - name: Copy /etc/postfix/main.cf
+      notify: Restart postfix
+      ansible.builtin.template:
+        src: files/postfix_main.j2
+        dest: /etc/postfix/main.cf
+        owner: root
+        group: root
+        mode: '0644'
+    - name: Configure mail forwarding for root
+      ansible.builtin.template:
+        src: files/forward.j2
+        dest: /root/.forward
+        owner: root
+        group: root
+        mode: '0600'
+  become: yes

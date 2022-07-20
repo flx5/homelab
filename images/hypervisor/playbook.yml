@@ -10,13 +10,12 @@
       - ata-WDC_WD40EFAX-68JH4N0_WD-WX42D10LLSRL
       - ata-WDC_WD40EFAX-68JH4N0_WD-WX42D10LLVVZ
       - ata-TOSHIBA_MG08ACA16TE_61Q0A1WJF57H
-      
-  vars_prompt:
-     - name: mail_relayhost
-     - name: mail_relayuser
-     - name: mail_relaypassword
-     - name: mail_relayport
-     - name: admin_mail
+
+  vars_files:
+    - mail_vars.yml
+
+  roles:
+    - '../ansible/roles/postfix'
 
   tasks:
     - name: Set timezone to Europe/Berlin
@@ -73,41 +72,6 @@
         group: root
         mode: '0600'
       notify: Restart libvirtd
-
-    - name: Install postfix
-      ansible.builtin.apt:
-        pkg: 
-          - postfix
-          - bsd-mailx
-        state: present
-        
-    - name: Copy /etc/postfix/sasl_password
-      notify: 
-        - postmap
-        - Restart postfix
-      ansible.builtin.template:
-        src: files/sasl_password.j2
-        dest: /etc/postfix/sasl_password
-        owner: root
-        group: root
-        mode: '0600'
-        
-    - name: Copy /etc/postfix/main.cf
-      notify: Restart postfix
-      ansible.builtin.template:
-        src: files/postfix_main.j2
-        dest: /etc/postfix/main.cf
-        owner: root
-        group: root
-        mode: '0644'
-        
-    - name: Configure mail forwarding for root
-      ansible.builtin.template:
-        src: files/forward.j2
-        dest: /root/.forward
-        owner: root
-        group: root
-        mode: '0600'
 
     - name: Install mdadm
       ansible.builtin.apt:
@@ -227,10 +191,4 @@
         state: restarted
     - name: Update mdadm
       ansible.builtin.command: update-initramfs -u
-    - name: postmap
-      ansible.builtin.command: postmap /etc/postfix/sasl_password
-    - name: Restart postfix
-      service:
-        name: postfix
-        state: restarted
-    
+   
