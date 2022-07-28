@@ -14,7 +14,7 @@ data "healthchecksio_channel" "email" {
 resource "healthchecksio_check" "snapraid_media" {
   name = "SnapRAID Media"
 
-  grace = 120 # in seconds
+  grace = 3600 # 1h in seconds
   schedule = "5 4 * * *"
 
   timezone  = "Europe/Berlin"
