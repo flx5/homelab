@@ -94,7 +94,7 @@
 
     - name: Copy md0.key
       ansible.builtin.copy:
-        content: "{{ lookup('community.sops.sops', 'keys/md0.key.enc.yml') }}"
+        content: "{{ lookup('community.sops.sops', 'keys/md0.enc.key') }}"
         dest: /root/md0.key
         owner: root
         group: root
@@ -158,6 +158,7 @@
         src: /dev/hdd/nas_backup
         fstype: ext4
         state: present
+        opts: nofail
 
   handlers:
     - name: Update mdadm
