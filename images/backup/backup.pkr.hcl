@@ -23,7 +23,16 @@ source "qemu" "backup" {
     })
     "user-data" = templatefile("cloud-init/user-data.yml", {
       username = var.username
-      password = bcrypt(var.password)
+      password = bcrypt(var.password),
+      dsa_private = var.dsa_private
+      dsa_public = file("keys/ssh_host_dsa_key.pub")
+      ecdsa_private = var.ecdsa_private
+      ecdsa_public = file("keys/ssh_host_ecdsa_key.pub")
+      ed25519_private = var.ed25519_private
+      ed25519_public = file("keys/ssh_host_ed25519_key.pub")
+      rsa_private = var.rsa_private
+      rsa_public = file("keys/ssh_host_rsa_key.pub")
+      
     })
     "network-config" = templatefile("cloud-init/network-config.yml", {
     })
@@ -53,5 +62,9 @@ build {
   provisioner "ansible" {
     playbook_file = "${path.root}/playbook.yml"
     user = var.username
+    # Workaround for bug https://github.com/hashicorp/packer-plugin-ansible/issues/69
+    ansible_ssh_extra_args = [
+       "-oHostKeyAlgorithms=+ssh-rsa -oPubkeyAcceptedKeyTypes=+ssh-rsa"
+    ]
   }
 }

@@ -35,6 +35,11 @@
       ansible.builtin.apt:
         pkg: '*'
         state: 'latest'
+        
+    - name: Install smartmontools
+      ansible.builtin.apt:
+        pkg: smartmontools
+        state: present
 
     # Install Cockpit
     - name: Install Cockpit

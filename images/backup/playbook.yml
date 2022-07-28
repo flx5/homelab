@@ -32,6 +32,11 @@
         pkg: '*'
         state: 'latest'
  
+    - name: Install smartmontools
+      ansible.builtin.apt:
+        pkg: smartmontools
+        state: present
+ 
     - name: Install LVM
       ansible.builtin.apt:
         pkg:
@@ -87,7 +92,13 @@
         pkg: cryptsetup
         state: present
 
-    # TODO Upload md0.key
+    - name: Copy md0.key
+      ansible.builtin.copy:
+        content: "{{ lookup('community.sops.sops', 'keys/md0.key.enc.yml') }}"
+        dest: /root/md0.key
+        owner: root
+        group: root
+        mode: '0400'
 
     - name: RAID Crypto
       community.general.crypttab:
@@ -132,6 +143,14 @@
         owner: nasbackup
         group: nasbackup
 
+    - name: Copy sshd.conf
+      notify: Restart sshd
+      ansible.builtin.template:
+        src: files/sshd.conf
+        dest: /etc/ssh/sshd_config.d/sshd.conf
+        owner: root
+        group: root
+        mode: '0644'
         
     - name: Mount nas backup Folder
       ansible.posix.mount:
@@ -143,3 +162,7 @@
   handlers:
     - name: Update mdadm
       ansible.builtin.command: update-initramfs -u
+    - name: Restart sshd
+      service:
+        name: sshd
+        state: restarted
