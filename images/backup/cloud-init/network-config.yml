@@ -1,3 +1,6 @@
 version: 2
 
-ethernets: {}
+ethernets:
+  eno1:
+    wakeonlan: true
+    dhcp4: true
