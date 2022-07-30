@@ -121,6 +121,36 @@
         group: root
         mode: '0644'
         
+    - name: Copy spindown.sh
+      ansible.builtin.template:
+        src: files/spindown.sh
+        dest: /usr/sbin/spindown.sh
+        owner: root
+        group: root
+        mode: '0744'
+        
+    - name: Copy spindown_boot.sh
+      ansible.builtin.template:
+        src: files/spindown_boot.sh
+        dest: /usr/sbin/spindown_boot.sh
+        owner: root
+        group: root
+        mode: '0744'
+        
+    - name: Copy spinup.sh
+      ansible.builtin.template:
+        src: files/spinup.sh
+        dest: /usr/sbin/spinup.sh
+        owner: root
+        group: root
+        mode: '0744'
+        
+    - name: Shutdown drives on boot because they seem to ignore hdparm's sleep setting
+      ansible.builtin.cron:
+        name: "Shutdown drives at boot"
+        special_time: reboot
+        job: "/usr/sbin/spindown_boot.sh"
+        
     - name: Add backup user for nas
       ansible.builtin.user:
         name: nasbackup
@@ -151,6 +181,19 @@
         owner: root
         group: root
         mode: '0644'
+        
+    - name: Copy pam_session.sh
+      ansible.builtin.template:
+        src: files/pam_session.sh
+        dest: /etc/pam_session.sh
+        owner: root
+        group: root
+        mode: '0744'
+        
+    - name: Configure SSH PAM
+      ansible.builtin.lineinfile:
+        path: /etc/pam.d/sshd
+        line: 'session     optional    pam_exec.so quiet /etc/pam_session.sh'
         
     - name: Mount nas backup Folder
       ansible.posix.mount:
