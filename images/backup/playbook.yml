@@ -190,10 +190,25 @@
         group: root
         mode: '0744'
         
-    - name: Configure SSH PAM
+    - name: Copy pam_standby.sh
+      ansible.builtin.template:
+        src: files/pam_standby.sh
+        dest: /etc/pam_standby.sh
+        owner: root
+        group: root
+        mode: '0744' 
+        
+    - name: Configure SSH PAM Disk Suspend
       ansible.builtin.lineinfile:
         path: /etc/pam.d/sshd
         line: 'session     optional    pam_exec.so quiet /etc/pam_session.sh'
+        # Disable for now in favor of suspend due to fan noise
+        state: absent
+        
+    - name: Configure SSH System Suspend
+      ansible.builtin.lineinfile:
+        path: /etc/pam.d/sshd
+        line: 'session     optional    pam_exec.so quiet /etc/pam_standby.sh'
         
     - name: Mount nas backup Folder
       ansible.posix.mount:
