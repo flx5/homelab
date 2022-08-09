@@ -20,3 +20,5 @@ guestumount /mnt/tmp
 
 # Remove snapshot
 virsh blockcommit docker_web vdb --active --verbose --pivot
+
+rm /mnt/vm/data/docker_web_snapshot.qcow2
