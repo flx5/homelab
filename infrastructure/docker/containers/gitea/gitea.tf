@@ -54,7 +54,8 @@ resource "docker_container" "gitea" {
     # Server configuration
     "GITEA__server__PROTOCOL=http",
     "GITEA__server__DOMAIN=${var.fqdn}",
-    "GITEA__server__ROOT_URL=http://${var.fqdn}/",
+    "GITEA__server__ROOT_URL=https://${var.fqdn}/",
+    "GITEA__server__SSH_DOMAIN=${var.fqdn}",
     "GITEA__server__SSH_PORT=2222",
 
     # I don't really need gravatars...
