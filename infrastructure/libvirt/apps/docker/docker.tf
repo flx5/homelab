@@ -42,6 +42,17 @@ resource "libvirt_domain" "docker" {
     addresses = [ var.address ]
   }
 
+  # TODO This feels hacky and I should probably prefer a separate libvirt_domain definition for each variant
+  dynamic "network_interface" {
+    for_each = var.bridge == "" ? toset([]) : toset([1])
+    content {
+      bridge     = var.bridge
+      wait_for_lease = true
+      hostname = local.fqdn
+      mac = var.bridge_mac
+    }
+  }
+
   xml {
     xslt = templatefile("xslt/add_hostdevs.xslt", {
       pci_devices = var.pci_devices

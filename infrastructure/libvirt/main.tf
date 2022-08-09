@@ -29,6 +29,10 @@ module "vm_web" {
       [ "/dev/vdc", "/mnt/nextcloud" ],
       ["/dev/vdd", "/mnt/backups"]
    ]
+
+   # Add this to the bridged network because the Fritz!Box doesn't support creating a port forwarding rule to a routed network.
+   bridge = "br-eno1"
+   bridge_mac = "52:54:00:6E:3A:C2"
 }
 
 module "vm_media" {

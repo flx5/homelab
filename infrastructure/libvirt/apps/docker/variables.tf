@@ -101,3 +101,13 @@ variable "data_size" {
   # Method calls (pow) are not allowed here, so set to zero.
   default = 0
 }
+
+variable "bridge" {
+  type = string
+  default = ""
+}
+
+variable "bridge_mac" {
+  type = string
+  default = ""
+}
