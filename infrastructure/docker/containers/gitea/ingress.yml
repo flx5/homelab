@@ -1,10 +1,23 @@
 http:
   routers:
-    to-gitea:
+    to-gitea-insecure:
       entryPoints:
         - web
       rule: "Host(`${fqdn}`)"
+      service: accidential_http
+      middlewares:
+        - https-redirect
+
+    to-gitea-secure:
+      entryPoints:
+        - websecure
+      rule: "Host(`${fqdn}`)"
       service: gitea
+      middlewares:
+        - secHeaders
+        - https-redirect
+      tls:
+        certResolver: letsencrypt
 
   services:
     gitea:

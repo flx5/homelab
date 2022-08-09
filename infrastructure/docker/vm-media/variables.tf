@@ -40,3 +40,8 @@ variable "sftp_host" {
   type        = string
   sensitive = true
 }
+
+variable "acme_email" {
+  type = string
+}
+

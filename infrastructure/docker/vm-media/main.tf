@@ -45,7 +45,12 @@ module "traefik" {
       jellyfin = module.jellyfin.traefik_config,
       tvheadend = module.tvheadend.traefik_config
    }, module.addons.traefik_config)
+
    additional_entrypoints = {
       tvheadend_htsp = 9982
    }
+
+   cloudflare_email = var.cloudflare_email
+   cloudflare_api_key = var.cloudflare_api_key
+   acme_email = var.acme_email
 }
