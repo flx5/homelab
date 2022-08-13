@@ -3,6 +3,10 @@ module "images" {
    pool_name = libvirt_pool.stage_prod.name
 }
 
+data "sops_file" "nas_key" {
+   source_file = "../../keys/nas_id_rsa.yml"
+}
+
 module "vm_web" {
    source = "./apps/docker"
 
@@ -17,6 +21,7 @@ module "vm_web" {
    data_pool_name = libvirt_pool.data.name
 
    ssh_id = var.ssh_id
+   ssh_backup_id = data.sops_file.nas_key.data["public"]
 
    spice_address = var.host
 
@@ -48,6 +53,7 @@ module "vm_media" {
    pool_name = libvirt_pool.stage_prod.name
    data_pool_name = libvirt_pool.data.name
    ssh_id = var.ssh_id
+   ssh_backup_id = data.sops_file.nas_key.data["public"]
 
    spice_address = var.host
 
@@ -136,6 +142,7 @@ module "vm_internal" {
    pool_name = libvirt_pool.stage_prod.name
    data_pool_name = libvirt_pool.data.name
    ssh_id = var.ssh_id
+   ssh_backup_id = data.sops_file.nas_key.data["public"]
 
    spice_address = var.host
 

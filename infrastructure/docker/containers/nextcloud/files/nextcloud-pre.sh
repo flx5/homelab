@@ -1,6 +1,3 @@
-#!/bin/bash
-set -e
-
 mkdir -p "${dump_folder}"
 
 docker container stop "${app_container}"

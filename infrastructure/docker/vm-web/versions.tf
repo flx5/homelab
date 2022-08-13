@@ -9,5 +9,10 @@ terraform {
       source = "cloudflare/cloudflare"
       version = "~> 3.0"
     }
+
+    ssh = {
+      source = "loafoe/ssh"
+      version = "2.1.0"
+    }
   }
 }

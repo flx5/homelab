@@ -12,7 +12,7 @@ output "backup_pre" {
     user = local.db_user
     password = var.db_password
     database = local.database
-    dump_folder = "/opt/containers/backup/gitea"
+    dump_folder = "/home/docker/backup/dumps/gitea"
   })
 }
 

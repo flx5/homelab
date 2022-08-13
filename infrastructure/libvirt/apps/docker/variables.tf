@@ -10,6 +10,10 @@ variable "ssh_id" {
   type = string
 }
 
+variable "ssh_backup_id" {
+  type = string
+}
+
 variable "base_disk" {
   type = string
 }

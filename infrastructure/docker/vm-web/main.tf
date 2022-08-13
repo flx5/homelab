@@ -68,3 +68,15 @@ module "traefik" {
    cloudflare_api_key = var.cloudflare_api_key
    acme_email = var.acme_email
 }
+
+module "backup" {
+   source = "../backup"
+
+   backup      = [
+      module.gitea,
+      module.nextcloud
+   ]
+
+   docker_host = var.docker_host
+   docker_user = var.docker_user
+}
