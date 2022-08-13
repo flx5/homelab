@@ -203,12 +203,13 @@
         path: /etc/pam.d/sshd
         line: 'session     optional    pam_exec.so quiet /etc/pam_session.sh'
         # Disable for now in favor of suspend due to fan noise
-        state: absent
+        state: present
         
     - name: Configure SSH System Suspend
       ansible.builtin.lineinfile:
         path: /etc/pam.d/sshd
         line: 'session     optional    pam_exec.so quiet /etc/pam_standby.sh'
+        state: absent
         
     - name: Mount nas backup Folder
       ansible.posix.mount:
