@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-rm /tmp/ssh_session_open
+rm /tmp/ssh_session_open || true
 
 sleep 5m
 
@@ -15,6 +15,8 @@ fi
 /usr/sbin/vgchange -a n hdd
 /usr/sbin/cryptdisks_stop md0_crypt
 /usr/sbin/mdadm --stop /dev/md0
+
+/usr/bin/sync
 
 {%for disk in disks %}
   /usr/sbin/hdparm -y /dev/disk/by-id/{{disk}}
