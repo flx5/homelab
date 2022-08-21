@@ -1,6 +1,6 @@
 locals {
    hostnames = {
-      jellyfin = "media.${var.base_domain}"
+      jellyfin  = "media.${var.base_domain}"
       tvheadend = "tv.media.${var.base_domain}"
    }
 }
