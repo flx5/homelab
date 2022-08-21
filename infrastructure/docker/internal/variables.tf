@@ -1,9 +1,15 @@
-variable "docker_host" {
-  type        = string
+variable "acme_email" {
+  type = string
 }
 
-variable "docker_user" {
+variable "cloudflare_email" {
   type        = string
+  sensitive   = true
+}
+
+variable "cloudflare_api_key" {
+  type        = string
+  sensitive   = true
 }
 
 variable "nextcloud_db_password" {
@@ -16,9 +22,12 @@ variable "nextcloud_db_root_password" {
   sensitive   = true
 }
 
-variable "acme_email" {
+variable "base_domain" {
   type = string
-  sensitive   = true
+}
+
+variable "smtp_host" {
+  type        = string
 }
 
 variable "auth_username" {
