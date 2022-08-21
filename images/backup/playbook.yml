@@ -211,6 +211,22 @@
         line: 'session     optional    pam_exec.so quiet /etc/pam_standby.sh'
         state: absent
         
+    - name: Copy check_array.sh
+      ansible.builtin.copy:
+        src: files/check_array.sh
+        dest: /usr/sbin/check_array.sh
+        owner: root
+        group: root
+        mode: '0744'
+        
+    - name: Override mdadm cron
+      ansible.builtin.copy:
+        src: files/mdadm.cron
+        dest: /etc/cron.d/mdadm
+        owner: root
+        group: root
+        mode: '0644'
+        
     - name: Mount nas backup Folder
       ansible.posix.mount:
         path: /home/nasbackup/repository
