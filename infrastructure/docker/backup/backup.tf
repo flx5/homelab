@@ -1,7 +1,6 @@
 resource "ssh_resource" "backup" {
   host         = var.docker_host
   user         = var.docker_user
-  agent        = true
 
   when         = "create"
 
