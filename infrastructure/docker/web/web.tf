@@ -1,12 +1,13 @@
 locals {
    traefik_name = "traefik"
+
    hostnames = {
       nextcloud = { url= "cloud.${var.base_domain}", public=true}
       calibre = { url="books.${var.base_domain}", public=false}
       gitea = { url= "git.${var.base_domain}", public=true }
    }
-   
-   smtp_host = cidrhost("${var.docker_host}/24", 1)
+
+   smtp_host = var.smtp_host
    smtp_port = 25
 }
 
@@ -68,7 +69,7 @@ module "traefik" {
    cloudflare_api_key = var.cloudflare_api_key
    acme_email = var.acme_email
 }
-
+/*
 module "backup" {
    source = "../backup"
 
@@ -80,3 +81,4 @@ module "backup" {
    docker_host = var.docker_host
    docker_user = var.docker_user
 }
+*/
