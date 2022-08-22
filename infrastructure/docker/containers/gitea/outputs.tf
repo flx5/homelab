@@ -5,23 +5,21 @@ output "traefik_config" {
   })
 }
 
-output "backup_pre" {
-  value = templatefile("${path.module}/files/gitea-pre.sh", {
-    app_container = docker_container.gitea.id
-    db_container = module.database.container.id
-    user = local.db_user
-    password = var.db_password
-    database = local.database
-    dump_folder = "/home/docker/backup/dumps/gitea"
-  })
-}
+output "backup" {
+  value = {
+    pre = templatefile("${path.module}/files/gitea-pre.sh", {
+      app_container = docker_container.gitea.id
+      db_container  = module.database.container.id
+      user          = local.db_user
+      password      = var.db_password
+      database      = local.database
+      dump_folder   = "${var.dump_folder}/gitea"
+    })
 
-output "backup_post" {
-  value = templatefile("${path.module}/files/gitea-post.sh", {
-    app_container = docker_container.gitea.id
-  })
-}
+    post = templatefile("${path.module}/files/gitea-post.sh", {
+      app_container = docker_container.gitea.id
+    })
 
-output "host_data_path" {
-  value = local.host_data_path
+    vm_folders = [ for folder in [ var.data_path ] : folder.path if folder.backup ]
+  }
 }

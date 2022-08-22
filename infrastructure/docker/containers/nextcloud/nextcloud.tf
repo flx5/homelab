@@ -76,12 +76,12 @@ resource "docker_container" "nextcloud" {
 
   volumes {
     container_path = "/var/www/html"
-    host_path = "/opt/containers/nextcloud/app"
+    host_path = var.app_folder.path
   }
 
   volumes {
     container_path = "/mnt/data"
-    host_path = var.data_dir
+    host_path = var.data_dir.path
   }
 
   depends_on = [

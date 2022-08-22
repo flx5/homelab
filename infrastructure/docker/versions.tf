@@ -14,5 +14,10 @@ terraform {
       source = "loafoe/ssh"
       version = "2.1.0"
     }
+
+    sops = {
+      source = "carlpett/sops"
+      version = "0.7.1"
+    }
   }
 }

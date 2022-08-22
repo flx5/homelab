@@ -1,3 +1,11 @@
+variable "hypervisor_host" {
+  type        = string
+}
+
+variable "hypervisor_user" {
+  type        = string
+}
+
 variable "docker_web_host" {
   type        = string
 }

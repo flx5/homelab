@@ -39,3 +39,7 @@ variable "auth_password" {
   type = string
   sensitive   = true
 }
+
+variable "dump_folder" {
+  type = string
+}

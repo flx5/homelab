@@ -24,6 +24,28 @@
       ansible.builtin.apt_repository:
         repo: deb http://deb.debian.org/debian "{{ansible_distribution_release}}-backports" main
         state: present
+    - name: Add Docker Client
+      block:
+      - name: Create custom Keyring directory
+        ansible.builtin.file:
+          path: /etc/apt/keyrings/
+          state: directory
+          mode: '0755'
+      - name: Install Docker Key
+        ansible.builtin.get_url:
+          url: https://download.docker.com/linux/debian/gpg
+          dest: /etc/apt/keyrings/docker.asc
+
+      - name: Install Docker Repository
+        ansible.builtin.apt_repository:
+          repo: "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian {{ ansible_distribution_release }} stable"
+          state: present
+        
+      - name: Install Docker Client
+        ansible.builtin.apt:
+          pkg: docker-ce-cli
+          state: present
+        
 
     - name: Update Package Cache
       ansible.builtin.apt:
@@ -177,6 +199,19 @@
       ansible.posix.mount:
         path: /mnt/vm
         src: /dev/pve-ssd/vm
+        fstype: ext4
+        state: present
+        
+    - name: Create /mnt/borg
+      ansible.builtin.file:
+        path: /mnt/borg
+        state: directory
+        mode: '0755'
+
+    - name: Mount Borg Folder
+      ansible.posix.mount:
+        path: /mnt/borg
+        src: /dev/pve-ssd/borg
         fstype: ext4
         state: present
 

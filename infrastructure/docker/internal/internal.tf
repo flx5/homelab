@@ -21,8 +21,11 @@ module "nextcloud" {
 
   fqdn = local.hostnames.nextcloud
 
-  # TODO Fix
-  data_dir = "/opt/nextcloud"
+  # TODO Fix and backup
+  data_dir = { path = "/opt/nextcloud", backup = false }
+  app_folder = { path = "/opt/containers/nextcloud/app", backup = true }
+
+  dump_folder = var.dump_folder
 }
 
 module "addons" {

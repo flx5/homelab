@@ -23,3 +23,14 @@ variable "db_root_password" {
 variable "fqdn" {
   type = string
 }
+
+variable "dump_folder" {
+  type = string
+}
+
+variable "data_path" {
+  type = object({
+    path: string
+    backup: bool
+  })
+}

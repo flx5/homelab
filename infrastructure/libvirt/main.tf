@@ -7,6 +7,8 @@ data "sops_file" "nas_key" {
    source_file = "../../keys/nas_id_rsa.yml"
 }
 
+# TODO Check if backup LVs are used and if not remove them!
+
 module "vm_web" {
    source = "./apps/docker"
 

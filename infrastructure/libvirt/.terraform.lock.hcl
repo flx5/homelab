@@ -74,3 +74,21 @@ provider "registry.terraform.io/kristofferahl/healthchecksio" {
     "zh:f8e3e3c7bdd1312d6f1b3dfe140b1962cee441db2a881e876ee8100d8eaf1f35",
   ]
 }
+
+provider "registry.terraform.io/loafoe/ssh" {
+  version = "2.1.0"
+  hashes = [
+    "h1:SJAMMfTkfbMjCEMsK1XveRsdZciHVkyFoHCufKv0MCM=",
+    "zh:00c35199ddff4b7ba94b77611bb281cd8b92369d8554a4b06941da4f1bb6faea",
+    "zh:20a040e90db57a399ade58732a70966506bfb116da5e22f4d8338cfdb73f2457",
+    "zh:2afced7ad7143d6159ade84c5e6e8ec94467c3b9499f170827e96abfe0f4e8ad",
+    "zh:4736a143c5d5d9f16ba748c57adffda14b59bb389496d64e0d510b502523239b",
+    "zh:53083b4cabe1e52041482c36d300185814b6d7251007f63008cc1a47e646d402",
+    "zh:5c32cb210da9d777a76023528797a02cb2800c087876fd8619519652eb5b70f5",
+    "zh:67b7b449a8083bb6bd329247b910b2f6036391a862089d42c5f483c86f15c044",
+    "zh:750c1f4f0068403879458af333c721b6911edd4557cfa40e1c2161fe729afac4",
+    "zh:c9fba134c716907e93453c741ff31347d9052bd3ae75f01417faadb0308bdbfa",
+    "zh:de175db17050c5196cd06d23b6c90da07d871c120c7af6c8f10eb55cd6c38797",
+    "zh:f0de57415da82071b020bc7c2280cc6492fb25b0826a7a524150bf5528266414",
+  ]
+}

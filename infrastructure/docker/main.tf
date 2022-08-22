@@ -1,5 +1,6 @@
 locals {
   smtp_host = cidrhost("${var.docker_web_host}/24", 1)
+  dump_folder = "/mnt/backup/source/dumps"
 }
 
 module "web" {
@@ -17,6 +18,8 @@ module "web" {
   gitea_db_root_password = var.web_gitea_db_root_password
   nextcloud_db_password = var.web_nextcloud_db_password
   nextcloud_db_root_password = var.web_nextcloud_db_root_password
+
+  dump_folder = "${local.dump_folder}/vm-web"
 }
 
 module "media" {
@@ -51,4 +54,6 @@ module "internal" {
   nextcloud_db_password      = var.internal_nextcloud_db_password
   nextcloud_db_root_password = var.internal_nextcloud_db_root_password
   smtp_host                  = local.smtp_host
+
+  dump_folder = "${local.dump_folder}/vm-internal"
 }

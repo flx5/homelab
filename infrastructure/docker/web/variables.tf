@@ -39,3 +39,7 @@ variable "gitea_db_root_password" {
   type        = string
   sensitive   = true
 }
+
+variable "dump_folder" {
+  type = string
+}

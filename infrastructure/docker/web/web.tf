@@ -9,6 +9,14 @@ locals {
 
    smtp_host = var.smtp_host
    smtp_port = 25
+
+   # Data folders
+   folders = {
+      nextcloud = {
+         app = "/opt/containers/nextcloud/app"
+      }
+      gitea = "/opt/containers/gitea/data"
+   }
 }
 
 # TODO Backup
@@ -24,7 +32,17 @@ module "nextcloud" {
 
    fqdn = local.hostnames.nextcloud.url
 
-   data_dir = "/mnt/nextcloud/data"
+   data_dir = {
+      path = "/mnt/nextcloud/data"
+      # Backup via LVM
+      backup = false
+   }
+   app_folder = {
+      path = local.folders.nextcloud.app
+      backup = true
+   }
+
+   dump_folder = var.dump_folder
 }
 
 # TODO Backup
@@ -38,6 +56,12 @@ module "gitea" {
    db_password = var.gitea_db_password
 
    db_root_password = var.gitea_db_root_password
+   data_path = {
+      backup = true
+      path = local.folders.gitea
+   }
+
+   dump_folder = var.dump_folder
 }
 
 # TODO Backup
@@ -69,16 +93,3 @@ module "traefik" {
    cloudflare_api_key = var.cloudflare_api_key
    acme_email = var.acme_email
 }
-/*
-module "backup" {
-   source = "../backup"
-
-   backup      = [
-      module.gitea,
-      module.nextcloud
-   ]
-
-   docker_host = var.docker_host
-   docker_user = var.docker_user
-}
-*/

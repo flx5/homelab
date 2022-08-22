@@ -28,6 +28,20 @@ variable "fqdn" {
   type = string
 }
 
-variable "data_dir" {
+variable "dump_folder" {
   type = string
+}
+
+variable "data_dir" {
+  type = object({
+    path: string
+    backup: bool
+  })
+}
+
+variable "app_folder" {
+  type = object({
+    path: string
+    backup: bool
+  })
 }
