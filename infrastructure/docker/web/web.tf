@@ -19,6 +19,10 @@ locals {
    }
 }
 
+data "sops_file" "secrets" {
+   source_file = "${path.module}/secrets.yml"
+}
+
 module "nextcloud" {
    source = "../containers/nextcloud"
 
@@ -26,8 +30,8 @@ module "nextcloud" {
    smtp_port = local.smtp_port
    traefik_host = local.traefik_name
    traefik_network = docker_network.traefik_intern.name
-   db_password = var.nextcloud_db_password
-   db_root_password = var.nextcloud_db_root_password
+   db_password = data.sops_file.secrets.data["nextcloud.db.user_password"]
+   db_root_password = data.sops_file.secrets.data["nextcloud.db.root_password"]
 
    fqdn = local.hostnames.nextcloud.url
 
@@ -51,9 +55,9 @@ module "gitea" {
    traefik_network = docker_network.traefik_intern.name
    smtp_host = local.smtp_host
    smtp_port = local.smtp_port
-   db_password = var.gitea_db_password
+   db_password = data.sops_file.secrets.data["gitea.db.user_password"]
+   db_root_password = data.sops_file.secrets.data["gitea.db.root_password"]
 
-   db_root_password = var.gitea_db_root_password
    data_path = {
       backup = true
       path = local.folders.gitea

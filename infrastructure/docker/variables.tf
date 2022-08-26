@@ -30,26 +30,6 @@ variable "docker_internal_user" {
   type        = string
 }
 
-variable "web_gitea_db_password" {
-  type        = string
-  sensitive   = true
-}
-
-variable "web_gitea_db_root_password" {
-  type        = string
-  sensitive   = true
-}
-
-variable "web_nextcloud_db_password" {
-  type        = string
-  sensitive   = true
-}
-
-variable "web_nextcloud_db_root_password" {
-  type        = string
-  sensitive   = true
-}
-
 variable "internal_nextcloud_db_password" {
   type        = string
   sensitive   = true

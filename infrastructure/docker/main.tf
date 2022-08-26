@@ -14,10 +14,6 @@ module "web" {
   base_domain = var.base_domain
   cloudflare_api_key = var.cloudflare_api_key
   cloudflare_email = var.cloudflare_email
-  gitea_db_password = var.web_gitea_db_password
-  gitea_db_root_password = var.web_gitea_db_root_password
-  nextcloud_db_password = var.web_nextcloud_db_password
-  nextcloud_db_root_password = var.web_nextcloud_db_root_password
 
   dump_folder = "${local.dump_folder}/vm-web"
 }

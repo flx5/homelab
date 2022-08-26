@@ -3,5 +3,8 @@ terraform {
     docker = {
       source  = "kreuzwerker/docker"
     }
+    sops = {
+      source = "carlpett/sops"
+    }
   }
 }
