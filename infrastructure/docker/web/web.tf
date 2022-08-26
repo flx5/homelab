@@ -62,12 +62,20 @@ module "gitea" {
    dump_folder = var.dump_folder
 }
 
-# TODO Backup
 module "calibre" {
    source = "../containers/calibre"
 
    traefik_network = docker_network.traefik_intern.name
    fqdn = local.hostnames.calibre.url
+
+   books_path      = {
+      path = "/opt/containers/calibre/books"
+      backup = true
+   }
+   config_path     = {
+      path = "/opt/containers/calibre/config"
+      backup = true
+   }
 }
 
 

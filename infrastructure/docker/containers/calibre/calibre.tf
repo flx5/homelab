@@ -17,12 +17,12 @@ resource "docker_container" "calibre" {
 
   volumes {
     container_path = "/config"
-    host_path = "/opt/containers/calibre/config"
+    host_path = var.config_path.path
   }
 
   volumes {
     container_path = "/books"
-    host_path = "/opt/containers/calibre/books"
+    host_path = var.books_path.path
   }
 
   networks_advanced {
