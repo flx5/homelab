@@ -14,6 +14,9 @@ resource "docker_container" "mariadb" {
 
   command = var.command
 
+  # Allow clean shutdown
+  destroy_grace_seconds = 120
+
   volumes {
     container_path = "/var/lib/mysql"
     host_path = "/opt/containers/${var.name}/database"
