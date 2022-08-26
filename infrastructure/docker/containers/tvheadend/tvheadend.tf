@@ -34,5 +34,5 @@ resource "docker_container" "tvheadend" {
 }
 
 resource "docker_image" "tvheadend" {
-  name = "lscr.io/linuxserver/tvheadend"
+  name = "lscr.io/linuxserver/tvheadend:version-1c65e8b0"
 }
