@@ -43,8 +43,7 @@ resource "ssh_resource" "backup" {
           vm_name  = "docker_media"
           username = var.docker_media_user
           address  = var.docker_media_host
-          # TODO Scripts
-          scripts  = [],
+          scripts  = module.media.backup,
 
           lvm = [
             { vg = "disk1", lv = "media", snapshot_size = "10G" },

@@ -14,12 +14,12 @@ resource "docker_container" "tvheadend" {
 
   volumes {
     container_path = "/config"
-    host_path = "/opt/containers/tvheadend/config"
+    host_path = var.config_path.path
   }
 
   volumes {
     container_path = "/recordings"
-    host_path = "/opt/containers/tvheadend/recordings"
+    host_path = var.recordings_path.path
   }
 
   # TODO Add devices for dvb + vaapi

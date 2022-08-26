@@ -16,6 +16,16 @@ module "tvheadend" {
       "/dev/dvb/adapter2",
       "/dev/dvb/adapter3",
    ]
+
+   recordings_path = {
+      path = "/opt/containers/tvheadend/recordings"
+      backup = true
+   }
+
+   config_path = {
+      path = "/opt/containers/tvheadend/config"
+      backup = true
+   }
 }
 
 # TODO Backup
