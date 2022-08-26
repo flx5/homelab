@@ -1,9 +1,9 @@
 output "hostnames" {
-  value = local.hostnames
+  value = merge(local.hostnames, module.addons.hostnames)
 }
 
 output "backup" {
-  value = {
+  value = merge({
     nextcloud = module.nextcloud.backup
-  }
+  }, module.addons.backup)
 }

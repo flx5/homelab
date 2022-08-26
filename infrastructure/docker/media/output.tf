@@ -1,3 +1,3 @@
 output "hostnames" {
-  value = local.hostnames
+  value = merge(local.hostnames, module.addons.hostnames)
 }
