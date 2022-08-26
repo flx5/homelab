@@ -43,10 +43,8 @@ echo "###### Starting backup on $(date) ######"
       set -e
       ${indent(6, script.pre)}
     ) || {
-      if [[ "$?" != '0' ]]; then
-         echo "Pre script for container ${container} on ${hostname} failed."
-         exit_code=1
-      fi
+       echo "Pre script for container ${container} on ${hostname} failed."
+       exit_code=1
     }
   %{~ endfor ~}
 
@@ -89,10 +87,8 @@ echo "###### Starting backup on $(date) ######"
     mkdir -p /mnt/backup/source/lvm/${lvm_device.vg}/${lvm_device.lv}
     mount -o ro /dev/${lvm_device.vg}/${lvm_device.lv}_snapshot /mnt/backup/source/lvm/${lvm_device.vg}/${lvm_device.lv}
   ) || {
-    if [[ "$?" != '0' ]]; then
-      echo "Creating LVM Snapshot for ${lvm_device.vg}/${lvm_device.lv} with size ${lvm_device.snapshot_size} failed."
-      exit_code=1
-    fi
+    echo "Creating LVM Snapshot for ${lvm_device.vg}/${lvm_device.lv} with size ${lvm_device.snapshot_size} failed."
+    exit_code=1
   }
   %{~ endfor ~}
 
@@ -172,10 +168,8 @@ echo "###### Starting backup on $(date) ######"
     umount /dev/${lvm_device.vg}/${lvm_device.lv}_snapshot
     lvremove -y /dev/${lvm_device.vg}/${lvm_device.lv}_snapshot
   ) || {
-    if [[ "$?" != '0' ]]; then
-      echo "Removing LVM Snapshot for ${lvm_device.vg}/${lvm_device.lv} with size ${lvm_device.snapshot_size} failed."
-      exit_code=1
-    fi
+    echo "Removing LVM Snapshot for ${lvm_device.vg}/${lvm_device.lv} with size ${lvm_device.snapshot_size} failed."
+    exit_code=1
   }
   %{~ endfor ~}
 %{~ endfor ~}
