@@ -1,5 +1,5 @@
 resource "docker_image" "mariadb" {
-  name = "mariadb:10.7.3"
+  name = "mariadb:10.9.2"
 }
 
 resource "docker_container" "mariadb" {
