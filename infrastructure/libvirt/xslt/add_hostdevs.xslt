@@ -70,6 +70,13 @@
                 <xsl:attribute name="type">usb</xsl:attribute>
                 <xsl:attribute name="index">0</xsl:attribute>
                 <xsl:attribute name="model">ich9-ehci1</xsl:attribute>
+                <xsl:element name="address">
+                    <xsl:attribute name="type">pci</xsl:attribute>
+                    <xsl:attribute name="domain">0x0000</xsl:attribute>
+                    <xsl:attribute name="bus">0x02</xsl:attribute>
+                    <xsl:attribute name="slot">0x02</xsl:attribute>
+                    <xsl:attribute name="function">0x7</xsl:attribute>
+                </xsl:element>
             </xsl:element>
             <xsl:element name ="controller">
                 <xsl:attribute name="type">usb</xsl:attribute>
@@ -79,25 +86,13 @@
                 <xsl:element name="master">
                     <xsl:attribute name="startport">0</xsl:attribute>
                 </xsl:element>
-            </xsl:element>
-            
-            <xsl:element name ="controller">
-                <xsl:attribute name="type">usb</xsl:attribute>
-                <xsl:attribute name="index">0</xsl:attribute>
-                <xsl:attribute name="model">ich9-uhci2</xsl:attribute>
-                
-                <xsl:element name="master">
-                    <xsl:attribute name="startport">2</xsl:attribute>
-                </xsl:element>
-            </xsl:element>
-            
-            <xsl:element name ="controller">
-                <xsl:attribute name="type">usb</xsl:attribute>
-                <xsl:attribute name="index">0</xsl:attribute>
-                <xsl:attribute name="model">ich9-uhci3</xsl:attribute>
-                
-                <xsl:element name="master">
-                    <xsl:attribute name="startport">4</xsl:attribute>
+                <xsl:element name="address">
+                    <xsl:attribute name="type">pci</xsl:attribute>
+                    <xsl:attribute name="domain">0x0000</xsl:attribute>
+                    <xsl:attribute name="bus">0x02</xsl:attribute>
+                    <xsl:attribute name="slot">0x02</xsl:attribute>
+                    <xsl:attribute name="function">0x0</xsl:attribute>
+                    <xsl:attribute name="multifunction">on</xsl:attribute>
                 </xsl:element>
             </xsl:element>
             %{ endif }
