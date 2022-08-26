@@ -1,3 +1,7 @@
+locals {
+  config_path = "/opt/containers/jellyfin/config"
+}
+
 # Start a container
 resource "docker_container" "jellyfin" {
   name  = "jellyfin"
@@ -14,7 +18,7 @@ resource "docker_container" "jellyfin" {
 
   volumes {
     container_path = "/config"
-    host_path = "/opt/containers/jellyfin/config"
+    host_path = local.config_path
   }
 
   volumes {

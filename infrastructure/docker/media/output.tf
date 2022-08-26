@@ -3,7 +3,8 @@ output "hostnames" {
 }
 
 output "backup" {
-  value = {
+  value = merge({
     tvheadend = module.tvheadend.backup
-  }
+    jellyfin = module.jellyfin.backup
+  }, module.addons.backup)
 }

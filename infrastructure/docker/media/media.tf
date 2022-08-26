@@ -28,14 +28,12 @@ module "tvheadend" {
    }
 }
 
-# TODO Backup
 module "jellyfin" {
    source = "../containers/jellyfin"
    traefik_network = docker_network.traefik_intern.name
    fqdn = local.hostnames.jellyfin
 }
 
-# TODO Backup configurations
 module "addons" {
    source = "git::ssh://git@github.com/flx5/homelab-addons.git//media"
    traefik_network = docker_network.traefik_intern.name
