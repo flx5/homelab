@@ -35,6 +35,10 @@ variable "address" {
   type = string
 }
 
+variable "mac" {
+  type = string
+}
+
 
 variable "spice_address" {
   type = string

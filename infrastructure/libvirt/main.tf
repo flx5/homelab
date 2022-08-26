@@ -21,6 +21,9 @@ module "vm_web" {
    network = libvirt_network.routed_network.id
    address = cidrhost(local.routed_subnet, 10)
 
+   # If the resource is recreated with another mac, the ip won't be assigned correctly...
+   mac = "52:54:00:12:0d:bb"
+
    pool_name = libvirt_pool.stage_prod.name
    data_pool_name = libvirt_pool.data.name
 
@@ -53,6 +56,8 @@ module "vm_media" {
 
    network = libvirt_network.routed_network.id
    address = cidrhost(local.routed_subnet, 11)
+   # If the resource is recreated with another mac, the ip won't be assigned correctly...
+   mac = "52:54:00:ca:90:b4"
 
    pool_name = libvirt_pool.stage_prod.name
    data_pool_name = libvirt_pool.data.name
@@ -142,6 +147,9 @@ module "vm_internal" {
 
    network = libvirt_network.routed_network.id
    address = cidrhost(local.routed_subnet, 12)
+
+   # If the resource is recreated with another mac, the ip won't be assigned correctly...
+   mac = "52:54:00:9e:2b:b6"
 
    pool_name = libvirt_pool.stage_prod.name
    data_pool_name = libvirt_pool.data.name
