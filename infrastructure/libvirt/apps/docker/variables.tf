@@ -2,6 +2,11 @@ variable "name" {
   type = string
 }
 
+variable "memory" {
+  type = string
+  default = 2048
+}
+
 variable "pool_name" {
   type = string
 }

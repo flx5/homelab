@@ -1,6 +1,6 @@
 resource "libvirt_domain" "docker" {
   name   = "docker_${var.name}"
-  memory = "2048"
+  memory = var.memory
   vcpu   = 1
 
   cpu {
