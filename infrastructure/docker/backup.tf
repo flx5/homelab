@@ -12,7 +12,7 @@ resource "ssh_resource" "backup" {
     destination = "backup_script.sh"
     permissions = "0700"
 
-    content = templatefile("script_tpl.sh", {
+    content = templatefile("backup_script.tpl.sh", {
       borg_repos = [
         {
           repository = data.sops_file.borg.data["onsite.repository"],
