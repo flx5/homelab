@@ -1,10 +1,5 @@
-data "docker_registry_image" "calibre" {
-  name = "lscr.io/linuxserver/calibre-web:0.6.19"
-}
-
 resource "docker_image" "calibre" {
-  name          = data.docker_registry_image.calibre.name
-  pull_triggers = [data.docker_registry_image.calibre.sha256_digest]
+  name          = "lscr.io/linuxserver/calibre-web:0.6.19"
 }
 
 # Start a container
@@ -32,5 +27,13 @@ resource "docker_container" "calibre" {
 
   networks_advanced {
     name = var.traefik_network
+  }
+
+  healthcheck {
+    test = ["CMD", "curl", "-f", "localhost:8083"]
+    interval = "10m"
+
+    # Allow for some time at start because the docker mod might need to be downloaded...
+    start_period = "5m"
   }
 }
