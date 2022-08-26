@@ -1,5 +1,5 @@
 resource "docker_image" "redis" {
-  name = "redis:6.2"
+  name = "redis:7.0"
 }
 
 resource "random_password" "redis_password" {
