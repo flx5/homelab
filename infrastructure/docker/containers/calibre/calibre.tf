@@ -12,7 +12,7 @@ resource "docker_container" "calibre" {
     "PUID=1000",
     "PGID=1000",
     "TZ=Europe/Berlin",
-    "DOCKER_MODS=linuxserver/calibre-web:calibre"
+    "DOCKER_MODS=linuxserver/mods:universal-calibre"
   ]
 
   volumes {
