@@ -18,5 +18,5 @@ resource "docker_container" "nginx" {
 }
 
 resource "docker_image" "nginx" {
-  name = "nginx"
+  name = "nginx:1.23.1"
 }
