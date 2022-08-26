@@ -1,5 +1,5 @@
 resource "docker_image" "mariadb" {
-  name = "mariadb:10.7.3"
+  name = "mariadb:10.9.2"
 }
 
 resource "docker_container" "mariadb" {
@@ -13,6 +13,9 @@ resource "docker_container" "mariadb" {
   }
 
   command = var.command
+
+  # Allow clean shutdown
+  destroy_grace_seconds = 120
 
   volumes {
     container_path = "/var/lib/mysql"
