@@ -19,7 +19,6 @@ locals {
    }
 }
 
-# TODO Backup
 module "nextcloud" {
    source = "../containers/nextcloud"
 
@@ -45,7 +44,6 @@ module "nextcloud" {
    dump_folder = var.dump_folder
 }
 
-# TODO Backup
 module "gitea" {
    source = "../containers/gitea"
 
