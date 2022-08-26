@@ -40,6 +40,7 @@ resource "libvirt_domain" "docker" {
   network_interface {
     network_id     = var.network
     addresses = [ var.address ]
+    hostname = local.hostname
   }
 
   # TODO This feels hacky and I should probably prefer a separate libvirt_domain definition for each variant
