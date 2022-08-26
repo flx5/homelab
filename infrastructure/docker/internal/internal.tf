@@ -9,6 +9,10 @@ locals {
   smtp_port = 25
 }
 
+data "sops_file" "secrets" {
+  source_file = "${path.module}/secrets.yml"
+}
+
 module "nextcloud" {
   source = "../containers/nextcloud"
 
@@ -16,8 +20,8 @@ module "nextcloud" {
   smtp_port = local.smtp_port
   traefik_host = local.traefik_name
   traefik_network = docker_network.traefik_intern.name
-  db_password = var.nextcloud_db_password
-  db_root_password = var.nextcloud_db_root_password
+  db_password = data.sops_file.secrets.data["nextcloud.db.user_password"]
+  db_root_password = data.sops_file.secrets.data["nextcloud.db.root_password"]
 
   fqdn = local.hostnames.nextcloud
 

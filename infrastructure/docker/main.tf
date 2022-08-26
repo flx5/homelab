@@ -47,8 +47,6 @@ module "internal" {
   base_domain                = var.base_domain
   cloudflare_api_key         = var.cloudflare_api_key
   cloudflare_email           = var.cloudflare_email
-  nextcloud_db_password      = var.internal_nextcloud_db_password
-  nextcloud_db_root_password = var.internal_nextcloud_db_root_password
   smtp_host                  = local.smtp_host
 
   dump_folder = "${local.dump_folder}/vm-internal"

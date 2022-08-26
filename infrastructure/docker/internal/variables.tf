@@ -12,16 +12,6 @@ variable "cloudflare_api_key" {
   sensitive   = true
 }
 
-variable "nextcloud_db_password" {
-  type        = string
-  sensitive   = true
-}
-
-variable "nextcloud_db_root_password" {
-  type        = string
-  sensitive   = true
-}
-
 variable "base_domain" {
   type = string
 }

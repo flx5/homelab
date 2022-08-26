@@ -30,16 +30,6 @@ variable "docker_internal_user" {
   type        = string
 }
 
-variable "internal_nextcloud_db_password" {
-  type        = string
-  sensitive   = true
-}
-
-variable "internal_nextcloud_db_root_password" {
-  type        = string
-  sensitive   = true
-}
-
 variable "internal_auth_username" {
   type        = string
   sensitive   = true

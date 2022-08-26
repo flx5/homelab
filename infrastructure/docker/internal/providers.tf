@@ -7,5 +7,8 @@ terraform {
       source = "loafoe/htpasswd"
       version = "1.0.3"
     }
+    sops = {
+      source = "carlpett/sops"
+    }
   }
 }
