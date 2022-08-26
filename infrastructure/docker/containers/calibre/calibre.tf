@@ -1,5 +1,10 @@
+data "docker_registry_image" "calibre" {
+  name = "lscr.io/linuxserver/calibre-web:0.6.19"
+}
+
 resource "docker_image" "calibre" {
-  name = "lscr.io/linuxserver/calibre-web"
+  name          = data.docker_registry_image.calibre.name
+  pull_triggers = [data.docker_registry_image.calibre.sha256_digest]
 }
 
 # Start a container

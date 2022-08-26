@@ -1,10 +1,23 @@
 http:
   routers:
-    to-calibre:
+    to-calibre-insecure:
       entryPoints:
         - web
       rule: "Host(`${fqdn}`)"
+      service: accidential_http
+      middlewares:
+        - https-redirect
+
+    to-calibre:
+      entryPoints:
+        - websecure
+      rule: "Host(`${fqdn}`)"
       service: calibre
+      middlewares:
+        - secHeaders
+        - https-redirect
+      tls:
+        certResolver: letsencrypt
 
   services:
     calibre:
