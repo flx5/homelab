@@ -31,9 +31,9 @@ resource "docker_container" "calibre" {
 
   healthcheck {
     test = ["CMD", "curl", "-f", "localhost:8083"]
-    interval = "10m"
+    interval = "10m0s"
 
     # Allow for some time at start because the docker mod might need to be downloaded...
-    start_period = "5m"
+    start_period = "5m0s"
   }
 }
