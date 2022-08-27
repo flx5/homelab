@@ -20,7 +20,8 @@ resource "docker_container" "traefik" {
 
   env = [
     "CF_API_EMAIL=${var.cloudflare_email}",
-    "CF_API_KEY=${var.cloudflare_api_key}"
+    "CF_API_KEY=${var.cloudflare_api_key}",
+    "LEGO_CA_CERTIFICATES=/etc/traefik/ca_cert.pem"
   ]
 
   networks_advanced {
@@ -60,6 +61,8 @@ resource "docker_container" "traefik" {
     content = templatefile("${path.module}/traefik.yml", {
       additional_entrypoints = var.additional_entrypoints,
       email = var.acme_email
+      homelab_ca = var.homelab_ca
+      homelab_ca_cert = var.homelab_ca_cert
     })
   }
 
@@ -68,6 +71,11 @@ resource "docker_container" "traefik" {
     content = templatefile("${path.module}/common.yml", {
       error = module.error_host.name
     })
+  }
+
+  upload {
+    file = "/etc/traefik/ca_cert.pem"
+    content = var.homelab_ca_cert
   }
 
   dynamic "upload" {

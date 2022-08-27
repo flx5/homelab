@@ -1,0 +1,15 @@
+tcp:
+  routers:
+    to-step-ca:
+      entryPoints:
+        - websecure
+      rule: "HostSNI(`${fqdn}`)"
+      service: step-ca
+      tls:
+        passthrough: true
+
+  services:
+    step-ca:
+      loadBalancer:
+        servers:
+          - address: ${host}:9000

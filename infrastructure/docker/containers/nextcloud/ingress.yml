@@ -20,7 +20,7 @@ http:
         - nextcloud-webdav
         - https-redirect
       tls:
-        certResolver: letsencrypt
+        certResolver: ${cert_resolver}
 
   services:
     nextcloud:

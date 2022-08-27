@@ -22,6 +22,9 @@ resource "docker_container" "bind9" {
     internal = "53"
     external = "53"
     protocol = "udp"
+
+    # Workaround for issue https://forums.docker.com/t/dns-issues-with-local-resolver-and-containers-on-the-same-host/102319/4
+    ip = var.server_ip
   }
 
   ports {

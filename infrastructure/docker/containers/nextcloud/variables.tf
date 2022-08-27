@@ -45,3 +45,8 @@ variable "app_folder" {
     backup: bool
   })
 }
+
+variable "cert_resolver" {
+  type = string
+  default = "letsencrypt"
+}

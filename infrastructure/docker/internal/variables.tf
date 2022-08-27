@@ -33,3 +33,11 @@ variable "auth_password" {
 variable "dump_folder" {
   type = string
 }
+
+variable "homelab_ca" {
+  type        = string
+}
+
+variable "homelab_ca_cert" {
+  type        = string
+}

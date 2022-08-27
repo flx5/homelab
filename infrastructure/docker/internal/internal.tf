@@ -29,6 +29,8 @@ module "nextcloud" {
   app_folder = { path = "/opt/containers/nextcloud/app", backup = true }
 
   dump_folder = var.dump_folder
+
+  cert_resolver = "homelab"
 }
 
 module "addons" {
@@ -59,10 +61,12 @@ module "traefik" {
         "${var.auth_username}" = htpasswd_password.hash.bcrypt
       }
     })
-  }, module.addons.traefik_config)
+  }/*, module.addons.traefik_config*/)
   additional_entrypoints = {}
 
   cloudflare_email = var.cloudflare_email
   cloudflare_api_key = var.cloudflare_api_key
   acme_email = var.acme_email
+  homelab_ca = var.homelab_ca
+  homelab_ca_cert = var.homelab_ca_cert
 }

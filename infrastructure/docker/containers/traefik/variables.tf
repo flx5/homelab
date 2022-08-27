@@ -6,6 +6,14 @@ variable "wan_network_name" {
   type        = string
 }
 
+variable "homelab_ca" {
+  type        = string
+}
+
+variable "homelab_ca_cert" {
+  type        = string
+}
+
 variable "configurations" {
   type = map(string)
 }

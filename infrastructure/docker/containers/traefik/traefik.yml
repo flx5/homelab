@@ -31,3 +31,10 @@ certificatesResolvers:
       storage: /acme/acme.json
       dnsChallenge:
         provider: cloudflare
+
+  homelab:
+    acme:
+      email: ${email}
+      caServer: https://${homelab_ca}:9000/acme/acme/directory
+      storage: /acme/acme_homelab.json
+      tlsChallenge: {}

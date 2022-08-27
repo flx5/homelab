@@ -30,3 +30,11 @@ variable "cloudflare_api_key" {
   type        = string
   sensitive   = true
 }
+
+variable "homelab_ca" {
+  type        = string
+}
+
+variable "homelab_ca_cert" {
+  type        = string
+}

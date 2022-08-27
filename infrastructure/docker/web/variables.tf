@@ -23,3 +23,7 @@ variable "base_domain" {
 variable "dump_folder" {
   type = string
 }
+
+variable "homelab_ca" {
+  type        = string
+}

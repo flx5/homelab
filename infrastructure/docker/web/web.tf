@@ -7,6 +7,10 @@ locals {
       gitea = { url= "git.${var.base_domain}", public=true }
    }
 
+   internal_hostnames = {
+      step-ca = "ca.home"
+   }
+
    smtp_host = var.smtp_host
    smtp_port = 25
 
@@ -82,6 +86,19 @@ module "calibre" {
    }
 }
 
+module "step-ca" {
+   source = "../containers/step-ca"
+
+   traefik_network = docker_network.traefik_intern.name
+
+   config_dir   = {
+      path = "/opt/containers/step-ca/config"
+      backup = true
+   }
+
+   fqdn = local.internal_hostnames.step-ca
+   ip_address = var.homelab_ca
+}
 
 module "traefik" {
    source = "../containers/traefik"
@@ -91,6 +108,7 @@ module "traefik" {
       nextcloud = module.nextcloud.traefik_config,
       gitea   = module.gitea.traefik_config
       calibre = module.calibre.traefik_config
+      step-ca = module.step-ca.traefik_config
    }
 
    hostname = local.traefik_name
@@ -102,4 +120,6 @@ module "traefik" {
    cloudflare_email = var.cloudflare_email
    cloudflare_api_key = var.cloudflare_api_key
    acme_email = var.acme_email
+   homelab_ca = var.homelab_ca
+   homelab_ca_cert = module.step-ca.root_ca
 }

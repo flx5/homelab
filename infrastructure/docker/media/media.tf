@@ -61,4 +61,6 @@ module "traefik" {
    cloudflare_email = var.cloudflare_email
    cloudflare_api_key = var.cloudflare_api_key
    acme_email = var.acme_email
+   homelab_ca = var.homelab_ca
+   homelab_ca_cert = var.homelab_ca_cert
 }
