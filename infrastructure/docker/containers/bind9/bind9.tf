@@ -47,6 +47,12 @@ resource "docker_container" "bind9" {
     })
   }
 
+  # Store Journal for dynamic entries
+  volumes {
+    container_path = "/var/lib/bind"
+    host_path = "/opt/containers/bind9/zones/"
+  }
+
   upload {
     file = "/var/lib/bind/db.home"
     content = templatefile("${path.module}/db.home", {
