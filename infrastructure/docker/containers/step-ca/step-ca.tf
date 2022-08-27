@@ -14,6 +14,9 @@ resource "docker_image" "step-ca" {
 # To enable ACME the following command has to be run once:
 # docker run -v /opt/containers/step-ca/config/:/home/step/ --rm -it smallstep/step-ca:0.22.0 step ca provisioner add acme --ca-url https://${var.ip_address}:9000 --type ACME
 
+# The certificates can be obtained from https://ca.home/roots.pem
+# Installing to trust stores https://smallstep.com/docs/step-cli/reference/certificate/install
+
 resource "docker_container" "step-ca" {
   name  = local.container_name
   image = docker_image.step-ca.latest

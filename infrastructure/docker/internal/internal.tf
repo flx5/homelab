@@ -34,7 +34,7 @@ module "nextcloud" {
 }
 
 module "addons" {
-  source = "git::ssh://git@github.com/flx5/homelab-addons.git//internal?ref=f0d3c05"
+  source = "git::ssh://git@github.com/flx5/homelab-addons.git//internal?ref=71035cd0"
   traefik_network = docker_network.traefik_intern.name
   base_domain = var.base_domain
 }
@@ -61,7 +61,7 @@ module "traefik" {
         "${var.auth_username}" = htpasswd_password.hash.bcrypt
       }
     })
-  }/*, module.addons.traefik_config*/)
+  }, module.addons.traefik_config)
   additional_entrypoints = {}
 
   cloudflare_email = var.cloudflare_email
