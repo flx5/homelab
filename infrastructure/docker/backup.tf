@@ -2,14 +2,19 @@ data "sops_file" "borg" {
   source_file = "../../keys/borg.yml"
 }
 
+locals {
+  backup_filename = "/home/${var.hypervisor_user}/backup_script.sh"
+}
+
 resource "ssh_resource" "backup" {
   host         = var.hypervisor_host
   user         = var.hypervisor_user
+  agent = true
 
   when         = "create"
 
   file {
-    destination = "backup_script.sh"
+    destination = local.backup_filename
     permissions = "0700"
 
     content = templatefile("backup_script.tpl.sh", {
@@ -66,4 +71,17 @@ resource "ssh_resource" "backup" {
       }
     })
   }
+
+  file {
+    permissions = "0700"
+    destination = "backup_wrapper.sh"
+    content     = templatefile("files/backup_wrapper.sh", {
+      healthcheck = healthchecksio_check.backup.ping_url
+      backup_script = local.backup_filename
+    })
+  }
+
+  commands = [
+    "echo \"5 2 * * * root $(realpath backup_wrapper.sh) > /dev/null\" | sudo tee /etc/cron.d/backup.cron"
+  ]
 }
