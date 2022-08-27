@@ -28,22 +28,13 @@ resource "cloudflare_record" "dns_web" {
   ttl     = 3600
 }
 
+# TODO Remove once not used by services anymore...
 resource "cloudflare_record" "dns_media" {
   for_each = module.media.hostnames
 
   zone_id = var.zone_id
   name    = each.value
   value   = var.docker_media_host
-  type    = "A"
-  ttl     = 3600
-}
-
-resource "cloudflare_record" "dns_internal" {
-  for_each = module.internal.hostnames
-
-  zone_id = var.zone_id
-  name    = each.value
-  value   = var.docker_internal_host
   type    = "A"
   ttl     = 3600
 }

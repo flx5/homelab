@@ -18,30 +18,25 @@ provider "dns" {
   }
 }
 
-resource "dns_a_record_set" "web" {
-  zone = "home."
-  name = "web"
-  addresses = [
-    var.docker_web_host
-  ]
-  ttl = 300
-}
+resource "dns_a_record_set" "dns_media" {
+  for_each = module.media.hostnames
 
-resource "dns_a_record_set" "media" {
   zone = "home."
-  name = "media"
+  # Trimming the base domain is a workaround until the services using that domain have been migrated...
+  name    = trimsuffix(trimsuffix(each.value, ".home"), ".${var.base_domain}")
   addresses = [
     var.docker_media_host
   ]
   ttl = 300
 }
 
-resource "dns_a_record_set" "internal" {
+resource "dns_a_record_set" "dns_internal" {
+  for_each = module.internal.hostnames
+
   zone = "home."
-  name = "internal"
+  name    = trimsuffix(each.value, ".home")
   addresses = [
     var.docker_internal_host
   ]
   ttl = 300
 }
-

@@ -2,7 +2,6 @@ locals {
   traefik_name = "traefik"
   hostnames = {
     nextcloud = "cloud.internal.${var.base_domain}"
-    duplicati = "duplicati.internal.${var.base_domain}"
   }
 
   smtp_host = var.smtp_host

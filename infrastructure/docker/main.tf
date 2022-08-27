@@ -44,10 +44,10 @@ module "internal" {
   acme_email                 = var.acme_email
   auth_password              = var.internal_auth_password
   auth_username              = var.internal_auth_username
-  base_domain                = var.base_domain
   cloudflare_api_key         = var.cloudflare_api_key
   cloudflare_email           = var.cloudflare_email
   smtp_host                  = local.smtp_host
+  base_domain = "home"
 
   dump_folder = "${local.dump_folder}/vm-internal"
 }
