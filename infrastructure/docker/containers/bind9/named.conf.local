@@ -1,0 +1,17 @@
+//
+// Do any local configuration here
+//
+// Use Zone recommended in https://www.rfc-editor.org/rfc/rfc6762#appendix-G
+include "/etc/bind/home.key";
+
+zone "home." {
+        type primary;
+        file "/var/lib/bind/db.home";
+        notify explicit;
+
+        allow-update { key home; };
+};
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+include "/etc/bind/zones.rfc1918";
