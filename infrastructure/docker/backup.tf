@@ -82,6 +82,6 @@ resource "ssh_resource" "backup" {
   }
 
   commands = [
-    "echo \"5 2 * * * root $(realpath backup_wrapper.sh) > /dev/null\" | sudo tee /etc/cron.d/backup.cron"
+    "echo \"5 2 * * * root $(realpath backup_wrapper.sh) > /dev/null\" | sudo tee /etc/cron.d/backup",
   ]
 }
