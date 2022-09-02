@@ -6,7 +6,7 @@ locals {
 resource "docker_container" "jellyfin" {
   name  = "jellyfin"
   image = docker_image.jellyfin.latest
-  restart = "always"
+  restart = "unless-stopped"
 
   env = [
     "JELLYFIN_PublishedServerUrl=${var.fqdn}"

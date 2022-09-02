@@ -39,7 +39,7 @@ module "redis" {
 resource "docker_container" "nextcloud" {
   name  = "nextcloud-app"
   image = docker_image.nextcloud.latest
-  restart = "always"
+  restart = "unless-stopped"
 
   env = [
     # MySQL Configuration

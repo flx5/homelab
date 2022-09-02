@@ -25,7 +25,7 @@ module "database" {
 resource "docker_container" "gitea" {
   name  = "gitea-app"
   image = docker_image.gitea.latest
-  restart = "always"
+  restart = "unless-stopped"
 
   env = [
     "USER_UID=1000",

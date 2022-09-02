@@ -20,6 +20,15 @@ provider "dns" {
   }
 }
 
+resource "dns_a_record_set" "nas" {
+  zone = "home."
+  name    = "nas"
+  addresses = [
+    var.hypervisor_host
+  ]
+  ttl = 300
+}
+
 resource "dns_a_record_set" "dns_web" {
   for_each = module.web.internal_hostnames
 

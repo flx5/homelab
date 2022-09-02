@@ -10,7 +10,7 @@ resource "docker_image" "bind9" {
 resource "docker_container" "bind9" {
   name  = var.hostname
   image = docker_image.bind9.latest
-  restart = "always"
+  restart = "unless-stopped"
 
   ports {
     internal = "53"

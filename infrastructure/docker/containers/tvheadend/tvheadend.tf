@@ -2,7 +2,7 @@
 resource "docker_container" "tvheadend" {
   name  = "tvheadend"
   image = docker_image.tvheadend.latest
-  restart = "always"
+  restart = "unless-stopped"
 
   env = [
 

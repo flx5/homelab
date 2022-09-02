@@ -6,7 +6,7 @@ resource "docker_image" "calibre" {
 resource "docker_container" "calibre" {
   name  = "calibre-app"
   image = docker_image.calibre.latest
-  restart = "always"
+  restart = "unless-stopped"
 
   env = [
     "PUID=1000",

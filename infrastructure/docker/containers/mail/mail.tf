@@ -14,7 +14,7 @@ resource "docker_image" "postfix" {
 resource "docker_container" "postfix" {
   name  = "postfix"
   image = docker_image.postfix.latest
-  restart = "always"
+  restart = "unless-stopped"
 
   env = [
     "myhostname=postfix",

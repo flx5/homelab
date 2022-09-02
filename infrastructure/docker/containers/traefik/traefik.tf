@@ -16,7 +16,7 @@ module "error_host" {
 resource "docker_container" "traefik" {
   name  = var.hostname
   image = docker_image.traefik.latest
-  restart = "always"
+  restart = "unless-stopped"
 
   env = [
     "CF_API_EMAIL=${var.cloudflare_email}",
