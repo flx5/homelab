@@ -12,13 +12,13 @@ echo "Schedule raid check"
 
 echo "Wait for raid check to start"
 
-while [[ $(< /sys/block/md0/md/sync_action) != "check" ]]; then
+while [[ $(< /sys/block/md0/md/sync_action) != "check" ]]; do
   sleep 10s
 done
 
 echo "Wait for raid check to finish"
 
-while [[ $(< /sys/block/md0/md/sync_action) != "idle" ]]; then
+while [[ $(< /sys/block/md0/md/sync_action) != "idle" ]]; do
   sleep 5m
 done
 
