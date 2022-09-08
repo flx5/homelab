@@ -24,8 +24,8 @@ module "nextcloud" {
 
   fqdn = local.hostnames.nextcloud
 
-  # TODO Fix and backup
-  data_dir = { path = "/opt/nextcloud", backup = false }
+  # Backup via LVM
+  data_dir = { path = "/mnt/stash/nextcloud/", backup = false }
   app_folder = { path = "/opt/containers/nextcloud/app", backup = true }
 
   dump_folder = var.dump_folder

@@ -173,7 +173,7 @@ module "vm_internal" {
       ["UUID=5e16c451-d8a6-4c53-90b8-62b0328dbe86", "/mnt/disks/stash2"],
       ["UUID=dc217d83-0a36-47a8-a899-78479a8a1992", "/mnt/disks/stash3"],
       ["UUID=f0b5fab4-ebb8-4cca-8bb9-f179fd0a409c", "/mnt/parity1/stash"],
-      ["/mnt/disks/stash*", "/mnt/stash", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=60G,fsname=mergerfs", "0", "0"],
+      ["/mnt/disks/stash*", "/mnt/stash", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=10G,fsname=mergerfs", "0", "0"],
       ["UUID=a7a973fe-5211-4e81-81a8-87a503bf572c", "/mnt/backups"],
    ]
 
