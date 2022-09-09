@@ -1,0 +1,26 @@
+http:
+  routers:
+    to-archivebox-insecure:
+      entryPoints:
+        - web
+      rule: "Host(`${fqdn}`)"
+      service: accidential_http
+      middlewares:
+        - https-redirect
+
+    to-archivebox-secure:
+      entryPoints:
+        - websecure
+      rule: "Host(`${fqdn}`)"
+      service: archivebox
+      middlewares:
+        - secHeaders
+        - https-redirect
+      tls:
+        certResolver: ${cert_resolver}
+
+  services:
+    archivebox:
+      loadBalancer:
+        servers:
+          - url: http://${host}:8000/

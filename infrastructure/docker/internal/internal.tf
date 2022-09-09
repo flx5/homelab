@@ -3,6 +3,7 @@ locals {
   hostnames = {
     nextcloud = "cloud.internal.${var.base_domain}"
     gitea = "git.internal.${var.base_domain}"
+    archivebox = "archive.internal.${var.base_domain}"
   }
 
   smtp_host = var.smtp_host
@@ -53,6 +54,14 @@ module "nextcloud" {
   cert_resolver = "homelab"
 }
 
+module "archivebox" {
+  source = "../containers/archivebox"
+  data_path = { path = "/opt/containers/archivebox", backup = true }
+  traefik_network = docker_network.traefik_intern.name
+  fqdn = local.hostnames.archivebox
+  cert_resolver = "homelab"
+}
+
 module "addons" {
   source = "git::ssh://git@github.com/flx5/homelab-addons.git//internal?ref=535ed02"
   traefik_network = docker_network.traefik_intern.name
@@ -77,6 +86,7 @@ module "traefik" {
   configurations = merge({
     nextcloud = module.nextcloud.traefik_config
     gitea = module.gitea.traefik_config
+    archivebox = module.archivebox.traefik_config
     internalAuth: templatefile("${path.module}/internal-auth.yml", {
       users = {
         "${var.auth_username}" = htpasswd_password.hash.bcrypt
