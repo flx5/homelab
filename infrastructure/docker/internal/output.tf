@@ -5,5 +5,6 @@ output "hostnames" {
 output "backup" {
   value = merge({
     nextcloud = module.nextcloud.backup
+    gitea = module.gitea.backup
   }, module.addons.backup)
 }

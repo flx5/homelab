@@ -17,7 +17,7 @@ http:
         - secHeaders
         - https-redirect
       tls:
-        certResolver: letsencrypt
+        certResolver: ${cert_resolver}
 
   services:
     gitea:

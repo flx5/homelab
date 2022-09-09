@@ -2,6 +2,7 @@ locals {
   traefik_name = "traefik"
   hostnames = {
     nextcloud = "cloud.internal.${var.base_domain}"
+    gitea = "git.internal.${var.base_domain}"
   }
 
   smtp_host = var.smtp_host
@@ -10,6 +11,25 @@ locals {
 
 data "sops_file" "secrets" {
   source_file = "${path.module}/secrets.yml"
+}
+
+module "gitea" {
+   source = "../containers/gitea"
+
+   fqdn = local.hostnames.gitea
+   traefik_network = docker_network.traefik_intern.name
+   smtp_host = local.smtp_host
+   smtp_port = local.smtp_port
+   db_password = data.sops_file.secrets.data["gitea.db.user_password"]
+   db_root_password = data.sops_file.secrets.data["gitea.db.root_password"]
+
+   data_path = {
+      backup = true
+      path = "/opt/containers/gitea"
+   }
+
+   dump_folder = var.dump_folder
+   cert_resolver = "homelab"
 }
 
 module "nextcloud" {
@@ -56,13 +76,16 @@ module "traefik" {
   wan_network_name = docker_network.lan.name
   configurations = merge({
     nextcloud = module.nextcloud.traefik_config
+    gitea = module.gitea.traefik_config
     internalAuth: templatefile("${path.module}/internal-auth.yml", {
       users = {
         "${var.auth_username}" = htpasswd_password.hash.bcrypt
       }
     })
   }, module.addons.traefik_config)
-  additional_entrypoints = {}
+  additional_entrypoints = {
+    gitea_ssh = 2222
+  }
 
   cloudflare_email = var.cloudflare_email
   cloudflare_api_key = var.cloudflare_api_key

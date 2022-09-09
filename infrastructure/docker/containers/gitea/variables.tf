@@ -34,3 +34,8 @@ variable "data_path" {
     backup: bool
   })
 }
+
+variable "cert_resolver" {
+  type = string
+  default = "letsencrypt"
+}
