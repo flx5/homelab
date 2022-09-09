@@ -54,7 +54,7 @@ module "nextcloud" {
 }
 
 module "addons" {
-  source = "git::ssh://git@github.com/flx5/homelab-addons.git//internal?ref=ea353c11"
+  source = "git::ssh://git@github.com/flx5/homelab-addons.git//internal?ref=535ed02"
   traefik_network = docker_network.traefik_intern.name
   base_domain = var.base_domain
 }
