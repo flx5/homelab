@@ -4,6 +4,7 @@ resource "docker_image" "redis" {
 
 resource "random_password" "redis_password" {
   length           = 16
+  special = false
 }
 
 resource "docker_container" "redis" {

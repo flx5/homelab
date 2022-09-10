@@ -49,9 +49,8 @@ resource "docker_container" "nextcloud" {
     "MYSQL_HOST=${module.database.container.name}",
 
     # Redis Configuration
-    # TODO Use redis once login loop does not occur anymore
-    # "REDIS_HOST=${module.redis.container.name}",
-    # "REDIS_HOST_PASSWORD=${module.redis.password}",
+    "REDIS_HOST=${module.redis.container.name}",
+    "REDIS_HOST_PASSWORD=${module.redis.password}",
 
     # Domain configuration
     "OVERWRITEPROTOCOL=https",
