@@ -1,7 +1,7 @@
 # Start a container
 resource "docker_container" "nginx" {
   name  = "nginx"
-  image = docker_image.nginx.latest
+  image = docker_image.nginx.image_id
   restart = "unless-stopped"
 
   dynamic "upload" {

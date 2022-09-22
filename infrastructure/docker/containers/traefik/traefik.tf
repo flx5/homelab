@@ -15,7 +15,7 @@ module "error_host" {
 
 resource "docker_container" "traefik" {
   name  = var.hostname
-  image = docker_image.traefik.latest
+  image = docker_image.traefik.image_id
   restart = "unless-stopped"
 
   env = [

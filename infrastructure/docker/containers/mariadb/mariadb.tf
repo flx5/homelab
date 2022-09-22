@@ -4,7 +4,7 @@ resource "docker_image" "mariadb" {
 
 resource "docker_container" "mariadb" {
   name  = var.name
-  image = docker_image.mariadb.latest
+  image = docker_image.mariadb.image_id
   restart = "unless-stopped"
 
   # Backend Network

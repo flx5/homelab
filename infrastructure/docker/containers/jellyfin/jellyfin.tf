@@ -5,7 +5,7 @@ locals {
 # Start a container
 resource "docker_container" "jellyfin" {
   name  = "jellyfin"
-  image = docker_image.jellyfin.latest
+  image = docker_image.jellyfin.image_id
   restart = "unless-stopped"
 
   env = [

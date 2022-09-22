@@ -38,7 +38,7 @@ module "redis" {
 
 resource "docker_container" "nextcloud" {
   name  = "nextcloud-app"
-  image = docker_image.nextcloud.latest
+  image = docker_image.nextcloud.image_id
   restart = "unless-stopped"
 
   env = [

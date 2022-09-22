@@ -9,7 +9,7 @@ resource "random_password" "redis_password" {
 
 resource "docker_container" "redis" {
   name  = var.name
-  image = docker_image.redis.latest
+  image = docker_image.redis.image_id
   restart = "unless-stopped"
 
   command = ["redis-server", "--requirepass", random_password.redis_password.result]

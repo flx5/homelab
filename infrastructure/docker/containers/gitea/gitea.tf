@@ -24,7 +24,7 @@ module "database" {
 # Start a container
 resource "docker_container" "gitea" {
   name  = "gitea-app"
-  image = docker_image.gitea.latest
+  image = docker_image.gitea.image_id
   restart = "unless-stopped"
 
   env = [

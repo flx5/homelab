@@ -4,7 +4,7 @@ resource "docker_image" "archivebox" {
 
 resource "docker_container" "archivebox" {
   name  = "archivebox-app"
-  image = docker_image.archivebox.latest
+  image = docker_image.archivebox.image_id
   restart = "unless-stopped"
 
   command = [ "server", "--quick-init", "0.0.0.0:8000"]

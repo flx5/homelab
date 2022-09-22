@@ -13,7 +13,7 @@ resource "docker_image" "postfix" {
 
 resource "docker_container" "postfix" {
   name  = "postfix"
-  image = docker_image.postfix.latest
+  image = docker_image.postfix.image_id
   restart = "unless-stopped"
 
   env = [

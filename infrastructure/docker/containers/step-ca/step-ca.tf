@@ -19,7 +19,7 @@ resource "docker_image" "step-ca" {
 
 resource "docker_container" "step-ca" {
   name  = local.container_name
-  image = docker_image.step-ca.latest
+  image = docker_image.step-ca.image_id
   restart = "unless-stopped"
 
   dns = [ var.ip_address ]

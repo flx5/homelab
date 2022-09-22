@@ -5,7 +5,7 @@ resource "docker_image" "calibre" {
 # Start a container
 resource "docker_container" "calibre" {
   name  = "calibre-app"
-  image = docker_image.calibre.latest
+  image = docker_image.calibre.image_id
   restart = "unless-stopped"
 
   env = [

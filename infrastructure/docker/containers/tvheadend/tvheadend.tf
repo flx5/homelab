@@ -1,7 +1,7 @@
 # Start a container
 resource "docker_container" "tvheadend" {
   name  = "tvheadend"
-  image = docker_image.tvheadend.latest
+  image = docker_image.tvheadend.image_id
   restart = "unless-stopped"
 
   env = [
