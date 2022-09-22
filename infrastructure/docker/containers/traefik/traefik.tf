@@ -4,6 +4,7 @@ resource "docker_image" "traefik" {
 
 module "error_host" {
   source = "../nginx"
+  name = "${var.hostname}-error"
   traefik_network = var.internal_network_name
 
   files = [
@@ -18,11 +19,13 @@ resource "docker_container" "traefik" {
   image = docker_image.traefik.image_id
   restart = "unless-stopped"
 
-  env = [
+  env = concat([
     "CF_API_EMAIL=${var.cloudflare_email}",
     "CF_API_KEY=${var.cloudflare_api_key}",
-    "LEGO_CA_CERTIFICATES=/etc/traefik/ca_cert.pem"
-  ]
+  ],
+    // When the custom certificate is set the official letsencrypt servers can't be used anymore.
+    var.homelab_ca_cert != "" ? [ "LEGO_CA_CERTIFICATES=/etc/traefik/ca_cert.pem" ]: []
+  )
 
   networks_advanced {
     name = var.internal_network_name
@@ -34,17 +37,17 @@ resource "docker_container" "traefik" {
 
   ports {
     internal = "80"
-    external = "80"
+    external = var.port_offset + 80
   }
 
   ports {
     internal = "443"
-    external = "443"
+    external = var.port_offset + 443
   }
 
   ports {
     internal = "8080"
-    external = "8080"
+    external = var.port_offset + 8080
   }
 
   dynamic "ports" {
@@ -75,7 +78,7 @@ resource "docker_container" "traefik" {
 
   upload {
     file = "/etc/traefik/ca_cert.pem"
-    content = var.homelab_ca_cert
+    content = var.homelab_ca_cert == "" ? "IGNORE" : var.homelab_ca_cert
   }
 
   dynamic "upload" {

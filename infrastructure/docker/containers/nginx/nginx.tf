@@ -1,6 +1,6 @@
 # Start a container
 resource "docker_container" "nginx" {
-  name  = "nginx"
+  name  = var.name
   image = docker_image.nginx.image_id
   restart = "unless-stopped"
 

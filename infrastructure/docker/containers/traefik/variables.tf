@@ -8,10 +8,12 @@ variable "wan_network_name" {
 
 variable "homelab_ca" {
   type        = string
+  default = ""
 }
 
 variable "homelab_ca_cert" {
   type        = string
+  default = ""
 }
 
 variable "configurations" {
@@ -20,6 +22,7 @@ variable "configurations" {
 
 variable "additional_entrypoints" {
   type = map(number)
+  default = {}
 }
 
 variable "hostname" {
@@ -43,4 +46,9 @@ variable "cloudflare_api_key" {
   type = string
   default = ""
   sensitive = true
+}
+
+variable "port_offset" {
+  type = number
+  default = 0
 }

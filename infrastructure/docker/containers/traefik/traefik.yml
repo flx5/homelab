@@ -25,16 +25,18 @@ entryPoints:
   %{ endfor ~}
 
 certificatesResolvers:
+  %{ if homelab_ca == "" }
   letsencrypt:
     acme:
       email: ${email}
       storage: /acme/acme.json
       dnsChallenge:
         provider: cloudflare
-
+  %{ else }
   homelab:
     acme:
       email: ${email}
       caServer: https://${homelab_ca}:9000/acme/acme/directory
       storage: /acme/acme_homelab.json
       tlsChallenge: {}
+  %{ endif }

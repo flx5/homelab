@@ -1,0 +1,32 @@
+http:
+  routers:
+    to-authentik-insecure:
+      entryPoints:
+        - web
+      rule: "Host(`${fqdn}`)"
+      service: accidential_http
+      middlewares:
+        - https-redirect
+
+    to-authentik:
+      entryPoints:
+        - websecure
+      rule: "Host(`${fqdn}`)"
+      service: authentik
+      middlewares:
+        - secHeaders
+        - https-redirect
+      tls:
+        certResolver: ${cert_resolver}
+
+  services:
+    authentik:
+      loadBalancer:
+        servers:
+          - url: http://${host}:9000/
+
+#  middlewares:
+#    authentik:
+#      headers:
+#        sslProxyHeaders:
+#          "X-Forwarded-Proto": "https"

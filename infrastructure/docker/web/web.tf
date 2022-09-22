@@ -1,10 +1,12 @@
 locals {
-   traefik_name = "traefik"
+   traefik_name_internal = "traefik_internal"
+   traefik_name_public = "traefik_public"
 
    hostnames = {
       nextcloud = { url= "cloud.${var.base_domain}", public=true}
       calibre = { url="books.${var.base_domain}", public=false}
       gitea = { url= "git.${var.base_domain}", public=true }
+      authentik = { url= "sso.${var.base_domain}", public=true }
    }
 
    internal_hostnames = {
@@ -32,7 +34,7 @@ module "nextcloud" {
 
    smtp_host = local.smtp_host
    smtp_port = local.smtp_port
-   traefik_host = local.traefik_name
+   traefik_host = local.traefik_name_public
    traefik_network = docker_network.traefik_intern.name
    db_password = data.sops_file.secrets.data["nextcloud.db.user_password"]
    db_root_password = data.sops_file.secrets.data["nextcloud.db.root_password"]
@@ -100,7 +102,40 @@ module "step-ca" {
    ip_address = var.homelab_ca
 }
 
-module "traefik" {
+module "authentik" {
+   source = "../containers/authentik"
+   db_password =  data.sops_file.secrets.data["authentik.db.user_password"]
+   traefik_network = docker_network.traefik_intern.name
+   data_dir = {
+      path = "/opt/containers/authentik"
+      backup = true
+   }
+   fqdn = local.hostnames.authentik.url
+   secret = data.sops_file.secrets.data["authentik.secret"]
+   geoip_account = data.sops_file.secrets.data["authentik.geoip.account"]
+   geoip_license = data.sops_file.secrets.data["authentik.geoip.license"]
+   smtp_host = var.smtp_host
+   smtp_port = 25
+
+   dump_folder = var.dump_folder
+}
+
+module "traefik_intern" {
+   source = "../containers/traefik"
+   internal_network_name = docker_network.traefik_intern.name
+   wan_network_name = docker_network.wan.name
+   configurations = {
+      step-ca = module.step-ca.traefik_config
+   }
+
+   hostname = local.traefik_name_internal
+
+   acme_email = var.acme_email
+   homelab_ca = var.homelab_ca
+   homelab_ca_cert = module.step-ca.root_ca
+}
+
+module "traefik_public" {
    source = "../containers/traefik"
    internal_network_name = docker_network.traefik_intern.name
    wan_network_name = docker_network.wan.name
@@ -108,10 +143,11 @@ module "traefik" {
       nextcloud = module.nextcloud.traefik_config,
       gitea   = module.gitea.traefik_config
       calibre = module.calibre.traefik_config
-      step-ca = module.step-ca.traefik_config
+      authentik = module.authentik.traefik_config
    }
 
-   hostname = local.traefik_name
+   port_offset = 1
+   hostname = local.traefik_name_public
 
    additional_entrypoints = {
       gitea_ssh = 2222
@@ -120,6 +156,4 @@ module "traefik" {
    cloudflare_email = var.cloudflare_email
    cloudflare_api_key = var.cloudflare_api_key
    acme_email = var.acme_email
-   homelab_ca = var.homelab_ca
-   homelab_ca_cert = module.step-ca.root_ca
 }

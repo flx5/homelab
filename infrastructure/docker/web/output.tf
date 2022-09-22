@@ -12,6 +12,7 @@ output "backup" {
     gitea = module.gitea.backup
     calibre = module.calibre.backup
     step-ca = module.step-ca.backup
+    authentik = module.authentik.backup
   }
 }
 
