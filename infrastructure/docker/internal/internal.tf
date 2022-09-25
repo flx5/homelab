@@ -49,6 +49,10 @@ module "nextcloud" {
   data_dir = { path = "/mnt/stash/nextcloud/", backup = false }
   app_folder = { path = "/opt/containers/nextcloud/app", backup = true }
 
+  additional_volumes = [
+    { name = "stash", path = "/mnt/stash/stash/data", backup = false }
+  ]
+
   dump_folder = var.dump_folder
 
   cert_resolver = "homelab"

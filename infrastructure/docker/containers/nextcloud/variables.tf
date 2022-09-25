@@ -46,6 +46,15 @@ variable "app_folder" {
   })
 }
 
+variable "additional_volumes" {
+  type = list(object({
+    name: string
+    path: string
+    backup: bool
+  }))
+  default = []
+}
+
 variable "cert_resolver" {
   type = string
   default = "letsencrypt"

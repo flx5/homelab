@@ -21,6 +21,6 @@ output "backup" {
       app_container = docker_container.nextcloud.id
     })
 
-    vm_folders = [ for folder in [ var.app_folder, var.data_dir ] : folder.path if folder.backup ]
+    vm_folders = [ for folder in concat([ var.app_folder, var.data_dir ], var.additional_volumes) : folder.path if folder.backup ]
   }
 }

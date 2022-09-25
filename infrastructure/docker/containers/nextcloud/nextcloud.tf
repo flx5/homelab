@@ -84,6 +84,14 @@ resource "docker_container" "nextcloud" {
     host_path = var.data_dir.path
   }
 
+  dynamic "volumes" {
+    for_each = var.additional_volumes
+    content {
+      container_path = "/mnt/volumes/${volumes.value.name}"
+      host_path = volumes.value.path
+    }
+  }
+
   depends_on = [
     module.database.container,
     module.redis.container
