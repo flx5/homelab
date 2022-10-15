@@ -1,5 +1,5 @@
 resource "docker_image" "traefik" {
-  name = "traefik:v2.8"
+  name = "traefik:2.9"
 }
 
 module "error_host" {
