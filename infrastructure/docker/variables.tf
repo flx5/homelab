@@ -55,18 +55,3 @@ variable "record_type" {
 variable "acme_email" {
   type = string
 }
-
-variable "sftp_user" {
-  type        = string
-  sensitive = true
-}
-
-variable "sftp_password" {
-  type        = string
-  sensitive = true
-}
-
-variable "sftp_host" {
-  type        = string
-  sensitive = true
-}

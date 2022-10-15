@@ -37,16 +37,6 @@ build {
   provisioner "shell" {
     script = "${path.root}/install.sh"
   }
-  
-  # Install rclone docker volume plugin
-  provisioner "shell" {
-    inline = [
-      "sudo DEBIAN_FRONTEND=noninteractive apt-get install -y fuse",
-      "sudo mkdir -p /var/lib/docker-plugins/rclone/config",
-      "sudo mkdir -p /var/lib/docker-plugins/rclone/cache",
-      "sudo docker plugin install rclone/docker-volume-rclone:amd64 args=\"-v\" --alias rclone --grant-all-permissions"
-    ]
-  }
 
   # Install guest agent
   provisioner "shell" {

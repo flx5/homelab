@@ -67,7 +67,7 @@ module "archivebox" {
 }
 
 module "addons" {
-  source = "git::ssh://git@github.com/flx5/homelab-addons.git//internal?ref=fdf943e9"
+  source = "git::ssh://git@github.com/flx5/homelab-addons.git//internal?ref=65b429a3"
   traefik_network = docker_network.traefik_intern.name
   base_domain = var.base_domain
 }

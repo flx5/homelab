@@ -30,9 +30,6 @@ module "media" {
   base_domain = var.base_domain
   cloudflare_api_key = var.cloudflare_api_key
   cloudflare_email = var.cloudflare_email
-  sftp_host = var.sftp_host
-  sftp_password = var.sftp_password
-  sftp_user = var.sftp_user
   homelab_ca = var.docker_web_host
   homelab_ca_cert = module.web.root_ca
 }
