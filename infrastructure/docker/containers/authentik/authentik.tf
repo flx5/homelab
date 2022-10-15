@@ -152,7 +152,7 @@ resource "docker_container" "authentik_worker" {
 }
 
 resource "docker_image" "geoip" {
-  name = "maxmindinc/geoipupdate:v4.9"
+  name = "maxmindinc/geoipupdate:4.10"
 }
 
 resource "docker_container" "geoip" {
