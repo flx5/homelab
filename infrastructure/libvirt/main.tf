@@ -83,6 +83,7 @@ module "vm_media" {
       { path="/etc/cron.d/snapraid", content = templatefile("${path.module}/files/snapraid-cron.conf", {
          healthcheck = healthchecksio_check.snapraid_media.ping_url
       })},
+      { path="/etc/udev/rules.d/90-cardreader.rules", content = file("${path.module}/files/90-cardreader.rules") }
    ]
 
 
