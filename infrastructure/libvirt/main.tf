@@ -7,8 +7,6 @@ data "sops_file" "nas_key" {
    source_file = "../../keys/nas_id_rsa.yml"
 }
 
-# TODO Check if backup LVs are used and if not remove them!
-
 module "vm_web" {
    source = "./apps/docker"
 
@@ -34,12 +32,10 @@ module "vm_web" {
 
    block_devices = [
       "/dev/pve-ssd/nextcloud", # vdc
-      "/dev/backup1/nextcloud" # vdd
    ]
 
    mounts = [
       [ "/dev/vdc", "/mnt/nextcloud" ],
-      ["/dev/vdd", "/mnt/backups"]
    ]
 
    # Add this to the bridged network because the Fritz!Box doesn't support creating a port forwarding rule to a routed network.
@@ -71,7 +67,6 @@ module "vm_media" {
       "/dev/disk2/media", # vdd
       "/dev/disk3/media", # vde
       "/dev/parity1/media", #vdf
-      "/dev/backup1/media" # vdg
    ]
 
    files = [
@@ -92,8 +87,7 @@ module "vm_media" {
       ["/dev/vdd", "/mnt/disks/media2"],
       ["/dev/vde", "/mnt/disks/media3"],
       ["/dev/vdf", "/mnt/parity1/media"],
-      ["/mnt/disks/media*", "/mnt/media", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=60G,fsname=mergerfs", "0", "0"],
-      ["/dev/vdg", "/mnt/backups"],
+      ["/mnt/disks/media*", "/mnt/media", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=60G,fsname=mergerfs", "0", "0"]
    ]
 
    pci_devices = [
@@ -164,7 +158,6 @@ module "vm_internal" {
       "/dev/disk2/stash", # vdd
       "/dev/disk3/stash", # vde
       "/dev/parity1/stash", #vdf
-      "/dev/backup1/stash" # vdg
    ]
 
    # TODO Configure snapraid
@@ -175,7 +168,6 @@ module "vm_internal" {
       ["UUID=dc217d83-0a36-47a8-a899-78479a8a1992", "/mnt/disks/stash3"],
       ["UUID=f0b5fab4-ebb8-4cca-8bb9-f179fd0a409c", "/mnt/parity1/stash"],
       ["/mnt/disks/stash*", "/mnt/stash", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=10G,fsname=mergerfs", "0", "0"],
-      ["UUID=a7a973fe-5211-4e81-81a8-87a503bf572c", "/mnt/backups"],
    ]
 
    packages = ["mergerfs", "snapraid"]
