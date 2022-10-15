@@ -78,7 +78,8 @@ module "vm_media" {
       { path="/etc/cron.d/snapraid", content = templatefile("${path.module}/files/snapraid-cron.conf", {
          healthcheck = healthchecksio_check.snapraid_media.ping_url
       })},
-      { path="/etc/udev/rules.d/90-cardreader.rules", content = file("${path.module}/files/90-cardreader.rules") }
+      { path="/etc/udev/rules.d/90-cardreader.rules", content = file("${path.module}/files/90-cardreader.rules") },
+      { path="/root/sftp.pass", content = var.sftp_password },
    ]
 
 
@@ -87,7 +88,9 @@ module "vm_media" {
       ["/dev/vdd", "/mnt/disks/media2"],
       ["/dev/vde", "/mnt/disks/media3"],
       ["/dev/vdf", "/mnt/parity1/media"],
-      ["/mnt/disks/media*", "/mnt/media", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=60G,fsname=mergerfs", "0", "0"]
+      ["/mnt/disks/media*", "/mnt/media", "fuse.mergerfs", "defaults,allow_other,use_ino,cache.files=off,moveonenospc=true,category.create=epmfs,func.mkdir=mspmfs,dropcacheonclose=true,minfreespace=60G,fsname=mergerfs", "0", "0"],
+      # For troubleshooting see https://wiki.archlinux.org/title/SSHFS#Troubleshooting
+      ["${var.sftp_user}@${var.sftp_host}:/files", "/mnt/incoming", "fuse.sshfs", "ssh_command=sshpass\\040-f\\040/root/sftp.pass\\040ssh,_netdev,noauto,x-systemd.automount,_netdev,users,idmap=user,allow_other,reconnect", "0", "0"]
    ]
 
    pci_devices = [

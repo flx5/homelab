@@ -38,7 +38,7 @@ build {
     inline = [
       "set -e",
       "apt-get update",
-      "apt-get install -y mergerfs snapraid",
+      "apt-get install -y mergerfs snapraid sshfs sshpass",
 
       # We need the normal kernel, not the cloud one because the tv card driver cx23885.ko is not included in cloud drivers
       "apt-get install -y linux-image-amd64",
