@@ -170,19 +170,19 @@ provider "registry.terraform.io/loafoe/htpasswd" {
 }
 
 provider "registry.terraform.io/loafoe/ssh" {
-  version     = "2.2.1"
-  constraints = "2.2.1"
+  version     = "2.3.0"
+  constraints = "2.3.0"
   hashes = [
-    "h1:5jbaQYn/6VhjACCSSDdbFI9MzVvA47or0KmXjfHfwUM=",
-    "h1:EG5nep89QKUsKg/l67HZJ4hNdk01EH7B7JBcN6zqkLA=",
-    "h1:JdnEoAXKPmVxMAOvx4uFyhpZ6O/a9TM45gw7gwqz+hY=",
-    "h1:LrPCrzSGNT2290FZ9y0nCztAJRSh59KntUlJw2f/m84=",
-    "h1:OwqJxzSJwEvzEiq9zdqr5z2qshCW65mRvpXK3hiKGZY=",
-    "h1:Xbl6Q4RaEJt/wMJNuGDgu6Ldw/8A3pSnOjkrDrNhwuc=",
-    "h1:c21nLZEDZZnjL0Idv77yYFE/4GaxrCb9ZB1KPH6ppxc=",
-    "h1:doN3tFLB+ygFDdapruuAHGGxPLhiSPOhA6y4zMuWzyk=",
-    "h1:v54yl9Q4+CJfoddFiCc5VdgFaDVuKalbIcGXOfDHwec=",
-    "h1:xcxlrj6BS0oUbBSN8xPJwv6JZmqhrlBusMzlEBbMkKY=",
-    "h1:yU5CefIqNmThh2zauZKrA6JvBQCRSZJNHbg47ee8x/s=",
+    "h1:F6D8LPMR8CJLs43R9VCQFDm0o4B0g9HWHL/Uq4Dm3fM=",
+    "h1:PeQLUlA2Fafi/txS6uw76SufxY6D0PiLpyZ79W7rGZg=",
+    "h1:TbaeK8NCu4+sutLMNt9eBjfv73qenfD0szBt03IvnAQ=",
+    "h1:Yz4FuWcR+50lvbjEwzn12kTmJdrtzwE3jAQIsnIM12o=",
+    "h1:Z6m6XH5SjY2YyfvlEyzLH8diSP2ZkftZGEmUuRjOSW4=",
+    "h1:enkvEZJf15ALxXgnVw8GnM9sC8eKR8wKFgOsTd/mOMQ=",
+    "h1:flubULteL2DPBjkmMQoWqbRxbPfo2xexjSGqn2ojNDs=",
+    "h1:iAWOLuRtYp8bN29M+3Dey1yOYXFLFlkrmUi2Z4VPFvQ=",
+    "h1:svHDQprTOiaXfMnqrKBB8sntr2bCp4J/rEMPURPW99E=",
+    "h1:wCyGA/xCWr4tA28CoYO10wTB9q4XU5NEegh7nGxkcis=",
+    "h1:yFdlGWvTmUyen7zY2VwY6M3PUkcQ6nkNuR/WQqVlVF0=",
   ]
 }
