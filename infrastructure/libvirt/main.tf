@@ -14,7 +14,7 @@ module "vm_web" {
    domain = libvirt_network.routed_network.domain
    name = "web"
 
-   memory = "4096"
+   memory = "6144"
 
    network = libvirt_network.routed_network.id
    address = cidrhost(local.routed_subnet, 10)
