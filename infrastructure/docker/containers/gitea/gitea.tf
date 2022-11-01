@@ -4,7 +4,7 @@ locals {
 }
 
 resource "docker_image" "gitea" {
-  name = "gitea/gitea:1.17.2"
+  name = "gitea/gitea:1.17.3"
 }
 
 resource "docker_network" "gitea_backend" {
