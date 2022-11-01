@@ -35,7 +35,7 @@ module "jellyfin" {
 }
 
 module "addons" {
-   source = "git::ssh://git@github.com/flx5/homelab-addons.git//media?ref=4f787c4"
+   source = "git::ssh://git@github.com/flx5/homelab-addons.git//media?ref=8518208"
    traefik_network = docker_network.traefik_intern.name
    base_domain = var.base_domain
 }
