@@ -4,7 +4,7 @@ resource "random_password" "password" {
 }
 
 resource "docker_image" "bind9" {
-  name = "internetsystemsconsortium/bind9:9.18"
+  name = "internetsystemsconsortium/bind9:9.19"
 }
 
 resource "docker_container" "bind9" {
