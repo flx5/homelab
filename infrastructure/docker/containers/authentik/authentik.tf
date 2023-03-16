@@ -39,7 +39,7 @@ module "redis" {
 }
 
 resource "docker_image" "server" {
-  name = "ghcr.io/goauthentik/server:2022.10.1"
+  name = "ghcr.io/goauthentik/server:2022.12.3"
 }
 
 
