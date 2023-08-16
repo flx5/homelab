@@ -15,6 +15,7 @@ module "vm_web" {
    name = "web"
 
    memory = "6144"
+   vcpu = 4
 
    network = libvirt_network.routed_network.id
    address = cidrhost(local.routed_subnet, 10)
@@ -142,6 +143,7 @@ module "vm_internal" {
    base_disk = module.images.docker
    domain = libvirt_network.routed_network.domain
    name = "internal"
+   memory = "4096"
 
    network = libvirt_network.routed_network.id
    address = cidrhost(local.routed_subnet, 12)
@@ -174,4 +176,20 @@ module "vm_internal" {
    ]
 
    packages = ["mergerfs", "snapraid"]
+}
+
+module "kubernetes" {
+   count = 3
+   source = "./apps/kubernetes"
+
+   base_disk = module.images.kubernetes
+   name = "node${count.index}"
+
+   memory = "2048"
+
+   network = libvirt_network.routed_network.id
+
+   pool_name = libvirt_pool.stage_prod.name
+
+   ssh_id = var.ssh_id
 }

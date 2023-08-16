@@ -1,0 +1,37 @@
+#cloud-config
+
+ssh_pwauth: False
+
+hostname: ${hostname}
+manage_etc_hosts: true
+
+timezone: Europe/Berlin
+
+packages:
+  - qemu-guest-agent
+
+users:
+  - name: ansible
+    gecos: Ansible User
+    groups: users,admin,wheel
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    lock_passwd: true
+    ssh_authorized_keys:
+      - ${ssh_id}
+
+disk_setup:
+  /dev/vdb:
+    table_type: 'mbr'
+    layout: [ 100 ]
+    overwrite: False
+
+fs_setup:
+  - label: data
+    filesystem: ext4
+    device: /dev/vdb1
+    overwrite: False
+
+# Reboot to make sure qemu-guest-agent gets started
+power_state:
+  mode: reboot

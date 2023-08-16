@@ -1,7 +1,7 @@
 resource "libvirt_domain" "docker" {
   name   = "docker_${var.name}"
   memory = var.memory
-  vcpu   = 1
+  vcpu   = var.vcpu
 
   cpu {
     mode = "host-passthrough"

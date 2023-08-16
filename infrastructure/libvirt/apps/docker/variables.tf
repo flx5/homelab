@@ -7,6 +7,11 @@ variable "memory" {
   default = 2048
 }
 
+variable "vcpu" {
+  type = number
+  default = 1
+}
+
 variable "pool_name" {
   type = string
 }
