@@ -4,15 +4,28 @@ locals {
 }
 
 resource "docker_image" "nextcloud" {
-  name = "nextcloud-full"
-  build {
-    path = path.module
+  name = "localhost/nextcloud-full"
+  # Build on remote takes very long. Disks seem to be too slow?!
+  # Thus build locally and transfer via docker save + docker load
+  # docker build . -t localhost/nextcloud-full
+  # docker save localhost/nextcloud-full -o nextcloud-full.tar
+  # Copy with scp
+  # sudo docker load < nextcloud-full.tar
+  #
+  # TODO Need to analyze disk performance, the local build works within a minute!
+  /*build {
+    context = path.module
     tag  = ["nextcloud-full"]
+    # Build the image on the server by copying the Dockerfile and running screen -L sudo docker build --progress=plain . -t nextcloud-cache
+    # This is just a temporary workaround until the image is built via a seperate pipeline!
+    cache_from = [
+      "nextcloud-cache:latest"
+    ]
     label = {
       trigger_dockerfile_hash = filemd5("${path.module}/Dockerfile")
       trigger_files_hash = join(", ", [ for file in fileset("${path.module}/files", "*") :  "${file}:${md5(file)}" ])
     }
-  }
+  }*/
 }
 
 resource "docker_network" "nextcloud_backend" {
