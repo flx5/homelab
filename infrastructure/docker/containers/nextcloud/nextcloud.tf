@@ -4,7 +4,7 @@ locals {
 }
 
 resource "docker_image" "nextcloud" {
-  name = "ghcr.io/flx5/nextcloud-full-image:v25.0.13"
+  name = "ghcr.io/flx5/nextcloud-full-image:v26.0.8"
 }
 
 resource "docker_network" "nextcloud_backend" {
