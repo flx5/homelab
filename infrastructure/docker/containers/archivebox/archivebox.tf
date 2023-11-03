@@ -1,5 +1,5 @@
 resource "docker_image" "archivebox" {
-  name = "archivebox/archivebox:0.6.3"
+  name = "archivebox/archivebox:0.7.0"
 }
 
 resource "docker_container" "archivebox" {
