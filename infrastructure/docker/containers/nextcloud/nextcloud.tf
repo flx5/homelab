@@ -30,14 +30,21 @@ module "redis" {
 
 resource "docker_container" "nextcloud" {
   for_each = {
-    app = "/entrypoint.sh"
-    cron = "/cron.sh"
+    app = {
+      entrypoint = [ "/entrypoint.sh" ]
+      command = [ "apache2-foreground" ]
+    }
+    cron = {
+      entrypoint = [ "/cron.sh" ]
+      command = []
+    }
   }
 
   name  = "nextcloud-${each.key}"
   image = docker_image.nextcloud.image_id
   restart = "unless-stopped"
-  entrypoint = [ each.value ]
+  entrypoint = each.value.entrypoint
+  command = each.value.command
 
   env = [
     # MySQL Configuration
