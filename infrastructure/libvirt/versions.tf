@@ -10,7 +10,7 @@ terraform {
     }
     healthchecksio = {
       source = "kristofferahl/healthchecksio"
-      version = "1.9.0"
+      version = "1.10.1"
     }
     sops = {
       source = "carlpett/sops"
