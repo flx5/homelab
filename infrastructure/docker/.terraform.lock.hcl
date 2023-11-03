@@ -12,6 +12,13 @@ provider "registry.terraform.io/carlpett/sops" {
     "h1:eetjYKFBQb6nbgxjehD/gzzAmH2ru94ha2tEzXNiNy8=",
     "h1:li6aZQcIHjJKX3zXbpu8XYIKEShGVzrmdMxKIs/IOTo=",
     "h1:nWrLW+9JjGLwfss4T7pTaE+JiZlBJQGoYxt4pDe5OE8=",
+    "zh:43f218054ea3a72c9756bf989aeebb9d0f23b66fd08e9fb4ae75d4f921295e82",
+    "zh:57fd326388042a6b7ecd60f740f81e5ef931546c4f068f054e7df34acf65d190",
+    "zh:87b970db8c137f4c2fcbff7a5705419a0aea9268ae0ac94f1ec5b978e42ab0d2",
+    "zh:9e3b67b89ac919f01731eb0466baa08ce0721e6cf962fe6752e7cc526ac0cba0",
+    "zh:c028f67ef330be0d15ce4d7ac7649a2e07a98ed3003fca52e0c72338b5f481f8",
+    "zh:c29362e36a44480d0d9cb7d90d1efba63fe7e0e94706b2a07884bc067c46cbc7",
+    "zh:d5bcfa836244718a1d564aa96eb7d733b4d361b6ecb961f7c5bcd0cadb1dfd05",
   ]
 }
 
@@ -134,6 +141,19 @@ provider "registry.terraform.io/kristofferahl/healthchecksio" {
     "h1:qqebfci2MMgGWPxo5FEJSB8RtyEmqMTdd1VjYD7mMGs=",
     "h1:rcVr9Oq1AcTfJmYR+NWrfdSUe0Ax0CM/0hvIieZnRxs=",
     "h1:yH6YSjiS+bxC0jjUU8LdlZHr1dwguCaMyTuccu0zIns=",
+    "zh:176b9142eabbbe2d83c4a1e4fb7b6d4ecc415268baec762b4af10f1c0d356e19",
+    "zh:1b30cfe2fe1a9a652b7c801ddc0cbbede9dc6a72bc739b14640035897a409c79",
+    "zh:2766be8e560058fa31c451f74b9ad64cda4894b52846511b5eba307e54d9ee37",
+    "zh:44e5d622e711505edb5b5d839595c483f8e23fa84c18d68fe507341f337761a1",
+    "zh:4d7b1497e8362eb0c54410524315a7b1d58887ea1a21c821a2251f055ed73b83",
+    "zh:55bbe5e9274a560dbc46a6b8070878a1cc1838dd92dbee051690ab88f8d618c2",
+    "zh:59b46168a94ce07df1524212838711e255f69a4ed015f0aa660062e3bb358b79",
+    "zh:802b2f613c002d973997f64a54018e14e40157b02954975c449f41d17717841e",
+    "zh:91c757e4a9972e38d194f969ac248ead5dd250277ebc8eb9a0c75af0ed58e1a4",
+    "zh:a73d3b257b7e0898695375e7be6c94fa4e70afb4640c86c43219025557a8f0e2",
+    "zh:bff1c8b28ae909a9c896dc991d1e287ee333970528551848ea664f941806edaf",
+    "zh:ce0fb47d372caf0f6229e3c807a90b8591fa5c25e1e6a2b4ba0a3c682dbe5e99",
+    "zh:ebe300d00b451192d88d4b7c656ed396bab240ac2ca338f7a4aaa951cfdc237f",
   ]
 }
 
@@ -171,5 +191,16 @@ provider "registry.terraform.io/loafoe/ssh" {
     "h1:rzc9DZXwXf0eExGPc/nlG4O4NmR9ta5bCBGZkOmekrw=",
     "h1:ssHp2K53x7GX+BIbwgrr2wapba6POSs5URHszwkRnQc=",
     "h1:t88ktB3g9wVugCTkyg17AMJ38i+nz7FwotwiDbon/GU=",
+    "zh:1285448b69bd388a4a59ed170f9c07c641207a7291057860557937807d02da95",
+    "zh:2472c5dee4265cb555a627aa4ecc5702d32cd7aebe85722820df7499b7d4502a",
+    "zh:2a9b8f0ad446febb517a7fe38de9b02bc1bcceb90843a713c546770eff44aa84",
+    "zh:66e62d5bb280af7407315a62aee2ab35f8ce1b36f7400633f75f72111deede87",
+    "zh:832fc1213c3447fa831c1b2331cde71072c95a3f3eae04ff23dd09975d7c6577",
+    "zh:a4e19d6a6e776732cce70f350e8cf1954febf1e9281b4668f567636c7d0f75d8",
+    "zh:ac18abae233fe367f164c5a4492875a25e1c1de38a181876ffdc9f87c75abacf",
+    "zh:b44203b49cdef04f3e110923017a1e80c8b5588b91605e0c0985b3c2d839d6c0",
+    "zh:bf489e0f8ebc6f1d0d28cd6eadd871d6d63b952deaf10271765609fce417a5cf",
+    "zh:c41a209c6a4bf81309e573a53ad7b9e8d655bd7e81e40685214aeac92e682333",
+    "zh:ded134d1359bd39c2261ce1ed3bd468f8fac4fff09c07a213a3d281313d99d59",
   ]
 }
