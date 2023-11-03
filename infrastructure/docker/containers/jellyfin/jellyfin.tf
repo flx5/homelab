@@ -38,5 +38,5 @@ resource "docker_container" "jellyfin" {
 }
 
 resource "docker_image" "jellyfin" {
-  name = "jellyfin/jellyfin:10.8.7"
+  name = "jellyfin/jellyfin:10.8.11"
 }
