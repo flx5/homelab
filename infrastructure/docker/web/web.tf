@@ -102,24 +102,6 @@ module "step-ca" {
    ip_address = var.homelab_ca
 }
 
-module "authentik" {
-   source = "../containers/authentik"
-   db_password =  data.sops_file.secrets.data["authentik.db.user_password"]
-   traefik_network = docker_network.traefik_intern.name
-   data_dir = {
-      path = "/opt/containers/authentik"
-      backup = true
-   }
-   fqdn = local.hostnames.authentik.url
-   secret = data.sops_file.secrets.data["authentik.secret"]
-   geoip_account = data.sops_file.secrets.data["authentik.geoip.account"]
-   geoip_license = data.sops_file.secrets.data["authentik.geoip.license"]
-   smtp_host = var.smtp_host
-   smtp_port = 25
-
-   dump_folder = var.dump_folder
-}
-
 module "traefik_intern" {
    source = "../containers/traefik"
    internal_network_name = docker_network.traefik_intern.name
@@ -143,7 +125,6 @@ module "traefik_public" {
       nextcloud = module.nextcloud.traefik_config,
       gitea   = module.gitea.traefik_config
       calibre = module.calibre.traefik_config
-      authentik = module.authentik.traefik_config
    }
 
    port_offset = 1
