@@ -5,7 +5,6 @@ http:
         browserXssFilter: true
         contentTypeNosniff: true
         frameDeny: true
-        sslRedirect: true
         stsPreload: true
         stsSeconds: 15552000
         customFrameOptionsValue: "SAMEORIGIN"
@@ -13,9 +12,8 @@ http:
       redirectScheme:
         scheme: https
         permanent: true
-
     lan-whitelist:
-      ipWhiteList:
+      ipAllowList:
         sourceRange:
           - "192.168.20.0/24"
 
