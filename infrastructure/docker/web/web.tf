@@ -4,7 +4,7 @@ locals {
 
    hostnames = {
       nextcloud = { url= "cloud.${var.base_domain}", public=true}
-      calibre = { url="books.${var.base_domain}", public=false}
+      calibre = { url="books.${var.base_domain}", public=true}
       gitea = { url= "git.${var.base_domain}", public=true }
       authentik = { url= "sso.${var.base_domain}", public=true }
    }
