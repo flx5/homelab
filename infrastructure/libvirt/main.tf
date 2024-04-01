@@ -79,7 +79,6 @@ module "vm_media" {
       { path="/etc/cron.d/snapraid", content = templatefile("${path.module}/files/snapraid-cron.conf", {
          healthcheck = healthchecksio_check.snapraid_media.ping_url
       })},
-      { path="/etc/udev/rules.d/90-cardreader.rules", content = file("${path.module}/files/90-cardreader.rules") },
       { path="/root/sftp.pass", content = var.sftp_password },
    ]
 
@@ -118,21 +117,6 @@ module "vm_media" {
          }
       }
    ]
-
-
-   usb_devices = [
-      {
-         name = "hostdev2"
-         guest = {
-            port = "1"
-         }
-         vendor = "0x0bda"
-         product = "0x0165"
-      }
-   ]
-   
-   # Card reader fails with usb3 so use a usb2 bus...
-   use_ich9_controller = true
 
    data_size = 30 * pow(1024, 3)
 }
@@ -179,13 +163,7 @@ module "vm_internal" {
 }
 
 module "kubernetes" {
-   count = 3
-   source = "./apps/kubernetes"
-
-   base_disk = module.images.kubernetes
-   name = "node${count.index}"
-
-   memory = "2048"
+   source = "./kubernetes"
 
    network = libvirt_network.routed_network.id
 

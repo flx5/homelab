@@ -1,0 +1,18 @@
+#cloud-config
+hostname: k3s-server-{{ trunc 4 .MachineID }}
+
+install:
+  device: "/dev/vda"
+  reboot: true
+  poweroff: false
+  auto: true # Required, for automated installations
+
+users:
+  - name: kairos
+    ssh_authorized_keys:
+      - ${ssh_id}
+
+k3s:
+  enabled: true
+  args:
+    - --disable=traefik,servicelb

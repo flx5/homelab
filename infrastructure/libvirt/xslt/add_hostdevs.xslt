@@ -39,63 +39,6 @@
                 </xsl:element>
             </xsl:element>
             %{ endfor }
-
-            %{ for device in usb_devices }
-            <xsl:element name ="hostdev">
-                <xsl:attribute name="mode">subsystem</xsl:attribute>
-                <xsl:attribute name="type">usb</xsl:attribute>
-                <xsl:attribute name="managed">yes</xsl:attribute>
-                <xsl:element name="source">
-                    <xsl:element name="vendor">
-                        <xsl:attribute name="id">${device.vendor}</xsl:attribute>
-                    </xsl:element>
-                    <xsl:element name="product">
-                        <xsl:attribute name="id">${device.product}</xsl:attribute>
-                    </xsl:element>
-                </xsl:element>
-                <xsl:element name="alias">
-                    <xsl:attribute name="name">${device.name}</xsl:attribute>
-                </xsl:element>
-                <xsl:element name="address">
-                    <xsl:attribute name="type">usb</xsl:attribute>
-                    <!-- Currently libvirt seems to only support one usb bus -->
-                    <xsl:attribute name="bus">0</xsl:attribute>
-                    <xsl:attribute name="port">${device.guest.port}</xsl:attribute>
-                </xsl:element>
-            </xsl:element>
-            %{ endfor }
-            
-            %{ if use_ich9_controller }
-            <xsl:element name ="controller">
-                <xsl:attribute name="type">usb</xsl:attribute>
-                <xsl:attribute name="index">0</xsl:attribute>
-                <xsl:attribute name="model">ich9-ehci1</xsl:attribute>
-                <xsl:element name="address">
-                    <xsl:attribute name="type">pci</xsl:attribute>
-                    <xsl:attribute name="domain">0x0000</xsl:attribute>
-                    <xsl:attribute name="bus">0x02</xsl:attribute>
-                    <xsl:attribute name="slot">0x02</xsl:attribute>
-                    <xsl:attribute name="function">0x7</xsl:attribute>
-                </xsl:element>
-            </xsl:element>
-            <xsl:element name ="controller">
-                <xsl:attribute name="type">usb</xsl:attribute>
-                <xsl:attribute name="index">0</xsl:attribute>
-                <xsl:attribute name="model">ich9-uhci1</xsl:attribute>
-                
-                <xsl:element name="master">
-                    <xsl:attribute name="startport">0</xsl:attribute>
-                </xsl:element>
-                <xsl:element name="address">
-                    <xsl:attribute name="type">pci</xsl:attribute>
-                    <xsl:attribute name="domain">0x0000</xsl:attribute>
-                    <xsl:attribute name="bus">0x02</xsl:attribute>
-                    <xsl:attribute name="slot">0x02</xsl:attribute>
-                    <xsl:attribute name="function">0x0</xsl:attribute>
-                    <xsl:attribute name="multifunction">on</xsl:attribute>
-                </xsl:element>
-            </xsl:element>
-            %{ endif }
         </xsl:copy>
     </xsl:template>
 </xsl:stylesheet>

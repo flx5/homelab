@@ -1,3 +1,0 @@
-# Setup a persistent alias for the card reader
-# Based on http://hintshop.ludvig.co.nz/show/persistent-names-usb-serial-devices/
-SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="0165", SYMLINK+="cardreader"
