@@ -33,3 +33,28 @@ options {
             none;
     };
 };
+
+
+logging {
+	channel bind_log {
+		file "/var/log/bind.log" versions 1 size 100M;
+		severity info;
+		print-time yes;
+		print-severity yes;
+		print-category yes;
+	};
+	category resolver {bind_log;};
+	category default {bind_log;};
+	category queries {bind_log;};
+	category client {bind_log;};
+	category config {bind_log;};
+	category notify {bind_log;};
+	category unmatched {bind_log;};
+	category dispatch {bind_log;};
+	category dnssec {bind_log;};
+	category database {bind_log;};
+	category security {bind_log;};
+	category network {bind_log;};
+	category rate-limit {bind_log;};
+	category lame-servers {bind_log;};	
+};

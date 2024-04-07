@@ -44,6 +44,7 @@ resource "docker_container" "bind9" {
   upload {
     file = "/etc/bind/named.conf.local"
     content = templatefile("${path.module}/named.conf.local", {
+      public_domain = var.public_domain
     })
   }
 
@@ -52,11 +53,24 @@ resource "docker_container" "bind9" {
     container_path = "/var/lib/bind"
     host_path = "/opt/containers/bind9/zones/"
   }
+  
+  volumes {
+    container_path = "/var/log"
+    host_path = "/opt/containers/bind9/logs/"
+  }
 
   upload {
     file = "/var/lib/bind/db.home"
     content = templatefile("${path.module}/db.home", {
       server_ip = var.server_ip
+    })
+  }
+  
+  upload {
+    file = "/var/lib/bind/db.public"
+    content = templatefile("${path.module}/db.public", {
+      server_ip = var.server_ip
+      public_domain = var.public_domain
     })
   }
 

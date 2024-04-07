@@ -111,6 +111,7 @@ module "traefik_intern" {
    }
 
    hostname = local.traefik_name_internal
+   port_offset = 10
 
    acme_email = var.acme_email
    homelab_ca = var.homelab_ca
@@ -127,7 +128,7 @@ module "traefik_public" {
       calibre = module.calibre.traefik_config
    }
 
-   port_offset = 1
+   port_offset = 0
    hostname = local.traefik_name_public
 
    additional_entrypoints = {

@@ -8,6 +8,7 @@ module "bind9" {
 
   source = "./containers/bind9"
   server_ip = var.docker_web_host
+  public_domain = var.base_domain
 }
 
 
@@ -19,6 +20,8 @@ provider "dns" {
     key_secret    = module.bind9.tsig-secret
   }
 }
+
+# Internal DNS
 
 resource "dns_a_record_set" "nas" {
   zone = "home."
@@ -61,4 +64,28 @@ resource "dns_a_record_set" "dns_internal" {
     var.docker_internal_host
   ]
   ttl = 300
+}
+
+# Split Head DNS because Speedport doesn't support hairpin nat (and I want to be able to access these services without internet!)
+
+resource "dns_a_record_set" "dns_web_loopback" {
+  for_each = module.web.hostnames
+
+  zone    = "${var.base_domain}."
+  name    = trimsuffix(each.value.url, ".${var.base_domain}")
+  addresses = [
+    var.docker_web_host
+  ]
+  ttl = 300
+}
+
+# TODO Remove once not used by services anymore...
+resource "dns_a_record_set" "dns_media_nat_hairpin" {
+  for_each = module.media.hostnames
+  
+  zone    = "${var.base_domain}."
+  name    = trimsuffix(each.value, ".${var.base_domain}")
+  addresses = [
+    var.docker_media_host
+  ]
 }

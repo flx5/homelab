@@ -10,3 +10,7 @@ variable "wan_network_name" {
 variable "server_ip" {
   type        = string
 }
+
+variable "public_domain" {
+  type        = string
+}
