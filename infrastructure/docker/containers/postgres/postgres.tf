@@ -1,5 +1,5 @@
 resource "docker_image" "postgres" {
-  name = "postgres:14.5-alpine"
+  name = "postgres:14.13-alpine"
 }
 
 resource "docker_container" "postgres" {
