@@ -8,7 +8,7 @@ resource "random_password" "password" {
 }
 
 resource "docker_image" "step-ca" {
-  name = "smallstep/step-ca:0.25.2"
+  name = "smallstep/step-ca:0.27.5"
 }
 
 # To enable ACME the following command has to be run once:
