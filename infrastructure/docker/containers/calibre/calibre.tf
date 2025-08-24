@@ -1,5 +1,5 @@
 resource "docker_image" "calibre" {
-  name          = "lscr.io/linuxserver/calibre-web:0.6.21"
+  name          = "lscr.io/linuxserver/calibre-web:0.6.25"
 }
 
 # Start a container
